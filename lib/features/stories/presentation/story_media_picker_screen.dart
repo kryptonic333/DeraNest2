@@ -1,0 +1,184 @@
+import 'package:deranest/core/constants/app_colors.dart';
+import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:extensions_kit/extensions_kit.dart';
+import 'package:flutter/material.dart';
+
+class StoryMediaPickerScreen extends StatelessWidget {
+  // User Profile Model
+  final Profile profile;
+  const StoryMediaPickerScreen({super.key, required this.profile});
+
+  @override
+  Widget build(BuildContext context) {
+    final posts = profile.posts ?? [];
+
+    return CustomSafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.kTransparent,
+        body: Column(
+          children: <Widget>[
+            // Top Bar
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8,
+              ),
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Discard', style: AppTextStyle.kLargeBodyText),
+                  ),
+                  Spacer(),
+                  Text('STORY', style: AppTextStyle.kVeryLargeBodyText),
+                  Spacer(),
+                ],
+              ),
+            ),
+
+            SizedBox(height: context.h(2)),
+
+            // Image/Video Boxes
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _mediaOptionBox(
+                  context: context,
+                  icon: Icons.image_sharp,
+                  label: 'Images',
+                  onTap: () {
+                    // Navigate to Story Media Gallery Screen
+                  },
+                ),
+                SizedBox(width: context.w(5)),
+                _mediaOptionBox(
+                  context: context,
+                  icon: Icons.video_collection,
+                  label: 'Videos',
+                  onTap: () {
+                    // Navigate to Story Media Gallery Screen
+                  },
+                ),
+              ],
+            ).padAll(3),
+
+            SizedBox(height: context.h(2)),
+
+            // Recent Text
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'Recent',
+                  style: AppTextStyle.kMediumBodyText.copyWith(
+                    color: AppColors.kBlack,
+                  ),
+                ),
+              ),
+            ),
+
+            // Grid Gallery
+            Expanded(
+              child: GridView.builder(
+                itemCount: posts.length + 1,
+                padding: const EdgeInsets.all(8),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 4,
+                  mainAxisSpacing: 4,
+                  childAspectRatio: 0.65,
+                ),
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return GestureDetector(
+                      onTap: () {
+                        // Navigate to Story Camera Screen
+                        controller.toggleCamera();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.kHintTextColor,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.camera_alt_outlined,
+                              size: context.h(6),
+                              color: AppColors.kWhite,
+                            ),
+                            SizedBox(height: context.h(2)),
+                            Text(
+                              'Camera',
+                              style: AppTextStyle.kMediumBodyText.copyWith(
+                                color: AppColors.kWhite,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  final assetPath = posts[index - 1];
+
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Image.asset(
+                      assetPath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey,
+                        child: const Icon(
+                          Icons.broken_image,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _mediaOptionBox({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: context.h(15),
+        width: context.w(35),
+        decoration: BoxDecoration(
+          color: AppColors.kHintTextColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 50, color: AppColors.kWhite),
+            SizedBox(height: 8),
+            Text(
+              label,
+              style: AppTextStyle.kMediumBodyText.copyWith(
+                color: AppColors.kWhite,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
