@@ -6,9 +6,11 @@ class AppImages {
   static const String postDetailImage = 'assets/images/post_detail_test.jpg';
 }
 
-class IconAssets {
-  static const String appLogo = 'assets/logos/app_logo.svg';
-  static const String sendButton = 'assets/icons/app_logo.svg';
-}
+
 
 class AudioAssets {}
+
+class SvgAssets {
+  static const String appLogo = 'assets/svg/app_logo.svg';
+  static const String sendButton = 'assets/svg/share.svg';
+}

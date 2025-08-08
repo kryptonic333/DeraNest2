@@ -6,6 +6,7 @@ import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -83,9 +84,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ).padOnly(top: 10, bottom: 3),
                   ValueListenableBuilder<int>(
                     valueListenable: currentPage,
-                    builder: (_, value, __) => _DotsIndicator(
-                      currentIndex: value,
-                    ),
+                    builder: (_, value, __) =>
+                        _DotsIndicator(currentIndex: value),
                   ),
                   SizedBox(height: context.h(4)),
                   CustomElevatedButton(
@@ -95,7 +95,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     title: isLast ? 'Get Started' : 'Next',
                     onPress: () {
                       if (isLast) {
-                        // Navigate to next screen
+                        
+                        context.go('/login');
                       } else {
                         nextPage();
                       }

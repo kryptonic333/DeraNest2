@@ -52,7 +52,9 @@ flutter:
     - assets/images/
     - assets/audio/
     - assets/logos/
-
+    - path: assets/svg/
+      transformers:
+        - package: vector_graphics_compiler
   # FONTS
   fonts:
     - family: Poppins_Light

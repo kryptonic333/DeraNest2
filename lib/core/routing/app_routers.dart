@@ -2,6 +2,7 @@ import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/features/authentication/presentation/forgot_screen.dart';
 import 'package:deranest/features/authentication/presentation/login_screen.dart';
 import 'package:deranest/features/authentication/presentation/signup_screen.dart';
+import 'package:deranest/features/authentication/presentation/terms_and_conditions.dart';
 import 'package:deranest/features/call/presentation/video_call_screen/incoming_video_call_screen.dart';
 import 'package:deranest/features/call/presentation/video_call_screen/on_video_call_screen.dart';
 import 'package:deranest/features/call/presentation/voice_call_screen/incoming_voice_call_screen.dart';
@@ -30,29 +31,30 @@ import 'package:go_router/go_router.dart';
 
 // Defines all route paths as constants
 class Routes {
-  static const String splash = '/';
-  static const String login = '/login';
-  static const String register = '/register';
-  static const String forgotPass = '/forgotPass';
-  static const String onBoard = '/onBoard';
-  static const String feed = '/feed';
-  static const String main = '/main';
-  static const String conversation = '/conversation';
-  static const String inbox = '/inbox';
-  static const String pollCreate = '/poll';
-  static const String notification = '/notification';
-  static const String postGallery = '/phoneGallery';
-  static const String postDetail = '/postDetail';
+  static const String splash            = '/';
+  static const String termsCondition    = '/termsCondition';
+  static const String login             = '/login';
+  static const String register          = '/register';
+  static const String forgotPass        = '/forgotPass';
+  static const String onBoard           = '/onBoard';
+  static const String feed              = '/feed';
+  static const String main              = '/main';
+  static const String conversation      = '/conversation';
+  static const String inbox             = '/inbox';
+  static const String pollCreate        = '/poll';
+  static const String notification      = '/notification';
+  static const String postGallery       = '/phoneGallery';
+  static const String postDetail        = '/postDetail';
   static const String contentTypeSelect = '/contentTypeSelect';
-  static const String profile = '/profile';
-  static const String setting = '/setting';
-  static const String userDiscovery = '/userDiscovery';
+  static const String profile           = '/profile';
+  static const String setting           = '/setting';
+  static const String userDiscovery     = '/userDiscovery';
   static const String storyMediaGallery = '/storyMediaGallery';
-  static const String storyCamera = '/storyCamera';
-  static const String storyMediaPicker = '/storyMediaPicker';
-  static const String storyViewer = '/storyViewer';
-  static const String onVideoCall = '/onVideoCall';
-  static const String onVoiceCall = '/onVoiceCall';
+  static const String storyCamera       = '/storyCamera';
+  static const String storyMediaPicker  = '/storyMediaPicker';
+  static const String storyViewer       = '/storyViewer';
+  static const String onVideoCall       = '/onVideoCall';
+  static const String onVoiceCall       = '/onVoiceCall';
   static const String incomingVideoCall = '/incomingVideoCall';
   static const String incomingVoiceCall = '/incomingVoiceCall';
 }
@@ -71,6 +73,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.register,
         builder: (context, state) => SignupScreen(),
+      ),
+      GoRoute(
+        path: Routes.termsCondition,
+        builder: (context, state) => TermsAndConditionsScreen(),
       ),
       GoRoute(
         path: Routes.forgotPass,

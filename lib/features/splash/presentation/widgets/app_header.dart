@@ -15,8 +15,8 @@ class AppHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         VectorGraphic(
-          loader: AssetBytesLoader(IconAssets.appLogo),
-          colorFilter: ColorFilter.mode(AppColors.kSecondary, BlendMode.dst),
+          loader: AssetBytesLoader(SvgAssets.appLogo),
+          colorFilter: ColorFilter.mode(AppColors.kSecondary, BlendMode.srcIn),
           width: context.w(9),
         ),
         SizedBox(width: context.w(2.75)),

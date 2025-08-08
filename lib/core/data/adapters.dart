@@ -1,4 +1,8 @@
+import 'package:deranest/core/constants/app_assets.dart';
 import 'package:hive/hive.dart';
+
+
+
 
 enum CallType { voice, video }
 
@@ -636,17 +640,17 @@ List<OnBoardingModel> onBoardingContents = [
   OnBoardingModel(
     title: "Welcome",
     subTitle: "This is your first step in using the app.",
-    image: "assets/images/step1.png",
+    image: AppImages.firstOnBoardImage,
   ),
   OnBoardingModel(
     title: "Track Progress",
     subTitle: "Easily monitor your performance over time.",
-    image: "assets/images/step2.png",
+    image: AppImages.secOnBoardImage,
   ),
   OnBoardingModel(
     title: "Stay Connected",
     subTitle: "Get updates and stay in the loop.",
-    image: "assets/images/step3.png",
+    image: AppImages.thirdOnBoardImage,
   ),
 ];
 

@@ -9,6 +9,7 @@ import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 // Authentication Screen Controller Required
 class SignupScreen extends StatelessWidget {
@@ -148,6 +149,7 @@ class SignupScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         // controller.updateTermsAgreed();
+                        context.go('/termsCondition');
                       },
                       child: Container(
                         height: context.h(2.45),
@@ -155,15 +157,12 @@ class SignupScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                           color: AppColors.kWhite,
-                          border: Border.all(
-                            color:  AppColors.kBlack,
-                          ),
+                          border: Border.all(color: AppColors.kBlack),
                         ),
                         child: Icon(
-                                Icons.check,
-                                color: AppColors.kSecondarySupport,
-                              ).centerWidget
-                           ,
+                          Icons.check,
+                          color: AppColors.kSecondarySupport,
+                        ).centerWidget,
                       ),
                     ),
                     CustomTextButton(
@@ -193,6 +192,7 @@ class SignupScreen extends StatelessWidget {
                     //     false) {
                     //   //  Navigate to Show People Screen
                     // }
+                    context.go('/feed');
                   },
                 ),
                 SizedBox(height: context.h(1.7)),
@@ -208,6 +208,7 @@ class SignupScreen extends StatelessWidget {
                   width: double.infinity,
                   onPress: () {
                     // Navigate to Login Screen
+                    context.go('/login');
                   },
                 ),
                 SizedBox(height: context.h(3)),

@@ -5,7 +5,6 @@ import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/features/feed/presentation/widgets/profile_header.dart';
 import 'package:deranest/features/feed/presentation/widgets/story_circle.dart';
-
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class MainFeedScreen extends StatelessWidget {
     expiresAt: DateTime(2025),
   );
   // Feed Model
-  final feed = Feed(createdAt: DateTime(2020),id: '', userId: '');
+  final feed = Feed(createdAt: DateTime(2020), id: '', userId: '');
   MainFeedScreen({super.key});
 
   @override
@@ -51,9 +50,6 @@ class MainFeedScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 itemCount: 3,
                 itemBuilder: (context, i) {
-                  
-                  
-
                   return _FeedCard(
                     feed: feed,
                     onBookmark: () {},
@@ -74,14 +70,13 @@ class MainFeedScreen extends StatelessWidget {
 
 // Story Circle
 class _StoryCircleItem extends StatelessWidget {
-  _StoryCircleItem({
+  const _StoryCircleItem({
     required this.story,
     // required this.controller,
     required this.index,
   });
   // Feed Screen Controller Required
 
-  
   // Story Model
   final Story story;
   final int index;
@@ -92,7 +87,7 @@ class _StoryCircleItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          StoryCircle( index: index),
+          StoryCircle(index: index),
           //SizedBox(height: context.h(1)),
           Text(
             ' ${story.name}', // Should be story.userName
@@ -117,7 +112,12 @@ class _FeedCard extends StatelessWidget {
     required this.onBookmark,
   });
   // Profile Model
-  final profile =Profile(id: '', name: '', username: 'username', createdAt: DateTime(2025));
+  final profile = Profile(
+    id: '',
+    name: '',
+    username: 'username',
+    createdAt: DateTime(2025),
+  );
   // Feed Screen Controller
   final feedController = TextEditingController();
   // Feed Model Required
@@ -144,11 +144,7 @@ class _FeedCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileHeader(
-              index: index,
-              user: profile,
-             
-            ).padOnly(top: 8, left: 8),
+            ProfileHeader(index: index, user: profile).padOnly(top: 8, left: 8),
             SizedBox(height: context.h(1)),
             GestureDetector(
               onTap: () {
@@ -266,7 +262,7 @@ class _BottomActionBar extends StatelessWidget {
               GestureDetector(
                 onTap: onShare,
                 child: VectorGraphic(
-                  loader: AssetBytesLoader(IconAssets.sendButton),
+                  loader: AssetBytesLoader(SvgAssets.sendButton),
 
                   width: context.w(6.5),
                 ),

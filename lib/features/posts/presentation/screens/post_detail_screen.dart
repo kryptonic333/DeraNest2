@@ -204,7 +204,7 @@ class BuildActionBar extends StatelessWidget {
               GestureDetector(
                 onTap: () {},
                 child: VectorGraphic(
-                  loader: AssetBytesLoader(IconAssets.sendButton),
+                  loader: AssetBytesLoader(SvgAssets.sendButton),
 
                   width: context.w(6.5),
                 ),

@@ -1,4 +1,3 @@
-
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
@@ -6,6 +5,7 @@ import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AskUserAuth extends StatelessWidget {
   const AskUserAuth({super.key});
@@ -39,7 +39,8 @@ class AskUserAuth extends StatelessWidget {
               width: context.w(90),
               title: 'Login',
               onPress: () {
-              // Navigate to Login Screen
+                // Navigate to Login Screen
+                context.go('/login');
               },
             ),
             SizedBox(height: context.h(2.5)),
@@ -53,6 +54,7 @@ class AskUserAuth extends StatelessWidget {
               width: context.w(90),
               onPress: () {
                 // Navigate to SignUp Screen
+                context.go('/register');
               },
             ),
           ],
