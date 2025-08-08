@@ -5,7 +5,8 @@ import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
 class ContentTypeSelectionScreen extends StatelessWidget {
-  const ContentTypeSelectionScreen({super.key});
+   const ContentTypeSelectionScreen({super.key});
+  final bool isExpanded = false;
 
   // Add Post Controller
   @override
@@ -34,7 +35,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                   // Create Heading
                   Text('CREATE', style: AppTextStyle.kVeryLargeBodyText),
                   const Spacer(),
-                  
+
                   //  Publish Button
                   InkWell(
                     onTap: () {},
@@ -75,7 +76,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                         },
                       ),
                       title: TextField(
-                        controller: controller.textController.value,
+                        controller: TextEditingController(),
                         decoration: const InputDecoration(
                           hintText: 'What\'s on your mind?',
                           border: InputBorder.none,
@@ -94,7 +95,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                   maxWidth: MediaQuery.of(context).size.width - 40,
                 ),
                 duration: const Duration(milliseconds: 600),
-                width: controller.isExpanded.value ? 250 : 50,
+                width: 250,
                 height: 50,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -106,14 +107,10 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                     children: [
                       // Add Icon
                       IconButton(
-                        icon: Icon(
-                          controller.isExpanded.value ? Icons.close : Icons.add,
-                          size: 25,
-                          color: Colors.black,
-                        ),
-                        onPressed: controller.toggleExpanded,
+                        icon: Icon(Icons.close, size: 25, color: Colors.black),
+                        onPressed: () {},
                       ),
-                      if (controller.isExpanded.value) ...[
+                      if (isExpanded) ...[
                         IconButton(
                           icon: const Icon(Icons.photo, size: 20),
                           onPressed: () {
@@ -153,8 +150,6 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                 ),
               ),
 
-              
-              
               // Content Type Selection (post or story)
               Center(
                 child: Container(
@@ -172,9 +167,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                         height: 30,
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         decoration: BoxDecoration(
-                          color: !controller.isStoryScreen.value
-                              ? AppColors.kAbortColor.withAlpha(100)
-                              : AppColors.kTransparent,
+                          color: AppColors.kAbortColor.withAlpha(100),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
@@ -183,9 +176,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                             child: Text(
                               'POST',
                               style: AppTextStyle.kMediumBodyText.copyWith(
-                                color: !controller.isStoryScreen.value
-                                    ? AppColors.kWhite
-                                    : AppColors.kBlack,
+                                color: AppColors.kBlack,
                               ),
                             ),
                           ),
@@ -196,9 +187,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                         height: 30,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
-                          color: controller.isStoryScreen.value
-                              ? AppColors.kAbortColor.withAlpha(100)
-                              : AppColors.kTransparent,
+                          color: AppColors.kAbortColor.withAlpha(100),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
@@ -212,9 +201,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                             child: Text(
                               'STORY',
                               style: AppTextStyle.kMediumBodyText.copyWith(
-                                color: controller.isStoryScreen.value
-                                    ? AppColors.kWhite
-                                    : AppColors.kBlack,
+                                color: AppColors.kBlack,
                               ),
                             ),
                           ),

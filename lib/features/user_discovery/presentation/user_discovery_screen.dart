@@ -1,12 +1,21 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
 class UserDiscoveryScreen extends StatelessWidget {
-  const UserDiscoveryScreen({super.key});
+  // Person
+  final PeopleOnApp person = PeopleOnApp(
+    email: '',
+    id: '1',
+    name: 'name',
+    username: 'username',
+    createdAt: DateTime(2025),
+  );
+  UserDiscoveryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +26,16 @@ class UserDiscoveryScreen extends StatelessWidget {
           leading: const Icon(Icons.add_box),
           elevation: 10,
           backgroundColor: AppColors.kPrimary.withAlpha(100),
-          title: Text(
-            'People You May Know',
-            style: AppTextStyle.kHeadingText,
-          ),
+          title: Text('People You May Know', style: AppTextStyle.kHeadingText),
         ),
         body: Column(
           children: [
             // List of People on App
             Expanded(
               child: ListView.builder(
-                itemCount: dummyPeople.length,
+                itemCount: 5,
                 itemBuilder: (context, index) {
-                  return _PersonCard(person: dummyPeople[index]);
+                  return _PersonCard(person: person);
                 },
               ),
             ),
@@ -42,9 +48,7 @@ class UserDiscoveryScreen extends StatelessWidget {
                   buttonColor: AppColors.kSecondarySupport,
                   textColor: AppColors.kWhite,
                   title: 'Skip',
-                  onPress: () {
-                    
-                  },
+                  onPress: () {},
                   borderRadius: 10,
                 ).padAll(8),
                 CustomElevatedButton(
@@ -52,9 +56,7 @@ class UserDiscoveryScreen extends StatelessWidget {
                   buttonColor: AppColors.kSecondarySupport,
                   textColor: AppColors.kWhite,
                   title: 'Go',
-                  onPress: () {
-                    
-                  },
+                  onPress: () {},
                   borderRadius: 10,
                 ).padAll(8),
               ],

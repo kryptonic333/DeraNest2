@@ -1,11 +1,11 @@
-
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/features/feed/presentation/widgets/profile_header.dart';
 import 'package:deranest/features/feed/presentation/widgets/story_circle.dart';
-import 'package:deranest/features/posts/presentation/screens/post_detail_screen.dart';
+
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,66 +13,75 @@ import 'package:vector_graphics/vector_graphics.dart';
 
 // Feed Screen Controller Required
 class MainFeedScreen extends StatelessWidget {
-  const MainFeedScreen({super.key});
+  // Story Model
+  final story = Story(
+    name: '',
+    id: '2',
+    userId: '34',
+    createdAt: DateTime(2022),
+    expiresAt: DateTime(2025),
+  );
+  // Feed Model
+  final feed = Feed(createdAt: DateTime(2020),id: '', userId: '');
+  MainFeedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
-        body:  Column(
-            children: [
-              // Stories Section
-              SizedBox(
-                height: context.h(12),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  itemCount: dummyStories.length,
-                  itemBuilder: (context, index) {
-                    return _StoryCircleItem(
-                      index: index,
-                      story: dummyStories[index],
-                      controller: controller,
-                    );
-                  },
-                ),
+        body: Column(
+          children: [
+            // Stories Section
+            SizedBox(
+              height: context.h(12),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return _StoryCircleItem(index: index, story: story);
+                },
               ),
+            ),
 
-              // Feed Section
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  itemCount: dummyFeedList.length,
-                  itemBuilder: (context, i) {
-                    final feed = dummyFeedList[i];
-                    if (feed.imageUrl == null) return const SizedBox.shrink();
+            // Feed Section
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                itemCount: 3,
+                itemBuilder: (context, i) {
+                  
+                  
 
-                    return _FeedCard(
-                      feed: feed,
-                      controller: controller,
-                      index: i,
-                    );
-                  },
-                ),
+                  return _FeedCard(
+                    feed: feed,
+                    onBookmark: () {},
+                    onComment: () {},
+                    onLike: () {},
+                    onShare: () {},
+                    index: i,
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      
+      ),
     );
   }
 }
 
 // Story Circle
 class _StoryCircleItem extends StatelessWidget {
-  const _StoryCircleItem({
+  _StoryCircleItem({
     required this.story,
-    required this.controller,
+    // required this.controller,
     required this.index,
   });
   // Feed Screen Controller Required
-  final HomeScreenController controller;
+
+  
   // Story Model
   final Story story;
   final int index;
@@ -83,7 +92,7 @@ class _StoryCircleItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          StoryCircle(controller: controller, index: index),
+          StoryCircle( index: index),
           //SizedBox(height: context.h(1)),
           Text(
             ' ${story.name}', // Should be story.userName
@@ -99,16 +108,27 @@ class _StoryCircleItem extends StatelessWidget {
 
 // Feed Card
 class _FeedCard extends StatelessWidget {
-  const _FeedCard({
+  _FeedCard({
     required this.feed,
-    required this.controller,
     required this.index,
+    required this.onLike,
+    required this.onComment,
+    required this.onShare,
+    required this.onBookmark,
   });
-  // Feed Screen Controller Required
-  final HomeScreenController controller;
+  // Profile Model
+  final profile =Profile(id: '', name: '', username: 'username', createdAt: DateTime(2025));
+  // Feed Screen Controller
+  final feedController = TextEditingController();
   // Feed Model Required
   final Feed feed;
   final int index;
+
+  // Bool
+  final VoidCallback onLike;
+  final VoidCallback onComment;
+  final VoidCallback onShare;
+  final VoidCallback onBookmark;
 
   @override
   Widget build(BuildContext context) {
@@ -126,13 +146,13 @@ class _FeedCard extends StatelessWidget {
           children: [
             ProfileHeader(
               index: index,
-              user: dummyProfileList[index],
-              controller: controller,
+              user: profile,
+             
             ).padOnly(top: 8, left: 8),
             SizedBox(height: context.h(1)),
             GestureDetector(
               onTap: () {
-              // Navigate to Post Detail Screen
+                // Navigate to Post Detail Screen
               },
               child: Container(
                 width: context.w(68),
@@ -152,11 +172,11 @@ class _FeedCard extends StatelessWidget {
 
                 child: _BottomActionBar(
                   feed: feed,
-                  controller: controller,
-                  onLike: controller.onLikeClicked,
-                  onComment: controller.onCommentClicked,
-                  onShare: controller.onShareClicked,
-                  onBookmark: controller.onBookmarkClicked,
+
+                  onLike: onLike,
+                  onComment: onComment,
+                  onShare: onComment,
+                  onBookmark: onBookmark,
                 ),
               ).centerWidget,
             ),
@@ -171,16 +191,16 @@ class _FeedCard extends StatelessWidget {
 class _BottomActionBar extends StatelessWidget {
   // Feed Model Required
   final Feed feed;
-  // Feed Screen Model
-  final HomeScreenController controller;
+  // Feed Screen Controller
+  final feedController = TextEditingController();
   final VoidCallback onLike;
   final VoidCallback onComment;
   final VoidCallback onShare;
   final VoidCallback onBookmark;
 
-  const _BottomActionBar({
+  _BottomActionBar({
     required this.feed,
-    required this.controller,
+
     required this.onLike,
     required this.onComment,
     required this.onShare,
@@ -217,9 +237,7 @@ class _BottomActionBar extends StatelessWidget {
             children: [
               _PostIconButton(
                 icon: CupertinoIcons.heart_solid,
-                color: controller.like.value
-                    ? AppColors.kRed
-                    : AppColors.kWhite,
+                color: AppColors.kWhite,
                 onTap: onLike,
               ).padLeft(context.w(1.5)),
               Text(
@@ -256,9 +274,7 @@ class _BottomActionBar extends StatelessWidget {
               SizedBox(width: context.w(2)),
 
               _PostIconButton(
-                color: controller.bookmark.value
-                    ? AppColors.kSecondarySupport.withAlpha(100)
-                    : AppColors.kWhite,
+                color: AppColors.kSecondarySupport.withAlpha(100),
                 icon: CupertinoIcons.bookmark_solid,
                 onTap: onBookmark,
               ).padRight(context.w(2.5)),

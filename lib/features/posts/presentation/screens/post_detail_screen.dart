@@ -1,6 +1,7 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/features/feed/presentation/widgets/profile_header.dart';
@@ -13,10 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 class PostDetailScreen extends StatelessWidget {
+  // Scroll Controller
+  final scrollController = ScrollController();
   final int index;
   // PostDetailScreen Model
-  final PostDetailViewModel post;
-  const PostDetailScreen({super.key, required this.post, required this.index});
+  final PostDetailModel post;
+   PostDetailScreen({super.key, required this.post, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +43,28 @@ class PostDetailScreen extends StatelessWidget {
         ),
 
         body: SingleChildScrollView(
-          controller: controller.scrollController,
+          controller: scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Header section with user profile
-              BuildPostHeader(controller: controller, index: index),
+              BuildPostHeader(index: index),
 
               // Post image
-              dummyPostDetailList[index].feed.imageUrl != null
-                  ? Container(
-                      color: AppColors.kPostBgColor,
-                      height: context.h(38),
-                      width: double.infinity,
-                      child: Image.asset(
-                        dummyPostDetailList[index].feed.imageUrl!,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : const SizedBox.shrink(),
+              Container(
+                color: AppColors.kPostBgColor,
+                height: context.h(38),
+                width: double.infinity,
+                child: Image.asset(AppImages.profileImage, fit: BoxFit.cover),
+              ),
 
               // Post actions row (like, comment, share, bookmark)
-              BuildActionBar(controller: controller, post: post),
+              BuildActionBar(post: post),
               // People who liked row and Post info
               _buildPostInfoSection(context),
 
               // The inline comment field at the very bottom
-              const CommentField().padOnly(
+               CommentField().padOnly(
                 left: context.w(2),
                 right: context.w(2),
                 bottom: context.h(2),
@@ -145,7 +143,7 @@ class PostDetailScreen extends StatelessWidget {
         ).padOnly(left: 12, right: 7),
         Text(
           // timeAgo is a utility
-          timeAgo(post.comments[0].commentedAt),
+          '4:50 Am',
           style: AppTextStyle.kSmallBodyText.copyWith(
             color: AppColors.kHintTextColor,
           ),
@@ -158,14 +156,10 @@ class PostDetailScreen extends StatelessWidget {
 // Action Bar
 class BuildActionBar extends StatelessWidget {
   // FeedScreen Controller
-  final HomeScreenController controller;
+  final feedController = TextEditingController();
   // PostDetailScreen Model
-  final PostDetailViewModel post;
-  const BuildActionBar({
-    super.key,
-    required this.controller,
-    required this.post,
-  });
+  final PostDetailModel post;
+  BuildActionBar({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -182,13 +176,11 @@ class BuildActionBar extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   CupertinoIcons.heart_solid,
-                  color: controller.like.value
-                      ? AppColors.kRed
-                      : AppColors.kWhite,
+                  color: AppColors.kWhite,
                   size: 28,
                 ),
                 onPressed: () {
-                  controller.onLikeClicked();
+                  // controller.onLikeClicked();
                 },
               ),
 
@@ -221,13 +213,11 @@ class BuildActionBar extends StatelessWidget {
               // Bookmark Button
               IconButton(
                 onPressed: () {
-                  controller.onBookmarkClicked();
+                  // controller.onBookmarkClicked();
                 },
                 icon: Icon(
                   CupertinoIcons.bookmark_solid,
-                  color: controller.bookmark.value
-                      ? AppColors.kSecondarySupport.withAlpha(100)
-                      : AppColors.kWhite,
+                  color: AppColors.kSecondarySupport.withAlpha(100),
                   size: 28,
                 ),
               ),
@@ -243,12 +233,14 @@ class BuildActionBar extends StatelessWidget {
 // Builds the top header with profile info and more_vert icon.
 class BuildPostHeader extends StatelessWidget {
   final int index;
-  final HomeScreenController controller;
-  const BuildPostHeader({
-    super.key,
-    required this.controller,
-    required this.index,
-  });
+  final Profile user = Profile(
+    id: 'id',
+    name: 'name',
+    username: 'username',
+    createdAt: DateTime(2025),
+  );
+
+  BuildPostHeader({super.key, required this.index});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -258,11 +250,7 @@ class BuildPostHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ProfileHeader(
-            user: dummyProfileList[index],
-            controller: controller,
-            index: index,
-          ),
+          ProfileHeader(user: user, index: index),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.more_vert_rounded, color: AppColors.kBlack),

@@ -1,6 +1,7 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
 import 'package:extensions_kit/extensions_kit.dart';
@@ -43,7 +44,7 @@ class ConversationScreen extends StatelessWidget {
                 participant: conversation.participant,
               ),
             ),
-            _MessageInputBar(controller: controller),
+            _MessageInputBar(),
           ],
         ),
       ),
@@ -107,7 +108,7 @@ class _ConversationAppBar extends StatelessWidget
               ),
               Text(
                 // timeAgo utility
-                'Active ${timeAgo(activeTime)}',
+                'Active 1 min ago',
                 style: AppTextStyle.kSmallBodyText.copyWith(
                   color: AppColors.kBlack,
                 ),
@@ -228,7 +229,7 @@ class _MessageBubble extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               // time utility - Specified for specific functionality
-              formatTimeOnly(message.sentAt),
+              '12:34 Am',
               style: AppTextStyle.kSmallBodyText,
             ),
           ],
@@ -292,7 +293,7 @@ class _DateChip extends StatelessWidget {
         ),
         child: Text(
           // time utility - Specified for specific functionality
-          messageTime(time),
+          '12:34 Am',
           style: AppTextStyle.kSmallBodyText.copyWith(color: AppColors.kBlack),
         ),
       ),
@@ -302,8 +303,9 @@ class _DateChip extends StatelessWidget {
 
 class _MessageInputBar extends StatelessWidget {
   // Chat Controller Required
-  final ChatController controller;
-  const _MessageInputBar({required this.controller});
+  final messageController = TextEditingController();
+
+   _MessageInputBar();
 
   void _showAttachmentSheet(BuildContext context) {
     // Get.bottomSheet(
@@ -333,7 +335,7 @@ class _MessageInputBar extends StatelessWidget {
               enabledBorderColor: AppColors.kWhite,
               contentPadding: EdgeInsets.all(context.h(1)),
               borderRadius: 10,
-              controller: controller.messageController,
+              controller: messageController,
               hintText: 'Type Message Here',
               labelText: null,
               keyboardType: TextInputType.multiline,
@@ -342,7 +344,7 @@ class _MessageInputBar extends StatelessWidget {
             ),
           ),
           ValueListenableBuilder<TextEditingValue>(
-            valueListenable: controller.messageController,
+            valueListenable:messageController,
             builder: (context, value, child) {
               if (value.text.isNotEmpty) {
                 return IconButton(

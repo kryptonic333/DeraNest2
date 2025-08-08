@@ -1,3 +1,4 @@
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/features/authentication/presentation/forgot_screen.dart';
 import 'package:deranest/features/authentication/presentation/login_screen.dart';
 import 'package:deranest/features/authentication/presentation/signup_screen.dart';
@@ -26,10 +27,6 @@ import 'package:deranest/features/user_discovery/presentation/user_discovery_scr
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-
-
-
 
 // Defines all route paths as constants
 class Routes {
@@ -66,18 +63,11 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 // Routing setup using GoRouter and Riverpod
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
     routes: [
-      GoRoute(
-        path: Routes.splash,
-        builder: (context, state) => SplashScreen(),
-      ),
-      GoRoute(
-        path: Routes.login,
-        builder: (context, state) => LoginScreen(),
-      ),
+      GoRoute(path: Routes.splash, builder: (context, state) => SplashScreen()),
+      GoRoute(path: Routes.login, builder: (context, state) => LoginScreen()),
       GoRoute(
         path: Routes.register,
         builder: (context, state) => SignupScreen(),
@@ -90,22 +80,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.onBoard,
         builder: (context, state) => OnboardingScreen(),
       ),
-      GoRoute(
-        path: Routes.feed,
-        builder: (context, state) => MainFeedScreen(),
-      ),
-      GoRoute(
-        path: Routes.main,
-        builder: (context, state) => MainScreen(),
-      ),
+      GoRoute(path: Routes.feed, builder: (context, state) => MainFeedScreen()),
+      GoRoute(path: Routes.main, builder: (context, state) => MainScreen()),
       GoRoute(
         path: Routes.conversation,
-        builder: (context, state) => ConversationScreen(),
+        builder: (context, state) {
+          final profile = state.extra as Profile;
+          final conversation = state.extra as Conversation;
+          return ConversationScreen(
+            conversation: conversation,
+            currentUser: profile,
+          );
+        },
       ),
-      GoRoute(
-        path: Routes.inbox,
-        builder: (context, state) => InboxScreen(),
-      ),
+      GoRoute(path: Routes.inbox, builder: (context, state) => InboxScreen()),
       GoRoute(
         path: Routes.pollCreate,
         builder: (context, state) => PollCreationScreen(),
@@ -120,7 +108,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Routes.postDetail,
-        builder: (context, state) => PostDetailScreen(),
+        builder: (context, state) {
+          final extras = state.extra as Map<String, dynamic>;
+          final post = extras['post'] as PostDetailModel;
+          final index = extras['index'] as int;
+
+          return PostDetailScreen(post: post, index: index);
+        },
       ),
       GoRoute(
         path: Routes.contentTypeSelect,
@@ -148,7 +142,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: Routes.storyMediaPicker,
-        builder: (context, state) => StoryMediaPickerScreen(),
+        builder: (context, state) {
+          final profile = state.extra as Profile;
+          return StoryMediaPickerScreen(profile: profile);
+        },
       ),
       GoRoute(
         path: Routes.storyViewer,

@@ -1,21 +1,17 @@
-
+import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
   // User Profile Model
   final Profile user;
-  // Feed Screen Controller
-  final HomeScreenController controller;
+  // Feed Screen Controller required
+  // final feedController = TextEditingController();
   final int index;
-  const ProfileHeader({
-    super.key,
-    required this.user,
-    required this.controller,
-    required this.index,
-  });
+   const ProfileHeader({super.key, required this.user, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +19,7 @@ class ProfileHeader extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-           
-            controller.onStoryClicked();
+            // controller.onStoryClicked();
           },
           child: Container(
             width: context.w(15),
@@ -32,17 +27,13 @@ class ProfileHeader extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 width: context.w(0.65),
-                color: controller.isStoryViewed.value
-                    ? AppColors.kHintTextColor.withAlpha(50)
-                    : AppColors.kAbortColor,
+                color:  AppColors.kAbortColor,
               ),
               color: AppColors.kWhite,
               shape: BoxShape.circle,
             ),
             child: CircleAvatar(
-              backgroundImage: dummyStories[index].imageUrl != null
-                  ? AssetImage(dummyStories[index].imageUrl!)
-                  : null,
+              backgroundImage: AssetImage(AppImages.postDetailImage),
             ),
           ).topLeftAlign,
         ),

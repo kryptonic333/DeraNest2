@@ -1,29 +1,58 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
-  // OnBoarding Screen Controller required
-  // OnBoarding Contents Model required
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final pageController = PageController();
+  final currentPage = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    currentPage.dispose();
+    super.dispose();
+  }
+
+  void nextPage() {
+    if (currentPage.value < onBoardingContents.length - 1) {
+      pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void previousPage() {
+    if (currentPage.value > 0) {
+      pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.kTransparent,
-      resizeToAvoidBottomInset: true,
       body: Container(
-        height: double.infinity,
-        width: double.infinity,
         color: AppColors.kWhite,
         child: CustomSafeArea(
           child: PageView.builder(
-            controller: controller.controller,
-            onPageChanged: controller.updateCurrentPage,
+            controller: pageController,
+            onPageChanged: (index) => currentPage.value = index,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: onBoardingContents.length,
             itemBuilder: (context, index) {
@@ -33,8 +62,13 @@ class OnboardingScreen extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _TopSection(index: index, controller: controller),
-                  // SizedBox(height: context.h(2)),
+                  _TopSection(
+                    index: index,
+                    onPrevious: previousPage,
+                    onSkip: () => pageController.jumpToPage(
+                      onBoardingContents.length - 1,
+                    ),
+                  ),
                   Expanded(
                     child: Text(
                       content.title,
@@ -47,11 +81,12 @@ class OnboardingScreen extends StatelessWidget {
                     style: AppTextStyle.kDefaultBodyText,
                     textAlign: TextAlign.center,
                   ).padOnly(top: 10, bottom: 3),
-                  _DotsIndicator(
-                    index: index,
-                    currentIndex: controller.currentPage.value,
+                  ValueListenableBuilder<int>(
+                    valueListenable: currentPage,
+                    builder: (_, value, __) => _DotsIndicator(
+                      currentIndex: value,
+                    ),
                   ),
-
                   SizedBox(height: context.h(4)),
                   CustomElevatedButton(
                     borderRadius: 10,
@@ -60,9 +95,9 @@ class OnboardingScreen extends StatelessWidget {
                     title: isLast ? 'Get Started' : 'Next',
                     onPress: () {
                       if (isLast) {
-                        // Get.offAll(AskUserAuth());
+                        // Navigate to next screen
                       } else {
-                        // controller.nextPage();
+                        nextPage();
                       }
                     },
                   ).padOnly(bottom: context.h(10)),
@@ -76,13 +111,17 @@ class OnboardingScreen extends StatelessWidget {
   }
 }
 
-//Top Section
+// Top Section without controller dependency
 class _TopSection extends StatelessWidget {
   final int index;
-  // OnBoard Controller
-  final OnBoardingScreenController controller;
+  final VoidCallback onPrevious;
+  final VoidCallback onSkip;
 
-  const _TopSection({required this.index, required this.controller});
+  const _TopSection({
+    required this.index,
+    required this.onPrevious,
+    required this.onSkip,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +151,7 @@ class _TopSection extends StatelessWidget {
               isFirst
                   ? SizedBox(width: context.h(1))
                   : CustomIconButton(
-                      onTap: controller.previousPage,
+                      onTap: onPrevious,
                       iconColor: AppColors.kBlack,
                       icon: Icons.arrow_back_rounded,
                     ).padAll(context.h(1)),
@@ -122,9 +161,7 @@ class _TopSection extends StatelessWidget {
                       buttonColor: AppColors.kPrimary,
                       textColor: AppColors.kBlack,
                       title: 'Skip',
-                      onPress: () => controller.controller.jumpToPage(
-                        onBoardingContents.length - 1,
-                      ),
+                      onPress: onSkip,
                     ).padAll(context.h(1)),
             ],
           ),
@@ -141,12 +178,11 @@ class _TopSection extends StatelessWidget {
   }
 }
 
-// Dots Indicator
+// Dots Indicator now only needs currentIndex
 class _DotsIndicator extends StatelessWidget {
-  final int index;
   final int currentIndex;
 
-  const _DotsIndicator({required this.index, required this.currentIndex});
+  const _DotsIndicator({required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {

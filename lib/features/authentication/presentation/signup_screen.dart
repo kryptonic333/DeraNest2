@@ -12,7 +12,17 @@ import 'package:flutter/material.dart';
 
 // Authentication Screen Controller Required
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  SignupScreen({super.key});
+  // Form Keys
+  final signUpFormKey = GlobalKey<FormState>();
+
+  //  TextEditing Controller
+  final phoneController = TextEditingController();
+  final genderController = TextEditingController();
+  final nameController = TextEditingController();
+  final signupPasswordController = TextEditingController();
+  final signupEmailController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,7 @@ class SignupScreen extends StatelessWidget {
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
-            key: controller.signUpFormKey,
+            key: signUpFormKey,
             child: Column(
               children: [
                 SizedBox(height: context.h(5)),
@@ -46,7 +56,7 @@ class SignupScreen extends StatelessWidget {
                     fontColor: AppColors.kBlack,
                     labelText: null,
                     keyboardType: TextInputType.name,
-                    controller: controller.nameController.value,
+                    controller: nameController,
                     hintText: 'Name',
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
@@ -59,7 +69,7 @@ class SignupScreen extends StatelessWidget {
                   field: CustomElevatedDropDownMenuButton(
                     textFontColor: AppColors.kBlack,
 
-                    textController: controller.genderController.value,
+                    textController: genderController,
                     width: double.infinity,
                     dropdownMenuEntries: const [
                       DropdownMenuEntry(value: 'Male', label: 'Male'),
@@ -69,7 +79,9 @@ class SignupScreen extends StatelessWidget {
                         label: 'Rather not say',
                       ),
                     ],
-                    onSelected: (value) => controller.genderController.value,
+                    onSelected: (value) {
+                      genderController;
+                    },
                   ),
                 ),
 
@@ -79,7 +91,7 @@ class SignupScreen extends StatelessWidget {
                   field: CustomElevatedTextField(
                     fontColor: AppColors.kBlack,
                     labelText: null,
-                    controller: controller.phoneController.value,
+                    controller: phoneController,
                     hintText: '03xxxxxxxxx',
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
@@ -93,7 +105,7 @@ class SignupScreen extends StatelessWidget {
                   field: CustomElevatedTextField(
                     labelText: null,
                     fontColor: AppColors.kBlack,
-                    controller: controller.signupEmailController.value,
+                    controller: signupEmailController,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -108,7 +120,7 @@ class SignupScreen extends StatelessWidget {
                     fontColor: AppColors.kBlack,
                     keyboardType: TextInputType.visiblePassword,
                     labelText: null,
-                    controller: controller.signupPasswordController.value,
+                    controller: signupPasswordController,
                     hintText: 'Password',
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
@@ -122,7 +134,7 @@ class SignupScreen extends StatelessWidget {
                     labelText: null,
                     fontColor: AppColors.kBlack,
                     keyboardType: TextInputType.visiblePassword,
-                    controller: controller.confirmPasswordController.value,
+                    controller: confirmPasswordController,
                     hintText: 'Password',
                     textInputAction: TextInputAction.done,
                     validator: FieldValidator.required(),
@@ -135,7 +147,7 @@ class SignupScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        controller.updateTermsAgreed();
+                        // controller.updateTermsAgreed();
                       },
                       child: Container(
                         height: context.h(2.45),
@@ -144,17 +156,14 @@ class SignupScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3),
                           color: AppColors.kWhite,
                           border: Border.all(
-                            color: controller.isTermsAgreed1.value
-                                ? AppColors.kWhite
-                                : AppColors.kBlack,
+                            color:  AppColors.kBlack,
                           ),
                         ),
-                        child: controller.isTermsAgreed1.value
-                            ? Icon(
+                        child: Icon(
                                 Icons.check,
                                 color: AppColors.kSecondarySupport,
                               ).centerWidget
-                            : null,
+                           ,
                       ),
                     ),
                     CustomTextButton(
@@ -175,15 +184,15 @@ class SignupScreen extends StatelessWidget {
                   width: double.infinity,
                   title: 'Register',
                   onPress: () {
-                    if (controller.isTermsAgreed1.value == false) {
-                      // Show Snackbar For Error
-                      return;
-                    }
+                    // if (controller.isTermsAgreed1.value == false) {
+                    //   // Show Snackbar For Error
+                    //   return;
+                    // }
 
-                    if (controller.signUpFormKey.currentState?.validate() ??
-                        false) {
-                      //  Navigate to Show People Screen
-                    }
+                    // if (controller.signUpFormKey.currentState?.validate() ??
+                    //     false) {
+                    //   //  Navigate to Show People Screen
+                    // }
                   },
                 ),
                 SizedBox(height: context.h(1.7)),

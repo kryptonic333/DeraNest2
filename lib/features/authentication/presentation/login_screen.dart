@@ -11,7 +11,13 @@ import 'package:flutter/material.dart';
 
 // Authentication Screen Controller Required
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+  // Form Key
+  final loginFormKey = GlobalKey<FormState>();
+  // TextEditing Controller
+  final loginEmailController = TextEditingController();
+  final loginPasswordController = TextEditingController();
+   
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class LoginScreen extends StatelessWidget {
         body:  SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Form(
-              key: controller.loginFormKey,
+              key: loginFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -43,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                     child: CustomElevatedTextField(
                       cursorColor: AppColors.kBlack,
                       fontColor: AppColors.kBlack,
-                      controller: controller.loginEmailController.value,
+                      controller: loginEmailController,
                       hintText: 'Email',
                       labelText: null,
                       keyboardType: TextInputType.emailAddress,
@@ -59,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                     child: CustomElevatedPasswordTextField(
                       cursorColor: AppColors.kBlack,
                       fontColor: AppColors.kBlack,
-                      controller: controller.loginPasswordController.value,
+                      controller: loginPasswordController,
                       hintText: 'Password',
                       labelText: null,
                       keyboardType: TextInputType.visiblePassword,
@@ -74,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          controller.updateTermsAgreed();
+                          // controller.updateTermsAgreed();
                         },
                         child: Container(
                           height: context.h(2.45),
@@ -83,17 +89,16 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(3),
                             color: AppColors.kWhite,
                             border: Border.all(
-                              color: controller.isTermsAgreed1.value
-                                  ? AppColors.kWhite
-                                  : AppColors.kBlack,
+                              color: 
+                                  AppColors.kWhite,
                             ),
                           ),
-                          child: controller.isTermsAgreed1.value
-                              ? Icon(
+                          child: 
+                               Icon(
                                   Icons.check,
                                   color: AppColors.kSecondarySupport,
                                 ).centerWidget
-                              : null,
+                              ,
                         ),
                       ),
                       CustomTextButton(
@@ -107,8 +112,11 @@ class LoginScreen extends StatelessWidget {
                       CustomTextButton(
                         text: 'Forgot Password',
                         fontSize: 14,
-                        onPressed: () =>
-                          //  Navigate to Forgot Password Screen
+                        onPressed: () 
+                        {
+                         //  Navigate to Forgot Password Screen
+                        }
+                       
                       ),
                     ],
                   ),
@@ -120,14 +128,14 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     title: 'Login',
                     onPress: () {
-                      if (controller.isTermsAgreed1.value == false) {
-                        // Show SnackBar for Error
-                        return;
-                      }
-                      if (controller.loginFormKey.currentState?.validate() ??
-                          false) {
-                        // Navigate to MainScreen
-                      }
+                      // if (controller.isTermsAgreed1.value == false) {
+                      //   // Show SnackBar for Error
+                      //   return;
+                      // }
+                      // if (controller.loginFormKey.currentState?.validate() ??
+                      //     false) {
+                      //   // Navigate to MainScreen
+                      // }
                     },
                   ),
                   SizedBox(height: context.h(1.7)),

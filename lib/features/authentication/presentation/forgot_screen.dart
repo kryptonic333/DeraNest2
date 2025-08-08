@@ -1,4 +1,3 @@
-
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
@@ -8,13 +7,15 @@ import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+  ForgotPasswordScreen({super.key});
+  // Form Key
+  final formKey = GlobalKey<FormState>();
+  // TextEditing Controller
+  final forgotPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     // Authentication Screen Controller Required
-   
-    final formKey = GlobalKey<FormState>(); // Key for form validation.
 
     return CustomSafeArea(
       child: Scaffold(
@@ -26,17 +27,11 @@ class ForgotPasswordScreen extends StatelessWidget {
             children: [
               SizedBox(height: context.h(5)),
 
-              Text(
-                'Forgot Password',
-                style: AppTextStyle.kLargeBodyText,
-              ),
+              Text('Forgot Password', style: AppTextStyle.kLargeBodyText),
 
               SizedBox(height: context.h(25)),
 
-              Text(
-                'Email',
-                style: AppTextStyle.kLargeBodyText,
-              ),
+              Text('Email', style: AppTextStyle.kLargeBodyText),
 
               SizedBox(height: context.h(1.5)),
 
@@ -44,7 +39,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               CustomTextField(
                 cursorColor: AppColors.kBlack,
                 fontColor: AppColors.kBlack,
-                controller: controller.forgotPasswordController.value,
+                controller: forgotPassController,
                 hintText: 'Email',
                 labelText: null,
                 keyboardType: TextInputType.emailAddress,

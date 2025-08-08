@@ -46,12 +46,12 @@ class NotificationScreen extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: controller.newNotifications.length,
+              itemCount: 10,
               itemBuilder: (context, index) {
-                final notification = controller.newNotifications[index];
-                final String userName = controller.getUserName(
-                  notification.sourceUserId,
-                );
+                // final notification = controller.newNotifications[index];
+                // final String userName = controller.getUserName(
+                //   notification.sourceUserId,
+                // );
                 return Column(
                   children: [
                     ListTile(
@@ -66,7 +66,7 @@ class NotificationScreen extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: ' $userName ',
+                              text: 'Name',
                               style: AppTextStyle.kMediumBodyText.copyWith(
                                 color: AppColors.kBlack,
                                 fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class NotificationScreen extends StatelessWidget {
                             ),
                             const TextSpan(text: ' '),
                             TextSpan(
-                              text: ' ${notification.message ?? ""} ',
+                              text: 'Message',
                               style: AppTextStyle.kSmallBodyText.copyWith(
                                 color: AppColors.kHintTextColor,
                               ),
@@ -84,7 +84,7 @@ class NotificationScreen extends StatelessWidget {
                       ),
                       subtitle: Text(
                         // timeAgo is utility
-                        timeAgo(notification.createdAt),
+                       '15 min Ago',
                         style: AppTextStyle.kSmallBodyText.copyWith(
                           color: AppColors.kHintTextColor,
                         ),
@@ -114,12 +114,12 @@ class NotificationScreen extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: controller.earlierNotifications.length,
+              itemCount: 10,
               itemBuilder: (context, index) {
-                final notification = controller.earlierNotifications[index];
-                final String userName = controller.getUserName(
-                  notification.sourceUserId,
-                );
+                // final notification = controller.earlierNotifications[index];
+                // final String userName = controller.getUserName(
+                //   notification.sourceUserId,
+                // );
                 return Column(
                   children: [
                     ListTile(
@@ -134,14 +134,14 @@ class NotificationScreen extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: ' $userName',
+                              text: 'Name',
                               style: AppTextStyle.kMediumBodyText.copyWith(
                                 color: AppColors.kBlack,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             TextSpan(
-                              text: ' ${notification.message ?? ""}',
+                              text: 'Message',
                               style: AppTextStyle.kSmallBodyText.copyWith(
                                 color: AppColors.kHintTextColor,
                               ),
@@ -151,7 +151,7 @@ class NotificationScreen extends StatelessWidget {
                       ),
                       subtitle: Text(
                         // timeAgo is utility
-                        timeAgo(notification.createdAt),
+                        '4:55 Am',
                         style: AppTextStyle.kSmallBodyText.copyWith(
                           color: AppColors.kHintTextColor,
                         ),

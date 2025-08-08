@@ -1,5 +1,6 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
 import 'package:deranest/features/posts/presentation/widgets/comment_field.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 void openCommentBottomSheet(
   BuildContext context, {
     // PostDetailScreen Model
-  required PostDetailViewModel post,
+  required PostDetailModel post,
 }) {
   // Open Bottom Sheet from here.
 }
@@ -17,7 +18,7 @@ void openCommentBottomSheet(
 class _CommentBottomSheet extends StatelessWidget {
   const _CommentBottomSheet({required this.post});
   // PostDetailScreen Model
-  final PostDetailViewModel post;
+  final PostDetailModel post;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +100,7 @@ class _CommentListItem extends StatelessWidget {
                 ),
                 TextSpan(
                   // timeAgo is a utility
-                  text: " • ${timeAgo(comment.commentedAt)}",
+                  text: " • 12:23 Am",
                   style: AppTextStyle.kSmallBodyText,
                 ),
               ],

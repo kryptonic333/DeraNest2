@@ -1,5 +1,6 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ class StoryMediaPickerScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         // Navigate to Story Camera Screen
-                        controller.toggleCamera();
+                        // controller.toggleCamera();
                       },
                       child: Container(
                         decoration: BoxDecoration(

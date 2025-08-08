@@ -11,10 +11,10 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profile = dummyProfileList[0];
-    final userImages = dummyFeedList
-        .where((feed) => feed.imageUrl != null)
-        .toList();
+    // final profile = dummyProfileList[0];
+    // final userImages = dummyFeedList
+    //     .where((feed) => feed.imageUrl != null)
+    //     .toList();
     return CustomSafeArea(
       child: Container(
         height: double.infinity,
@@ -22,9 +22,7 @@ class ProfileScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.kWhite,
           image: DecorationImage(
-            image: profile.profilePictureUrl != null
-                ? AssetImage(profile.coverPictureUrl!)
-                : AssetImage(AppImages.profileImage),
+            image: AssetImage(AppImages.profileImage),
             fit: BoxFit.cover,
           ),
         ),
@@ -78,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(
-                                          profile.postsCount.toString(),
+                                          "5",
                                           style: AppTextStyle
                                               .kMediumBodyText
                                               .copyWith(
@@ -105,7 +103,7 @@ class ProfileScreen extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(
-                                          profile.followersCount.toString(),
+                                          '20',
                                           style:
                                               AppTextStyle.kMediumBodyText,
                                         ),
@@ -129,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(
-                                          profile.followingCount.toString(),
+                                         '76',
                                           style:
                                               AppTextStyle.kMediumBodyText,
                                         ),
@@ -147,14 +145,14 @@ class ProfileScreen extends StatelessWidget {
                                 SizedBox(height: context.h(2)),
                                 // Name
                                 Text(
-                                  profile.name,
+                                  'Name',
                                   style: AppTextStyle.kVeryLargeBodyText
                                       .copyWith(color: AppColors.kBlack),
                                 ),
                                 SizedBox(height: 5),
                                 // Username
                                 Text(
-                                  profile.username,
+                                  '@userName',
                                   style: AppTextStyle.kDefaultBodyText.copyWith(
                                     color: AppColors.kBlack,
                                   ),
@@ -162,7 +160,7 @@ class ProfileScreen extends StatelessWidget {
                                 SizedBox(height: context.h(1.5)),
                                 // Bio
                                 Text(
-                                  profile.bio,
+                                  'Passionate Tech Engineer',
                                   style: AppTextStyle.kSmallBodyText.copyWith(
                                     color: AppColors.kBlack,
                                   ),
@@ -186,7 +184,7 @@ class ProfileScreen extends StatelessWidget {
                                       topRight: Radius.circular(50),
                                     ),
                                     child: GridView.builder(
-                                      itemCount: userImages.length,
+                                      itemCount: 5,
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 3,
@@ -195,8 +193,8 @@ class ProfileScreen extends StatelessWidget {
                                             childAspectRatio: 1,
                                           ),
                                       itemBuilder: (context, index) {
-                                        final imageUrl =
-                                            userImages[index].imageUrl!;
+                                        // final imageUrl =
+                                        //     userImages[index].imageUrl!;
                                         return ClipRRect(
                                           borderRadius: BorderRadius.only(
                                             topLeft: index == 0
@@ -209,7 +207,7 @@ class ProfileScreen extends StatelessWidget {
                                             bottomRight: Radius.circular(5),
                                           ),
                                           child: Image.asset(
-                                            imageUrl,
+                                            AppImages.profileImage,
                                             fit: BoxFit.cover,
                                           ),
                                         );
@@ -238,9 +236,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             child: CircleAvatar(
                               radius: context.w(15),
-                              backgroundImage: profile.profilePictureUrl != null
-                                  ? AssetImage(profile.profilePictureUrl!)
-                                  : AssetImage(AppImages.profileImage),
+                              backgroundImage:AssetImage(AppImages.profileImage),
                             ),
                           ),
                         ),

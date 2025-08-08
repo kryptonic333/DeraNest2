@@ -1,5 +1,6 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
 import 'package:extensions_kit/extensions_kit.dart';
@@ -8,15 +9,43 @@ import 'package:flutter/material.dart';
 // Chat Controller Required
 
 class InboxScreen extends StatelessWidget {
-  const InboxScreen({super.key});
+  // Search Controller
+  final searchController = TextEditingController();
+  InboxScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Conversation Model Required
-    final List<Conversation> conversations = dummyConversations;
+    final List<Conversation> conversations = [
+      Conversation(
+        id: 'id',
+        participant: Profile(
+          id: 'id',
+          name: 'name',
+          username: 'username',
+          createdAt: DateTime(2025),
+        ),
+        messages: [],
+      ),
+      Conversation(
+        id: 'id',
+        participant: Profile(
+          id: 'id',
+          name: 'name',
+          username: 'username',
+          createdAt: DateTime(2025),
+        ),
+        messages: [],
+      ),
+    ];
 
     // Profile Model Required
-    final Profile currentUser = dummyProfileList[1];
+    final Profile currentUser = Profile(
+      id: '',
+      name: 'name',
+      username: 'username',
+      createdAt: DateTime(2025),
+    );
 
     return CustomSafeArea(
       child: Scaffold(
@@ -39,7 +68,7 @@ class InboxScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            _SearchBar(controller: controller.searchController),
+            _SearchBar(controller: searchController),
             // 3. The list is now built dynamically using our organized data.
             Expanded(
               child: _ChatListView(
@@ -99,7 +128,6 @@ class _ChatListView extends StatelessWidget {
 
         return InkWell(
           onTap: () {
-            
             // Get.to(
             //   () => ConversationScreen(
             //     conversation: conversation,
@@ -107,7 +135,7 @@ class _ChatListView extends StatelessWidget {
             //   ),
             // );
           },
-        
+
           child: _InboxListItem(conversation: conversation),
         );
       },
@@ -115,7 +143,7 @@ class _ChatListView extends StatelessWidget {
   }
 }
 
-// Chat List Item 
+// Chat List Item
 class _InboxListItem extends StatelessWidget {
   // Conversation Model Required
   final Conversation conversation;
@@ -124,11 +152,10 @@ class _InboxListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final participant = conversation.participant;
     final lastMessage = conversation.messages.isNotEmpty
         ? conversation.messages.last
-        : null; 
+        : null;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,15 +172,14 @@ class _InboxListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                participant.name, 
+                participant.name,
                 style: AppTextStyle.kMediumBodyText.copyWith(
                   color: AppColors.kBlack,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                lastMessage?.message ??
-                    'No messages yet', 
+                lastMessage?.message ?? 'No messages yet',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.kSmallBodyText,
@@ -164,8 +190,8 @@ class _InboxListItem extends StatelessWidget {
         Center(
           child: Text(
             lastMessage != null
-                  // time utility - Specified for specific functionality
-                ? timeAgo(lastMessage.sentAt)
+                // time utility - Specified for specific functionality
+                ? '3:45 Am'
                 : '', // Dynamic time
             style: AppTextStyle.kDefaultBodyText.copyWith(
               color: AppColors.kHintTextColor,

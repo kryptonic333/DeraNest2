@@ -88,7 +88,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
               minimumSize: const Size(double.infinity, 50),
             ),
             onPressed: () {
-              controller.updateTermsAgreed();
+              // controller.updateTermsAgreed();
               // Navigate to previous screen
             },
             child: const Text(
