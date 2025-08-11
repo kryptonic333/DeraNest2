@@ -1,17 +1,20 @@
-
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 // Authentication Screen Controller Required
-class TermsAndConditionsScreen extends StatelessWidget {
+class TermsAndConditionsScreen extends ConsumerWidget {
   const TermsAndConditionsScreen({super.key});
-  
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+   
+    final authCtrl = ref.read(authProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
@@ -88,8 +91,9 @@ class TermsAndConditionsScreen extends StatelessWidget {
               minimumSize: const Size(double.infinity, 50),
             ),
             onPressed: () {
-              // controller.updateTermsAgreed();
+              authCtrl.toggleTermsAgreed();
               // Navigate to previous screen
+              context.pop();
             },
             child: const Text(
               'Accept & Continue',
@@ -122,11 +126,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
     return Text(
       content,
       textAlign: TextAlign.justify,
-      style: const TextStyle(
-        fontSize: 15,
-        height: 1.5, 
-        color: Colors.black54,
-      ),
+      style: const TextStyle(fontSize: 15, height: 1.5, color: Colors.black54),
     );
   }
 }

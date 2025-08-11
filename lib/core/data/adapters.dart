@@ -1,34 +1,31 @@
 import 'package:deranest/core/constants/app_assets.dart';
+import 'package:deranest/core/routing/app_routers.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
-
-
 
 enum CallType { voice, video }
 
 @HiveType(typeId: 0)
-class Call extends HiveObject
-{
+class Call extends HiveObject {
   @HiveField(0)
-  final String id; 
+  final String id;
   @HiveField(1)
-  final String initiatorId; 
+  final String initiatorId;
   @HiveField(2)
-  final List<String> participantIds; 
+  final List<String> participantIds;
   @HiveField(3)
-  final CallType type; 
+  final CallType type;
   @HiveField(4)
-  final DateTime startTime; 
+  final DateTime startTime;
   @HiveField(5)
-  final DateTime? endTime; 
+  final DateTime? endTime;
   @HiveField(6)
-  final String status; 
+  final String status;
   @HiveField(7)
-  final Duration?
-      duration; 
+  final Duration? duration;
   @HiveField(8)
-  final String?
-      conversationId;
+  final String? conversationId;
 
   Call({
     required this.id,
@@ -42,7 +39,6 @@ class Call extends HiveObject
     this.conversationId,
   });
 
-  
   Call copyWith({
     String? id,
     String? initiatorId,
@@ -68,14 +64,12 @@ class Call extends HiveObject
   }
 }
 
-
 @HiveType(typeId: 2)
-class Conversation extends HiveObject
-{
+class Conversation extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  final Profile participant; 
+  final Profile participant;
   @HiveField(2)
   final List<Message> messages;
 
@@ -86,10 +80,8 @@ class Conversation extends HiveObject
   });
 }
 
-
 @HiveType(typeId: 3)
-class InboxThread extends HiveObject
-{
+class InboxThread extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -141,12 +133,10 @@ class InboxThread extends HiveObject
   }
 }
 
-
 enum MessageType { sentText, receivedText, sentVoice, receivedVoice }
 
 @HiveType(typeId: 4)
-class Message extends HiveObject
-{
+class Message extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -223,10 +213,8 @@ class Message extends HiveObject
   }
 }
 
-
 @HiveType(typeId: 5)
-class Comment extends HiveObject
-{
+class Comment extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -247,10 +235,8 @@ class Comment extends HiveObject
   });
 }
 
-
 @HiveType(typeId: 6)
-class Feed extends HiveObject 
-{
+class Feed extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -275,7 +261,6 @@ class Feed extends HiveObject
   final DateTime createdAt;
   @HiveField(11)
   final DateTime? updatedAt;
-  
 
   Feed({
     required this.id,
@@ -306,7 +291,6 @@ class Feed extends HiveObject
     bool? isBookmarked,
     DateTime? createdAt,
     DateTime? updatedAt,
-    
   }) {
     return Feed(
       id: id ?? this.id,
@@ -321,15 +305,12 @@ class Feed extends HiveObject
       isBookmarked: isBookmarked ?? this.isBookmarked,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      
     );
   }
 }
 
-
 @HiveType(typeId: 7)
-class PostDetailModel extends HiveObject 
-{
+class PostDetailModel extends HiveObject {
   @HiveField(0)
   final Feed feed;
   @HiveField(1)
@@ -351,15 +332,14 @@ class PostDetailModel extends HiveObject
 }
 
 @HiveType(typeId: 8)
-class Notification extends HiveObject
-{
+class Notification extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
   final String userId;
   @HiveField(2)
   final String type;
-  @HiveField(3) 
+  @HiveField(3)
   final String? sourceUserId;
   @HiveField(4)
   final String? sourceObjectId;
@@ -370,7 +350,7 @@ class Notification extends HiveObject
   @HiveField(7)
   final DateTime createdAt;
   @HiveField(8)
-  final Map<String, dynamic>? metadata; 
+  final Map<String, dynamic>? metadata;
 
   Notification({
     required this.id,
@@ -379,7 +359,7 @@ class Notification extends HiveObject
     this.sourceUserId,
     this.sourceObjectId,
     this.message,
-    this.isRead = false, 
+    this.isRead = false,
     required this.createdAt,
     this.metadata,
   });
@@ -410,15 +390,14 @@ class Notification extends HiveObject
 }
 
 @HiveType(typeId: 9)
-class OnBoardingModel extends HiveObject  
-{
+class OnBoardingModel extends HiveObject {
   @HiveField(0)
   final String image;
   @HiveField(1)
   final String title;
   @HiveField(2)
   final String subTitle;
-  
+
   OnBoardingModel({
     required this.image,
     required this.title,
@@ -426,10 +405,8 @@ class OnBoardingModel extends HiveObject
   });
 }
 
-
 @HiveType(typeId: 10)
-class PeopleOnApp extends HiveObject 
-{
+class PeopleOnApp extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -487,10 +464,8 @@ class PeopleOnApp extends HiveObject
   }
 }
 
-
 @HiveType(typeId: 11)
-class Profile extends HiveObject
-{
+class Profile extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -567,10 +542,8 @@ class Profile extends HiveObject
   }
 }
 
-
 @HiveType(typeId: 12)
-class Story extends HiveObject
-{
+class Story extends HiveObject {
   @HiveField(0)
   final String name;
   @HiveField(1)
@@ -630,11 +603,26 @@ class Story extends HiveObject
       isViewed: isViewed ?? this.isViewed,
     );
   }
-
- 
 }
 
+@HiveType(typeId: 13)
+class Destination extends HiveObject{
+  @HiveField(0)
+  final String label;
+  @HiveField(1)
+  final IconData icon;
+  
 
+  Destination({required this.label, required this.icon});
+}
+
+final destination =[
+ Destination(label: '', icon: CupertinoIcons.home),
+ Destination(label: '', icon: CupertinoIcons.chat_bubble_2),
+ Destination(label: '', icon: Icons.add, ),
+ Destination(label: '', icon: Icons.person),
+ Destination(label: '', icon: CupertinoIcons.bell, ),
+];
 
 List<OnBoardingModel> onBoardingContents = [
   OnBoardingModel(
@@ -653,4 +641,3 @@ List<OnBoardingModel> onBoardingContents = [
     image: AppImages.thirdOnBoardImage,
   ),
 ];
-

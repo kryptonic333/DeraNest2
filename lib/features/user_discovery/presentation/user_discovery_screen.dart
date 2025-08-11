@@ -3,8 +3,10 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/routing/app_routers.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UserDiscoveryScreen extends StatelessWidget {
   // Person
@@ -48,7 +50,9 @@ class UserDiscoveryScreen extends StatelessWidget {
                   buttonColor: AppColors.kSecondarySupport,
                   textColor: AppColors.kWhite,
                   title: 'Skip',
-                  onPress: () {},
+                  onPress: () {
+                    context.go(Routes.feed);
+                  },
                   borderRadius: 10,
                 ).padAll(8),
                 CustomElevatedButton(
@@ -56,7 +60,11 @@ class UserDiscoveryScreen extends StatelessWidget {
                   buttonColor: AppColors.kSecondarySupport,
                   textColor: AppColors.kWhite,
                   title: 'Go',
-                  onPress: () {},
+                  onPress: () {
+                    // Check whether the user has followed someone or not
+                    // If not, ask him to skip or follow someone to continue
+                    context.go(Routes.feed);
+                  },
                   borderRadius: 10,
                 ).padAll(8),
               ],

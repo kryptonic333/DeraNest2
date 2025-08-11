@@ -6,34 +6,29 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
+import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 // Authentication Screen Controller Required
-class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
-  // Form Keys
-  final signUpFormKey = GlobalKey<FormState>();
-
-  //  TextEditing Controller
-  final phoneController = TextEditingController();
-  final genderController = TextEditingController();
-  final nameController = TextEditingController();
-  final signupPasswordController = TextEditingController();
-  final signupEmailController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+class SignupScreen extends ConsumerWidget {
+  const SignupScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+    final authCtrl = ref.read(authProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
-            key: signUpFormKey,
+            key: authState.signUpFormKey,
             child: Column(
               children: [
                 SizedBox(height: context.h(5)),
@@ -57,7 +52,7 @@ class SignupScreen extends StatelessWidget {
                     fontColor: AppColors.kBlack,
                     labelText: null,
                     keyboardType: TextInputType.name,
-                    controller: nameController,
+                    controller: authState.nameController,
                     hintText: 'Name',
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
@@ -70,7 +65,7 @@ class SignupScreen extends StatelessWidget {
                   field: CustomElevatedDropDownMenuButton(
                     textFontColor: AppColors.kBlack,
 
-                    textController: genderController,
+                    textController: authState.genderController,
                     width: double.infinity,
                     dropdownMenuEntries: const [
                       DropdownMenuEntry(value: 'Male', label: 'Male'),
@@ -81,7 +76,7 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ],
                     onSelected: (value) {
-                      genderController;
+                      authState.genderController;
                     },
                   ),
                 ),
@@ -92,7 +87,7 @@ class SignupScreen extends StatelessWidget {
                   field: CustomElevatedTextField(
                     fontColor: AppColors.kBlack,
                     labelText: null,
-                    controller: phoneController,
+                    controller: authState.phoneController,
                     hintText: '03xxxxxxxxx',
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
@@ -106,7 +101,7 @@ class SignupScreen extends StatelessWidget {
                   field: CustomElevatedTextField(
                     labelText: null,
                     fontColor: AppColors.kBlack,
-                    controller: signupEmailController,
+                    controller: authState.signupEmailController,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -121,7 +116,7 @@ class SignupScreen extends StatelessWidget {
                     fontColor: AppColors.kBlack,
                     keyboardType: TextInputType.visiblePassword,
                     labelText: null,
-                    controller: signupPasswordController,
+                    controller: authState.signupPasswordController,
                     hintText: 'Password',
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
@@ -135,7 +130,7 @@ class SignupScreen extends StatelessWidget {
                     labelText: null,
                     fontColor: AppColors.kBlack,
                     keyboardType: TextInputType.visiblePassword,
-                    controller: confirmPasswordController,
+                    controller: authState.confirmPasswordController,
                     hintText: 'Password',
                     textInputAction: TextInputAction.done,
                     validator: FieldValidator.required(),
@@ -148,8 +143,8 @@ class SignupScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // controller.updateTermsAgreed();
-                        context.go('/termsCondition');
+                        authCtrl.toggleTermsAgreed();
+                        
                       },
                       child: Container(
                         height: context.h(2.45),
@@ -157,18 +152,23 @@ class SignupScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                           color: AppColors.kWhite,
-                          border: Border.all(color: AppColors.kBlack),
+                          border: Border.all(color: authState.isTermsAgreed
+                                  ? AppColors.kWhite
+                                  : AppColors.kBlack),
                         ),
-                        child: Icon(
-                          Icons.check,
-                          color: AppColors.kSecondarySupport,
-                        ).centerWidget,
+                        child: authState.isTermsAgreed
+                            ? Icon(
+                                Icons.check,
+                                color: AppColors.kSecondarySupport,
+                              ).centerWidget
+                            : null,
                       ),
                     ),
                     CustomTextButton(
                       fontSize: 16,
                       onPressed: () {
                         // Navigate to Terms and Conditions Screen
+                        context.push(Routes.termsCondition);
                       },
                       text: 'Terms & Conditions',
                     ),
@@ -183,16 +183,16 @@ class SignupScreen extends StatelessWidget {
                   width: double.infinity,
                   title: 'Register',
                   onPress: () {
-                    // if (controller.isTermsAgreed1.value == false) {
-                    //   // Show Snackbar For Error
-                    //   return;
-                    // }
+                    if (authState.isTermsAgreed == false) {
+                      // Show Snackbar For Error
+                      return;
+                    }
 
-                    // if (controller.signUpFormKey.currentState?.validate() ??
-                    //     false) {
-                    //   //  Navigate to Show People Screen
-                    // }
-                    context.go('/feed');
+                    if (authState.signUpFormKey.currentState?.validate() ??
+                        false) {
+                      //  Navigate to Show People Screen
+                      context.go(Routes.userDiscovery);
+                    }
                   },
                 ),
                 SizedBox(height: context.h(1.7)),

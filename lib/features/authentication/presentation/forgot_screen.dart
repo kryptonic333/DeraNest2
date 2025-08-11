@@ -3,25 +3,24 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
+import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  ForgotPasswordScreen({super.key});
-  // Form Key
-  final formKey = GlobalKey<FormState>();
-  // TextEditing Controller
-  final forgotPassController = TextEditingController();
-
+class ForgotPasswordScreen extends ConsumerWidget {
+  const ForgotPasswordScreen({super.key});
+  
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     // Authentication Screen Controller Required
+     final authState = ref.watch(authProvider);
 
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
         body: Form(
-          key: formKey,
+          key: authState.forgetFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,7 +38,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               CustomTextField(
                 cursorColor: AppColors.kBlack,
                 fontColor: AppColors.kBlack,
-                controller: forgotPassController,
+                controller: authState.forgotPasswordController,
                 hintText: 'Email',
                 labelText: null,
                 keyboardType: TextInputType.emailAddress,
@@ -61,7 +60,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                   width: context.w(90),
                   title: 'Send',
                   onPress: () {
-                    if (formKey.currentState?.validate() ?? false) {}
+                    if (authState.forgetFormKey.currentState?.validate() ?? false) 
+                    {
+                      // Send Email to set new password
+                    }
                   },
                 ),
               ),

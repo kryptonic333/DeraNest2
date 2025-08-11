@@ -5,29 +5,29 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
+import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 // Authentication Screen Controller Required
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
-  // Form Key
-  final loginFormKey = GlobalKey<FormState>();
-  // TextEditing Controller
-  final loginEmailController = TextEditingController();
-  final loginPasswordController = TextEditingController();
+class LoginScreen extends ConsumerWidget {
+  const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+    final authCtrl = ref.read(authProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
-            key: loginFormKey,
+            key: authState.loginFormKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                   child: CustomElevatedTextField(
                     cursorColor: AppColors.kBlack,
                     fontColor: AppColors.kBlack,
-                    controller: loginEmailController,
+                    controller: authState.loginEmailController,
                     hintText: 'Email',
                     labelText: null,
                     keyboardType: TextInputType.emailAddress,
@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                   child: CustomElevatedPasswordTextField(
                     cursorColor: AppColors.kBlack,
                     fontColor: AppColors.kBlack,
-                    controller: loginPasswordController,
+                    controller: authState.loginPasswordController,
                     hintText: 'Password',
                     labelText: null,
                     keyboardType: TextInputType.visiblePassword,
@@ -80,8 +80,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // controller.updateTermsAgreed();
-                        context.go('/termsCondition');
+                        authCtrl.toggleTermsAgreed();
                       },
                       child: Container(
                         height: context.h(2.45),
@@ -89,19 +88,25 @@ class LoginScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                           color: AppColors.kWhite,
-                          border: Border.all(color: AppColors.kWhite),
+                          border: Border.all(
+                            color: authState.isTermsAgreed
+                                ? AppColors.kWhite
+                                : AppColors.kBlack,
+                          ),
                         ),
-                        child: Icon(
-                          Icons.check,
-                          color: AppColors.kSecondarySupport,
-                        ).centerWidget,
+                        child: authState.isTermsAgreed
+                            ? Icon(
+                                Icons.check,
+                                color: AppColors.kSecondarySupport,
+                              ).centerWidget
+                            : null,
                       ),
                     ),
                     CustomTextButton(
                       fontSize: 14,
                       onPressed: () {
                         // Navigate to Terms and Conditions Screen
-                        context.go('/forgotPass');
+                        context.push(Routes.termsCondition);
                       },
                       text: 'Terms & Conditions',
                     ),
@@ -111,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                       fontSize: 14,
                       onPressed: () {
                         //  Navigate to Forgot Password Screen
-                        context.go('/forgotPass');
+                        context.push(Routes.forgotPass);
                       },
                     ),
                   ],
@@ -124,16 +129,15 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   title: 'Login',
                   onPress: () {
-                    // if (controller.isTermsAgreed1.value == false) {
-                    //   // Show SnackBar for Error
-                    //   return;
-                    // }
-                    // if (controller.loginFormKey.currentState?.validate() ??
-                    //     false) {
-                    //   // Navigate to MainScreen
-                    // }
-
-                    context.go('/feed');
+                    if (authState.isTermsAgreed == false) {
+                      // Show SnackBar for Error
+                      return;
+                    }
+                    if (authState.loginFormKey.currentState?.validate() ??
+                        false) {
+                      // Navigate to MainScreen
+                      context.go(Routes.feed);
+                    }
                   },
                 ),
                 SizedBox(height: context.h(1.7)),
@@ -150,7 +154,7 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   onPress: () {
                     // Navigate to Signup Screen
-                    context.go('/register');
+                    context.go(Routes.register);
                   },
                 ),
                 SizedBox(height: context.h(5)),
