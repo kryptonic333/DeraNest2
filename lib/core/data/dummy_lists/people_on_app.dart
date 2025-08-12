@@ -1,0 +1,48 @@
+import 'package:deranest/core/data/adapters.dart';
+
+List<PeopleOnApp> dummyPeople = [
+  PeopleOnApp(
+    id: 'user_001',
+    name: 'Alice Smith',
+    username: 'alice_s',
+    email: 'alice.s@example.com',
+    profilePictureUrl:null,
+    gender: 'Female',
+    followers: ['user_002', 'user_003'],
+    following: ['user_004'],
+    createdAt: DateTime(2023, 1, 15, 10, 30),
+  ),
+  PeopleOnApp(
+    id: 'user_002',
+    name: 'Bob Johnson',
+    username: 'bob_j',
+    email: 'bob.j@example.com',
+    profilePictureUrl: null,
+    gender: 'Male',
+    followers: ['user_001', 'user_004'],
+    following: ['user_001', 'user_003'],
+    createdAt: DateTime(2023, 2, 20, 14, 0),
+  ), 
+  PeopleOnApp(
+    id: 'user_003',
+    name: 'Charlie Brown',
+    username: 'charlie_b',
+    email: 'charlie.b@example.com',
+    profilePictureUrl: null,
+    gender: 'Rather not say',
+    followers: ['user_001'],
+    following: ['user_002'],
+    createdAt: DateTime(2023, 3, 5, 8, 45),
+  ),
+  PeopleOnApp(
+    id: 'user_004',
+    name: 'Diana Prince',
+    username: 'diana_p',
+    email: 'diana.p@example.com',
+    profilePictureUrl: null,
+    gender: 'Female',
+    followers: ['user_002'],
+    following: ['user_001'],
+    createdAt: DateTime(2023, 4, 1, 11, 0),
+  ),
+];

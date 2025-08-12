@@ -3,11 +3,13 @@ import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/feed/presentation/widgets/profile_header.dart';
 import 'package:deranest/features/feed/presentation/widgets/story_circle.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 // Feed Screen Controller Required
@@ -121,6 +123,7 @@ class _FeedCard extends StatelessWidget {
   // Feed Screen Controller
   final feedController = TextEditingController();
   // Feed Model Required
+  
   final Feed feed;
   final int index;
 
@@ -149,6 +152,11 @@ class _FeedCard extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 // Navigate to Post Detail Screen
+                context.push(Routes.postDetail,extra:
+                {
+                  'post' : feed,
+                  'index' : index
+                });
               },
               child: Container(
                 width: context.w(68),

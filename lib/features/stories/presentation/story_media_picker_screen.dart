@@ -2,16 +2,21 @@ import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/stories/data/story_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class StoryMediaPickerScreen extends StatelessWidget {
-  // User Profile Model
+class StoryMediaPickerScreen extends ConsumerWidget {
   final Profile profile;
   const StoryMediaPickerScreen({super.key, required this.profile});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(addStoryProvider);
+    final notifier = ref.read(addStoryProvider.notifier);
     final posts = profile.posts ?? [];
 
     return CustomSafeArea(
@@ -29,7 +34,7 @@ class StoryMediaPickerScreen extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      context.pop();
                     },
                     child: Text('Discard', style: AppTextStyle.kLargeBodyText),
                   ),
@@ -52,6 +57,7 @@ class StoryMediaPickerScreen extends StatelessWidget {
                   label: 'Images',
                   onTap: () {
                     // Navigate to Story Media Gallery Screen
+                    context.push(Routes.storyMediaGallery);
                   },
                 ),
                 SizedBox(width: context.w(5)),
@@ -61,6 +67,7 @@ class StoryMediaPickerScreen extends StatelessWidget {
                   label: 'Videos',
                   onTap: () {
                     // Navigate to Story Media Gallery Screen
+                    context.push(Routes.storyMediaGallery);
                   },
                 ),
               ],
@@ -98,7 +105,8 @@ class StoryMediaPickerScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         // Navigate to Story Camera Screen
-                        // controller.toggleCamera();
+                        context.push(Routes.storyCamera);
+                        notifier.toggleCamera();
                       },
                       child: Container(
                         decoration: BoxDecoration(

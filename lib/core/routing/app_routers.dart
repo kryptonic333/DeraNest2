@@ -117,8 +117,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: Routes.storyCamera,
-                builder: (context, state) => StoryCameraScreen(),
+                path: Routes.contentTypeSelect,
+                builder: (context, state) => ContentTypeSelectionScreen(),
               ),
             ],
           ),
@@ -146,8 +146,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => PostGalleryScreen(),
       ),
       GoRoute(
-        path: Routes.contentTypeSelect,
-        builder: (context, state) => ContentTypeSelectionScreen(),
+        path: Routes.storyCamera,
+        builder: (context, state) => StoryCameraScreen(),
       ),
       GoRoute(
         path: Routes.setting,

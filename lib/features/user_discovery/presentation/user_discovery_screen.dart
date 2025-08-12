@@ -1,6 +1,7 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/core/data/dummy_lists/people_on_app.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';
@@ -35,9 +36,9 @@ class UserDiscoveryScreen extends StatelessWidget {
             // List of People on App
             Expanded(
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: dummyPeople.length,
                 itemBuilder: (context, index) {
-                  return _PersonCard(person: person);
+                  return _PersonCard(person: dummyPeople[index]);
                 },
               ),
             ),

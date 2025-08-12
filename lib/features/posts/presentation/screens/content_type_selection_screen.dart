@@ -1,16 +1,23 @@
+import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/posts/data/providers/add_post_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class ContentTypeSelectionScreen extends StatelessWidget {
-   const ContentTypeSelectionScreen({super.key});
-  final bool isExpanded = false;
+class ContentTypeSelectionScreen extends ConsumerWidget {
+  const ContentTypeSelectionScreen({super.key});
 
   // Add Post Controller
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(addPostProvider);
+    final controller = ref.read(addPostProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
@@ -24,21 +31,15 @@ class ContentTypeSelectionScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // Discard Button
-                  TextButton(
-                    onPressed: () {
-                      // Get.back();
-                    },
-                    child: Text('Discard', style: AppTextStyle.kLargeBodyText),
-                  ),
-                  const Spacer(),
                   // Create Heading
                   Text('CREATE', style: AppTextStyle.kVeryLargeBodyText),
                   const Spacer(),
 
                   //  Publish Button
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      // Perform action to publish post
+                    },
                     child: Container(
                       height: 30,
                       width: 100,
@@ -64,24 +65,18 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                 children: [
                   const CircleAvatar(
                     radius: 20,
-                    // backgroundImage: AssetImage('assets/images/user.png'),
+                    backgroundImage: AssetImage(AppImages.postDetailImage),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: ListTile(
-                      trailing: IconButton(
-                        icon: const Icon(Icons.check, color: Colors.grey),
-                        onPressed: () {
-                          // Submit the text to server or perform an action
-                        },
-                      ),
-                      title: TextField(
-                        controller: TextEditingController(),
-                        decoration: const InputDecoration(
-                          hintText: 'What\'s on your mind?',
-                          border: InputBorder.none,
-                        ),
-                      ),
+                    child: CustomElevatedTextField(
+                      controller: state.textController,
+                      hintText: 'What\'s on your mind?',
+                      contentPadding: EdgeInsets.fromLTRB(18, 15, 18, 15),
+                      labelText: null,
+                      keyboardType: TextInputType.multiline,
+                      textInputAction: TextInputAction.done,
+                      validator: null,
                     ),
                   ),
                 ],
@@ -95,7 +90,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                   maxWidth: MediaQuery.of(context).size.width - 40,
                 ),
                 duration: const Duration(milliseconds: 600),
-                width: 250,
+                width: state.isExpanded ? 250 : 50,
                 height: 50,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -107,14 +102,20 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                     children: [
                       // Add Icon
                       IconButton(
-                        icon: Icon(Icons.close, size: 25, color: Colors.black),
-                        onPressed: () {},
+                        icon: Icon(
+                          state.isExpanded ? Icons.close : Icons.add,
+                          size: 25,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          controller.toggleExpanded();
+                        },
                       ),
-                      if (isExpanded) ...[
+                      if (state.isExpanded) ...[
                         IconButton(
                           icon: const Icon(Icons.photo, size: 20),
                           onPressed: () {
-                            // Get.to(() => const PostGalleryScreen());
+                            context.push(Routes.postGallery);
                           },
                         ),
                         //  Camera Icon
@@ -144,7 +145,7 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: const Image(
-                    image: AssetImage('assets/images/person.jpg'),
+                    image: AssetImage(AppImages.profileImage),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -167,7 +168,9 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                         height: 30,
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         decoration: BoxDecoration(
-                          color: AppColors.kAbortColor.withAlpha(100),
+                          color: !state.isStoryScreen
+                              ? AppColors.kAbortColor.withAlpha(100)
+                              : AppColors.kTransparent,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
@@ -176,7 +179,9 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                             child: Text(
                               'POST',
                               style: AppTextStyle.kMediumBodyText.copyWith(
-                                color: AppColors.kBlack,
+                                color: !state.isStoryScreen
+                                    ? AppColors.kWhite
+                                    : AppColors.kBlack,
                               ),
                             ),
                           ),
@@ -187,21 +192,22 @@ class ContentTypeSelectionScreen extends StatelessWidget {
                         height: 30,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
-                          color: AppColors.kAbortColor.withAlpha(100),
+                          color: state.isStoryScreen
+                              ? AppColors.kAbortColor.withAlpha(100)
+                              : AppColors.kTransparent,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
                           child: InkWell(
                             onTap: () {
-                              // Get.to(
-                              //   () =>
-                              //       StoryScreen(profile: dummyProfileList[0]),
-                              // );
+                              context.push(Routes.storyCamera);
                             },
                             child: Text(
                               'STORY',
                               style: AppTextStyle.kMediumBodyText.copyWith(
-                                color: AppColors.kBlack,
+                                color: state.isStoryScreen
+                                    ? AppColors.kWhite
+                                    : AppColors.kBlack,
                               ),
                             ),
                           ),

@@ -4,31 +4,38 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
-import 'package:deranest/features/feed/presentation/widgets/profile_header.dart';
+
+import 'package:deranest/features/posts/data/providers/post_detail_provider.dart';
+import 'package:deranest/features/posts/presentation/widgets/build_action_bar.dart';
+import 'package:deranest/features/posts/presentation/widgets/build_post_header.dart';
 import 'package:deranest/features/posts/presentation/widgets/comment_field.dart';
 import 'package:deranest/features/posts/presentation/widgets/comment_sheet.dart';
+import 'package:deranest/features/posts/presentation/widgets/liked_by_row.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
 import 'package:extensions_kit/extensions_kit.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:vector_graphics/vector_graphics.dart';
 
-class PostDetailScreen extends StatelessWidget {
-  // Scroll Controller
-  final scrollController = ScrollController();
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+
+class PostDetailScreen extends ConsumerWidget {
+  
   final int index;
   // PostDetailScreen Model
   final PostDetailModel post;
-   PostDetailScreen({super.key, required this.post, required this.index});
+  const PostDetailScreen({super.key, required this.post, required this.index});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(postDetailProvider); 
+    
     return CustomSafeArea(
       child: Scaffold(
         appBar: AppBar(
           leading: CustomIconButton(
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
             },
             icon: Icons.arrow_back_rounded,
             iconColor: AppColors.kSecondary,
@@ -43,12 +50,12 @@ class PostDetailScreen extends StatelessWidget {
         ),
 
         body: SingleChildScrollView(
-          controller: scrollController,
+          controller: state.scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Header section with user profile
-              BuildPostHeader(index: index),
+              BuildPostHeader( index: index),
 
               // Post image
               Container(
@@ -64,7 +71,7 @@ class PostDetailScreen extends StatelessWidget {
               _buildPostInfoSection(context),
 
               // The inline comment field at the very bottom
-               CommentField().padOnly(
+              CommentField().padOnly(
                 left: context.w(2),
                 right: context.w(2),
                 bottom: context.h(2),
@@ -82,7 +89,7 @@ class PostDetailScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Overlapping avatars and "Liked By" text
-        _LikedByRow(likedBy: post.likedBy),
+        LikedByRow(likedBy: post.likedBy),
         SizedBox(height: context.h(3)),
 
         // Post Caption
@@ -153,164 +160,3 @@ class PostDetailScreen extends StatelessWidget {
   }
 }
 
-// Action Bar
-class BuildActionBar extends StatelessWidget {
-  // FeedScreen Controller
-  final feedController = TextEditingController();
-  // PostDetailScreen Model
-  final PostDetailModel post;
-  BuildActionBar({super.key, required this.post});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: context.h(7),
-      color: AppColors.kPostBgColor.withAlpha(130),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-        children: [
-          // Comment Button
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  CupertinoIcons.heart_solid,
-                  color: AppColors.kWhite,
-                  size: 28,
-                ),
-                onPressed: () {
-                  // controller.onLikeClicked();
-                },
-              ),
-
-              // Like Button
-              IconButton(
-                icon: const Icon(
-                  CupertinoIcons.chat_bubble_text_fill,
-                  color: AppColors.kWhite,
-                  size: 28,
-                ),
-                onPressed: () {
-                  openCommentBottomSheet(context, post: post);
-                },
-              ),
-            ],
-          ),
-
-          Row(
-            children: [
-              // Share Button
-              GestureDetector(
-                onTap: () {},
-                child: VectorGraphic(
-                  loader: AssetBytesLoader(SvgAssets.sendButton),
-
-                  width: context.w(6.5),
-                ),
-              ),
-
-              // Bookmark Button
-              IconButton(
-                onPressed: () {
-                  // controller.onBookmarkClicked();
-                },
-                icon: Icon(
-                  CupertinoIcons.bookmark_solid,
-                  color: AppColors.kSecondarySupport.withAlpha(100),
-                  size: 28,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-// A  widget for the contents of the comment bottom sheet.
-
-// Builds the top header with profile info and more_vert icon.
-class BuildPostHeader extends StatelessWidget {
-  final int index;
-  final Profile user = Profile(
-    id: 'id',
-    name: 'name',
-    username: 'username',
-    createdAt: DateTime(2025),
-  );
-
-  BuildPostHeader({super.key, required this.index});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: context.h(6.5),
-      color: AppColors.kWhite,
-      padding: const EdgeInsets.only(left: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ProfileHeader(user: user, index: index),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert_rounded, color: AppColors.kBlack),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// A widget class for "Liked By" avatars.
-class _LikedByRow extends StatelessWidget {
-  const _LikedByRow({required this.likedBy});
-  // User Profile Model
-  final List<Profile> likedBy;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          height: context.h(5),
-          width: context.w(40),
-          child: Stack(
-            children: List.generate(
-              likedBy.length > 3 ? 3 : likedBy.length, // Show max 3 avatars
-              (index) => Positioned(
-                left: (15.0 * index), // Overlapping effect
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage(
-                    likedBy[index].profilePictureUrl!,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: context.w(3)),
-        Expanded(
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Liked by ',
-                  style: AppTextStyle.kMediumBodyText.copyWith(
-                    color: AppColors.kHintTextColor,
-                  ),
-                ),
-                TextSpan(
-                  text: '${likedBy[0].name} and others',
-                  style: AppTextStyle.kMediumBodyText.copyWith(
-                    color: AppColors.kHintTextColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}

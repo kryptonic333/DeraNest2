@@ -1,13 +1,16 @@
+import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StoryMediaGalleryScreen extends StatelessWidget {
+class StoryMediaGalleryScreen extends ConsumerWidget {
   const StoryMediaGalleryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) 
+  {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
@@ -40,7 +43,7 @@ class StoryMediaGalleryScreen extends StatelessWidget {
                   // Logic for applying image to story screen
                 },
                 child: Image.asset(
-                  'assets/images/post_detail_test.jpg',
+                  AppImages.postDetailImage,
                   fit: BoxFit.cover,
                 ),
               ),

@@ -3,12 +3,14 @@ import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class PostGalleryScreen extends StatelessWidget {
+class PostGalleryScreen extends ConsumerWidget {
   const PostGalleryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
@@ -19,7 +21,7 @@ class PostGalleryScreen extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  // Get.back();
+                  context.pop();
                 },
                 child: Text(
                   'Cancel',
@@ -30,7 +32,7 @@ class PostGalleryScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  // Get.back();
+                  context.pop();
                 },
                 child: Container(
                   height: 30,

@@ -3,19 +3,24 @@ import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
+import 'package:deranest/features/stories/data/story_provider.dart';
 import 'package:deranest/features/stories/presentation/widgets/corner_frame_painter.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class StoryCameraScreen extends StatelessWidget {
-   StoryCameraScreen({super.key});
+class StoryCameraScreen extends ConsumerWidget {
+  StoryCameraScreen({super.key});
   // Story Thoughts
   final storyTextController = TextEditingController();
   // isCamera bool
   final bool isCamera = true;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(addStoryProvider);
+    final controller = ref.read(addStoryProvider.notifier);
     return CustomSafeArea(
       child: Container(
         height: double.infinity,
@@ -42,7 +47,7 @@ class StoryCameraScreen extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        context.pop();
                       },
                       child: Text(
                         'Discard',
@@ -59,18 +64,17 @@ class StoryCameraScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        // if (controller.isShotTaken.value &&
-                        //     !controller.isCamera.value) {
-                        //   controller.publishStory();
-                        //   controller.toggleShotTaken();
-                        //   // controller.toggleCamera();
-                        //   return;
-                        // }
-                        // // changes the value
-                        // if (controller.isCamera.value) {
-                        //   controller.toggleShotTaken();
-                        //   controller.toggleCamera();
-                        // }
+                        if (state.isShotTaken && !state.isCamera) {
+                          controller.publishStory(context);
+                          controller.toggleShotTaken();
+                          controller.toggleCamera();
+                          return;
+                        }
+                        // changes the value
+                        if (state.isCamera) {
+                          controller.toggleShotTaken();
+                          controller.toggleCamera();
+                        }
                       },
                       child: Container(
                         height: 30,
@@ -81,7 +85,7 @@ class StoryCameraScreen extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'Shot',
+                            state.isCamera ? 'Shot' : 'Publish',
                             style: AppTextStyle.kMediumBodyText.copyWith(
                               color: AppColors.kWhite,
                             ),
@@ -94,7 +98,7 @@ class StoryCameraScreen extends StatelessWidget {
               ),
 
               // Main Body View
-              isCamera
+              state.isCamera
                   ? SizedBox(
                       height: context.h(80),
                       width: context.w(80),
@@ -107,7 +111,7 @@ class StoryCameraScreen extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // controller.showTextFieldToggle();
+                              controller.showTextFieldToggle();
                             },
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -125,7 +129,7 @@ class StoryCameraScreen extends StatelessWidget {
                           SizedBox(height: context.h(2)),
                           GestureDetector(
                             onTap: () {
-                              // controller.showColorsToggle();
+                              controller.showColorsToggle();
                             },
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -143,7 +147,7 @@ class StoryCameraScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-              if (true)
+              if (state.showTextField && !state.isCamera)
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: CustomTextField(
@@ -161,7 +165,7 @@ class StoryCameraScreen extends StatelessWidget {
                 ).padAll(10),
 
               // building ui for colors list
-              if (true)
+               if (state.showColors && !state.isCamera)
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
