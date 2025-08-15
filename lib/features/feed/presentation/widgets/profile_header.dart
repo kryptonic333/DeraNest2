@@ -1,4 +1,3 @@
-
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
@@ -11,23 +10,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileHeader extends ConsumerWidget {
-  // User Profile Model
+  
   final Profile user;
-  // Feed Screen Controller required
-  // final feedController = TextEditingController();
+  
+ 
   final int index;
-   const ProfileHeader({super.key, required this.user, required this.index});
+  const ProfileHeader({super.key, required this.user, required this.index});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-  final state = ref.watch(postDetailProvider);
-  final notifier = ref.read(postDetailProvider.notifier);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(postDetailProvider);
+    final notifier = ref.read(postDetailProvider.notifier);
     return Row(
       children: [
         GestureDetector(
           onTap: () {
-             notifier.onStoryClicked();
-             context.push(Routes.storyViewer);
+            if (!state.isStoryViewed) {
+              notifier.onStoryClicked();
+            }
+            context.push(Routes.storyViewer);
           },
           child: Container(
             width: context.w(15),
@@ -35,7 +36,7 @@ class ProfileHeader extends ConsumerWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 width: context.w(0.65),
-                color:  state.isStoryViewed
+                color: state.isStoryViewed
                     ? AppColors.kHintTextColor.withAlpha(50)
                     : AppColors.kAbortColor,
               ),
@@ -53,8 +54,19 @@ class ProfileHeader extends ConsumerWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(' ${user.name}', style: AppTextStyle.kMediumBodyText),
-            Text(' @${user.username}', style: AppTextStyle.kLargeBodyText),
+            Text(
+              ' ${user.name}',
+              style: AppTextStyle.kLargeBodyText.copyWith(
+                fontSize: 17,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            Text(
+              ' @${user.username}',
+              style: AppTextStyle.kMediumBodyText.copyWith(
+                color: AppColors.kHintTextColor,
+              ),
+            ),
           ],
         ),
         Divider(color: AppColors.kHintTextColor, thickness: 1),

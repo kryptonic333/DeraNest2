@@ -198,7 +198,7 @@ class _BottomActionBar extends ConsumerWidget {
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
           colors: [
-            AppColors.kHintTextColor.withAlpha(100),
+            AppColors.kBlack.withAlpha(120),
             AppColors.kWhite.withAlpha(100),
           ],
         ),
@@ -251,7 +251,7 @@ class _BottomActionBar extends ConsumerWidget {
 
               _PostIconButton(
                 color: state.bookmark
-                    ? AppColors.kSecondarySupport.withAlpha(100)
+                    ? AppColors.kSecondarySupport.withAlpha(80)
                     : AppColors.kWhite,
                 icon: CupertinoIcons.bookmark_solid,
                 onTap: onBookmark,

@@ -1,8 +1,8 @@
 import 'package:deranest/core/constants/app_colors.dart';
+import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,8 +12,9 @@ class TermsAndConditionsScreen extends ConsumerWidget {
   const TermsAndConditionsScreen({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-   
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(authProvider);
+
     final authCtrl = ref.read(authProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
@@ -21,16 +22,13 @@ class TermsAndConditionsScreen extends ConsumerWidget {
         appBar: AppBar(
           title: const Text(
             'Terms & Conditions',
-            style: TextStyle(
-              color: AppColors.kWhite,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyle.kHeadingText,
           ),
-          backgroundColor: AppColors.kSecondary,
-          elevation: 2,
+          backgroundColor: AppColors.kWhite,
+
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: AppColors.kWhite),
-            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(Icons.arrow_back, color: AppColors.kAbortColor),
+            onPressed: () => context.pop(),
           ),
         ),
         body: SingleChildScrollView(
@@ -91,8 +89,10 @@ class TermsAndConditionsScreen extends ConsumerWidget {
               minimumSize: const Size(double.infinity, 50),
             ),
             onPressed: () {
-              authCtrl.toggleTermsAgreed();
-              // Navigate to previous screen
+              if (!state.isTermsAgreed) {
+                authCtrl.toggleTermsAgreed();
+              }
+
               context.pop();
             },
             child: const Text(

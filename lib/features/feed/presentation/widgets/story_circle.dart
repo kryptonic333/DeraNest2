@@ -19,7 +19,9 @@ class StoryCircle extends ConsumerWidget {
     final notifier = ref.read(postDetailProvider.notifier);
     return GestureDetector(
       onTap: () {
-        notifier.onStoryClicked();
+        if (!state.isStoryViewed) {
+          notifier.onStoryClicked();
+        }
         context.push(Routes.storyViewer);
       },
       child: Container(

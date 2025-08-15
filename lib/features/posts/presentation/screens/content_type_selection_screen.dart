@@ -20,6 +20,39 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
     final controller = ref.read(addPostProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: // Create Heading
+          Text(
+            'CREATE',
+            style: AppTextStyle.kVeryLargeBodyText,
+          ),
+          backgroundColor: AppColors.kWhite,
+          actions: [
+            //  Publish Button
+            GestureDetector(
+              onTap: () {
+                // Perform action to publish post
+              },
+              child: Container(
+                height: context.h(4),
+                width: context.w(28),
+                decoration: BoxDecoration(
+                  color: AppColors.kSecondary,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    'Publish',
+                    style: AppTextStyle.kMediumBodyText.copyWith(
+                      color: AppColors.kWhite,
+                    ),
+                  ),
+                ),
+              ),
+            ).padRight(context.w(1)),
+          ],
+        ),
         backgroundColor: AppColors.kTransparent,
         resizeToAvoidBottomInset: false,
 
@@ -28,48 +61,14 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: context.w(15)),
-                  const Spacer(),
-                  // Create Heading
-                  Text('CREATE', style: AppTextStyle.kVeryLargeBodyText),
-                  const Spacer(),
-
-                  //  Publish Button
-                  InkWell(
-                    onTap: () {
-                      // Perform action to publish post
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: AppColors.kSecondary,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Publish',
-                          style: AppTextStyle.kMediumBodyText.copyWith(
-                            color: AppColors.kWhite,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
               // TextField to add thoughts
               Row(
                 children: [
-                  const CircleAvatar(
-                    radius: 20,
+                  CircleAvatar(
+                    radius: context.w(5),
                     backgroundImage: AssetImage(AppImages.postDetailImage),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: context.w(3)),
                   Expanded(
                     child: CustomElevatedTextField(
                       controller: state.textController,
@@ -83,20 +82,20 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: context.h(2)),
               // Animated Container - for adding media
               AnimatedContainer(
-                curve: Curves.easeInOut,
+                curve: Curves.decelerate,
                 margin: const EdgeInsets.only(right: 20),
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width - 40,
-                ),
-                duration: const Duration(milliseconds: 600),
-                width: state.isExpanded ? 250 : 50,
-                height: 50,
+                constraints: BoxConstraints(maxWidth: context.screenWidth - 40),
+                duration: const Duration(milliseconds: 00),
+                width: state.isExpanded ? context.w(65) : context.w(13),
+                height: context.h(5.75),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  border: Border.all(color: AppColors.kBlack),
+                  shape: BoxShape.circle,
+                  color: AppColors.kWhite,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: ClipRect(
@@ -106,7 +105,7 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                       IconButton(
                         icon: Icon(
                           state.isExpanded ? Icons.close : Icons.add,
-                          size: 25,
+                          size: context.w(6.75),
                           color: Colors.black,
                         ),
                         onPressed: () {
@@ -115,24 +114,27 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                       ),
                       if (state.isExpanded) ...[
                         IconButton(
-                          icon: const Icon(Icons.photo, size: 20),
+                          icon: Icon(Icons.photo, size: context.w(6.75)),
                           onPressed: () {
                             context.push(Routes.postGallery);
                           },
                         ),
                         //  Camera Icon
                         IconButton(
-                          icon: const Icon(Icons.camera_alt, size: 20),
+                          icon: Icon(Icons.camera_alt, size: context.w(6.75)),
                           onPressed: () {},
                         ),
                         // Emojis Button
                         IconButton(
-                          icon: const Icon(Icons.emoji_emotions, size: 20),
+                          icon: Icon(
+                            Icons.emoji_emotions,
+                            size: context.w(6.75),
+                          ),
                           onPressed: () {},
                         ),
                         // File uploading Button
                         IconButton(
-                          icon: const Icon(Icons.file_upload, size: 20),
+                          icon: Icon(Icons.file_upload, size: context.w(6.75)),
                           onPressed: () {},
                         ),
                       ],
@@ -140,26 +142,23 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: context.h(1)),
               //  Post Image
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: const Image(
-                    image: AssetImage(AppImages.profileImage),
-                    fit: BoxFit.fill,
-                  ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: const Image(
+                  image: AssetImage(AppImages.profileImage),
+                  fit: BoxFit.fill,
                 ),
-              ),
+              ).padAll(5),
 
               // Content Type Selection (post or story)
               Center(
                 child: Container(
-                  height: 40,
-                  width: 200,
+                  height: context.h(5),
+                  width: context.w(55),
                   decoration: BoxDecoration(
-                    color: AppColors.kHintTextColor.withAlpha(100),
+                    color: AppColors.kHintTextColor.withAlpha(50),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -167,7 +166,7 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                     children: [
                       // Container on Post Text
                       Container(
-                        height: 30,
+                        height: context.h(3.75),
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         decoration: BoxDecoration(
                           color: !state.isStoryScreen
@@ -189,10 +188,11 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
+
                       // Container on STORY Text
                       Container(
-                        height: 30,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        height: context.h(3.75),
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         decoration: BoxDecoration(
                           color: state.isStoryScreen
                               ? AppColors.kAbortColor.withAlpha(100)

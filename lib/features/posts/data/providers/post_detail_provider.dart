@@ -67,7 +67,8 @@ class PostDetailProvider extends StateNotifier<PostDetailState> {
           ),
         );
 
-  void onStoryClicked() {
+  void onStoryClicked() 
+  {
     state = state.copyWith(isStoryViewed: !state.isStoryViewed);
   }
 

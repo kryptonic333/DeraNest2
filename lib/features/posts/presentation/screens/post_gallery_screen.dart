@@ -2,6 +2,7 @@ import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,7 @@ class PostGalleryScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
         appBar: AppBar(
+          backgroundColor: AppColors.kWhite,
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,6 +28,7 @@ class PostGalleryScreen extends ConsumerWidget {
                 child: Text(
                   'Cancel',
                   style: AppTextStyle.kDefaultBodyText.copyWith(
+                    fontSize: 19,
                     color: AppColors.kAbortColor,
                   ),
                 ),
@@ -35,8 +38,8 @@ class PostGalleryScreen extends ConsumerWidget {
                   context.pop();
                 },
                 child: Container(
-                  height: 30,
-                  width: 60,
+                  height: context.h(4),
+                  width: context.w(19),
                   decoration: BoxDecoration(
                     color: AppColors.kSecondarySupport,
                     borderRadius: BorderRadius.circular(30),
@@ -46,6 +49,7 @@ class PostGalleryScreen extends ConsumerWidget {
                       'Next',
                       style: AppTextStyle.kDefaultBodyText.copyWith(
                         color: AppColors.kWhite,
+                        fontSize: 19,
                       ),
                     ),
                   ),

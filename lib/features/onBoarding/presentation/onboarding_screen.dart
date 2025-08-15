@@ -35,8 +35,9 @@ class OnboardingScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final content = onBoardingContents[index];
                 final isLast = index == onBoardingContents.length - 1;
-      
+
                 return Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _TopSection(

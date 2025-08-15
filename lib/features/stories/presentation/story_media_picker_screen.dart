@@ -15,36 +15,35 @@ class StoryMediaPickerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
     final notifier = ref.read(addStoryProvider.notifier);
     final posts = profile.posts ?? [];
 
     return CustomSafeArea(
       child: Scaffold(
+        // Top Bar
+        appBar: AppBar(
+          backgroundColor: AppColors.kWhite,
+          automaticallyImplyLeading: false,
+          actions: [
+            Text('STORY', style: AppTextStyle.kVeryLargeBodyText),
+            SizedBox(width: context.w(15)),
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: Text(
+                'Discard',
+                style: AppTextStyle.kLargeBodyText.copyWith(
+                  color: AppColors.kAbortColor,
+                ),
+              ),
+            ),
+            SizedBox(width: context.w(2)),
+          ],
+        ),
         backgroundColor: AppColors.kTransparent,
         body: Column(
           children: <Widget>[
-            // Top Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8,
-              ),
-              child: Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    child: Text('Discard', style: AppTextStyle.kLargeBodyText),
-                  ),
-                  Spacer(),
-                  Text('STORY', style: AppTextStyle.kVeryLargeBodyText),
-                  Spacer(),
-                ],
-              ),
-            ),
-
             SizedBox(height: context.h(2)),
 
             // Image/Video Boxes
@@ -142,10 +141,10 @@ class StoryMediaPickerScreen extends ConsumerWidget {
                       assetPath,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(
-                        color: Colors.grey,
+                        color: AppColors.kHintTextColor,
                         child: const Icon(
                           Icons.broken_image,
-                          color: Colors.white,
+                          color: AppColors.kWhite,
                         ),
                       ),
                     ),
@@ -177,7 +176,7 @@ class StoryMediaPickerScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 50, color: AppColors.kWhite),
+            Icon(icon, size: context.w(13), color: AppColors.kWhite),
             SizedBox(height: 8),
             Text(
               label,

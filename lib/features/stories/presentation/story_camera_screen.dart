@@ -16,7 +16,7 @@ class StoryCameraScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(addStoryProvider);
-    final controller = ref.read(addStoryProvider.notifier);
+    final notifier = ref.read(addStoryProvider.notifier);
     return CustomSafeArea(
       child: Container(
         height: double.infinity,
@@ -48,7 +48,7 @@ class StoryCameraScreen extends ConsumerWidget {
                       child: Text(
                         'Discard',
                         style: AppTextStyle.kLargeBodyText.copyWith(
-                          color: AppColors.kBlack,
+                          color: AppColors.kAbortColor,
                         ),
                       ),
                     ),
@@ -61,15 +61,15 @@ class StoryCameraScreen extends ConsumerWidget {
                     InkWell(
                       onTap: () {
                         if (state.isShotTaken && !state.isCamera) {
-                          controller.publishStory(context);
-                          controller.toggleShotTaken();
-                          controller.toggleCamera();
+                          notifier.publishStory(context);
+                          notifier.toggleShotTaken();
+                          notifier.toggleCamera();
                           return;
                         }
                         // changes the value
                         if (state.isCamera) {
-                          controller.toggleShotTaken();
-                          controller.toggleCamera();
+                          notifier.toggleShotTaken();
+                          notifier.toggleCamera();
                         }
                       },
                       child: Container(
@@ -107,7 +107,7 @@ class StoryCameraScreen extends ConsumerWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              controller.showTextFieldToggle();
+                              notifier.showTextFieldToggle();
                             },
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -125,7 +125,7 @@ class StoryCameraScreen extends ConsumerWidget {
                           SizedBox(height: context.h(2)),
                           GestureDetector(
                             onTap: () {
-                              controller.showColorsToggle();
+                              notifier.showColorsToggle();
                             },
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -173,7 +173,7 @@ class StoryCameraScreen extends ConsumerWidget {
                         if (index == 0) {
                           return GestureDetector(
                             onTap: () {
-                              context.pop();
+                              notifier.showColorsToggle();
                             },
                             child: CircleAvatar(
                               radius: 15,
