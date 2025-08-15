@@ -179,7 +179,7 @@ class ProfileScreen extends ConsumerWidget {
                                   height: context.h(40),
                                   padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: AppColors.kWhite,
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(50),
                                       topRight: Radius.circular(50),
@@ -191,7 +191,7 @@ class ProfileScreen extends ConsumerWidget {
                                       topRight: Radius.circular(50),
                                     ),
                                     child: GridView.builder(
-                                      itemCount: 5,
+                                      itemCount: userImages.length,
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 3,

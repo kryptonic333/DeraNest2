@@ -4,15 +4,17 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
+import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/messages/data/stream_provider/stream_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-// Chat Controller Required
 class ConversationScreen extends StatelessWidget {
-  // Conversation Model
   final Conversation conversation;
-  // User Profile Model
+
   final Profile currentUser;
 
   const ConversationScreen({
@@ -52,7 +54,7 @@ class ConversationScreen extends StatelessWidget {
   }
 }
 
-// WIDGETS BELOW ARE UPDATED TO USE THE DYNAMIC DATA
+// Custom Conversation App Bar
 
 class _ConversationAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -71,7 +73,7 @@ class _ConversationAppBar extends StatelessWidget
     return AppBar(
       leading: IconButton(
         onPressed: () {
-          // Get.back();
+          context.pop();
         },
         icon: const Icon(Icons.arrow_back, color: AppColors.kBlack),
       ),
@@ -108,6 +110,7 @@ class _ConversationAppBar extends StatelessWidget
               ),
               Text(
                 // timeAgo utility
+                // 'Active ${timeAgo(activeTime)}'
                 'Active 1 min ago',
                 style: AppTextStyle.kSmallBodyText.copyWith(
                   color: AppColors.kBlack,
@@ -125,7 +128,7 @@ class _ConversationAppBar extends StatelessWidget
             color: AppColors.kHintTextColor,
           ),
           onPressed: () {
-            // Get.to(() => const OngoingVoiceCallScreen());
+            context.push(Routes.incomingVoiceCall);
           },
         ),
         IconButton(
@@ -135,7 +138,7 @@ class _ConversationAppBar extends StatelessWidget
             color: AppColors.kHintTextColor,
           ),
           onPressed: () {
-            //  Get.to(() => const VideoCallScreen())
+            context.push(Routes.incomingVideoCall);
           },
         ).padRight(context.w(2)),
       ],
@@ -149,10 +152,9 @@ class _ConversationAppBar extends StatelessWidget
 }
 
 class _MessageList extends StatelessWidget {
-  // Message Model
   final List<Message> messages;
   final String currentUserId;
-  // User Profile Model
+
   final Profile participant;
 
   const _MessageList({
@@ -229,6 +231,7 @@ class _MessageBubble extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               // time utility - Specified for specific functionality
+              // formatTimeOnly(message.sentAt),
               '12:34 Am',
               style: AppTextStyle.kSmallBodyText,
             ),
@@ -293,6 +296,7 @@ class _DateChip extends StatelessWidget {
         ),
         child: Text(
           // time utility - Specified for specific functionality
+          // messageTime(time),
           '12:34 Am',
           style: AppTextStyle.kSmallBodyText.copyWith(color: AppColors.kBlack),
         ),
@@ -301,24 +305,16 @@ class _DateChip extends StatelessWidget {
   }
 }
 
-class _MessageInputBar extends StatelessWidget {
-  // Chat Controller Required
-  final messageController = TextEditingController();
-
-   _MessageInputBar();
+class _MessageInputBar extends ConsumerWidget {
+  const _MessageInputBar();
 
   void _showAttachmentSheet(BuildContext context) {
-    // Get.bottomSheet(
-    //   const _AttachmentBottomSheet(),
-    //   backgroundColor: AppColors.kWhite,
-    //   shape: const RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    //   ),
-    // );
+    showBottomSheet(context: context, builder: (b) => _AttachmentBottomSheet());
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final messageState = ref.watch(chatProvider);
     return Container(
       color: AppColors.kWhite,
       child: Row(
@@ -335,7 +331,7 @@ class _MessageInputBar extends StatelessWidget {
               enabledBorderColor: AppColors.kWhite,
               contentPadding: EdgeInsets.all(context.h(1)),
               borderRadius: 10,
-              controller: messageController,
+              controller: messageState.messageController,
               hintText: 'Type Message Here',
               labelText: null,
               keyboardType: TextInputType.multiline,
@@ -344,7 +340,7 @@ class _MessageInputBar extends StatelessWidget {
             ),
           ),
           ValueListenableBuilder<TextEditingValue>(
-            valueListenable:messageController,
+            valueListenable: messageState.messageController,
             builder: (context, value, child) {
               if (value.text.isNotEmpty) {
                 return IconButton(
@@ -393,7 +389,7 @@ class _AttachmentBottomSheet extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                // Get.back();
+                context.pop();
               },
               child: const Icon(Icons.close_rounded, color: AppColors.kBlack),
             ).padLeft(context.w(2)),
@@ -423,7 +419,7 @@ class _AttachmentBottomSheet extends StatelessWidget {
         ),
         _BuildAttachmentOption(
           onTap: () {
-            // Get.to(PollCreationScreen());
+            context.push(Routes.pollCreate);
           },
           icon: Icons.poll_outlined,
           label: 'Create a Poll',

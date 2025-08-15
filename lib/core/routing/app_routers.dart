@@ -3,6 +3,7 @@ import 'package:deranest/features/authentication/presentation/forgot_screen.dart
 import 'package:deranest/features/authentication/presentation/login_screen.dart';
 import 'package:deranest/features/authentication/presentation/signup_screen.dart';
 import 'package:deranest/features/authentication/presentation/terms_and_conditions.dart';
+import 'package:deranest/features/authentication/presentation/welcome_screen.dart';
 import 'package:deranest/features/call/presentation/video_call_screen/incoming_video_call_screen.dart';
 import 'package:deranest/features/call/presentation/video_call_screen/on_video_call_screen.dart';
 import 'package:deranest/features/call/presentation/voice_call_screen/incoming_voice_call_screen.dart';
@@ -34,11 +35,12 @@ class Routes {
   static const String splash = '/';
   static const String termsCondition = '/termsCondition';
   static const String login = '/login';
+  static const String welcome = '/welcome';
   static const String register = '/register';
   static const String forgotPass = '/forgotPass';
   static const String onBoard = '/onBoard';
   static const String feed = '/feed';
-  static const String main = '/main';
+  
   static const String conversation = '/conversation';
   static const String inbox = '/inbox';
   static const String pollCreate = '/poll';
@@ -71,6 +73,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       // --- Auth and splash outside of tabs ---
       GoRoute(path: Routes.splash, builder: (context, state) => SplashScreen()),
       GoRoute(path: Routes.login, builder: (context, state) => LoginScreen()),
+      GoRoute(path: Routes.welcome, builder: (context, state) => AskUserAuth()),
       GoRoute(
         path: Routes.register,
         builder: (context, state) => SignupScreen(),
@@ -118,7 +121,9 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: Routes.contentTypeSelect,
-                builder: (context, state) => ContentTypeSelectionScreen(),
+                builder: (context, state) {
+                  return ContentTypeSelectionScreen();
+                },
               ),
             ],
           ),
@@ -202,8 +207,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.conversation,
         builder: (context, state) {
-          final profile = state.extra as Profile;
-          final conversation = state.extra as Conversation;
+          final extras = state.extra as Map<String, dynamic>;
+          final profile = extras['profile'] as Profile;
+          final conversation = extras['conversation'] as Conversation;
           return ConversationScreen(
             conversation: conversation,
             currentUser: profile,

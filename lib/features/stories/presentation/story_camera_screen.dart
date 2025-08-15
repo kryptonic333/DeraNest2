@@ -11,11 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class StoryCameraScreen extends ConsumerWidget {
-  StoryCameraScreen({super.key});
-  // Story Thoughts
-  final storyTextController = TextEditingController();
-  // isCamera bool
-  final bool isCamera = true;
+  const StoryCameraScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -155,7 +151,7 @@ class StoryCameraScreen extends ConsumerWidget {
                     isSuffixIconEnabled: true,
                     suffixIcon: Icons.send_outlined,
                     contentPadding: EdgeInsets.all(10),
-                    controller: storyTextController,
+                    controller: state.storyTextController,
                     hintText: 'Add Your Thoughts here....',
                     labelText: null,
                     keyboardType: TextInputType.multiline,
@@ -165,7 +161,7 @@ class StoryCameraScreen extends ConsumerWidget {
                 ).padAll(10),
 
               // building ui for colors list
-               if (state.showColors && !state.isCamera)
+              if (state.showColors && !state.isCamera)
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
@@ -176,7 +172,9 @@ class StoryCameraScreen extends ConsumerWidget {
                       children: List.generate(10, (index) {
                         if (index == 0) {
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              context.pop();
+                            },
                             child: CircleAvatar(
                               radius: 15,
                               backgroundColor: AppColors.kRed,

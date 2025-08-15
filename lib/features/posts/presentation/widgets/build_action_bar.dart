@@ -65,7 +65,7 @@ class BuildActionBar extends ConsumerWidget {
           IconButton(
                 onPressed: () 
                 {
-                  notifier.onBookmarkClicked;
+                  notifier.onBookmarkClicked();
                 },
                 icon: Icon(
                   CupertinoIcons.bookmark_solid,

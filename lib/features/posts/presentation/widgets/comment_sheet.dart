@@ -9,10 +9,14 @@ import 'package:flutter/material.dart';
 
 void openCommentBottomSheet(
   BuildContext context, {
-    // PostDetailScreen Model
+  // PostDetailScreen Model
   required PostDetailModel post,
 }) {
   // Open Bottom Sheet from here.
+  showBottomSheet(
+    context: context,
+    builder: (b) => _CommentBottomSheet(post: post),
+  );
 }
 
 class _CommentBottomSheet extends StatelessWidget {

@@ -83,11 +83,15 @@ class PostDetailProvider extends StateNotifier<PostDetailState> {
     state = state.copyWith(share: !state.share);
   }
 
-  void onBookmarkClicked() {
-    state = state.copyWith(bookmark: !state.bookmark);
+  void onBookmarkClicked() 
+  {
+      print('Before bookmark: ${state.bookmark}');
+      state = state.copyWith(bookmark: !state.bookmark);
+      print('After bookmark: ${state.bookmark}');
   }
 
-  void clearController() {
+  void clearController() 
+  {
     state.commentController.clear();
   }
 

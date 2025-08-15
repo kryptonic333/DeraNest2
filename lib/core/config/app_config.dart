@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/data/local_storage.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +15,12 @@ class AppConfig {
 
   // Hides the status bar and system navigation indicators
   static Future<void> hideStatusBarAndIndicator() async {
-    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    
+    
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: AppColors.kTransparent),
+    );
   }
 
   // Status bar height, Screen height and Screen Width variables

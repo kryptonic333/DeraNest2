@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 // The main widget is stateful to manage the timer and button states.
 class OnVoiceCallScreen extends StatefulWidget {
@@ -59,8 +60,8 @@ class _OngoingVoiceCallScreenState extends State<OnVoiceCallScreen> {
   void _toggleMute() => setState(() => _isMuted = !_isMuted);
   void _toggleSpeaker() => setState(() => _isSpeakerOn = !_isSpeakerOn);
   void _endCall() {
-    Navigator.pop(context);
-  } 
+    context.pop();
+  }
 
   void _addCall() {
     /* Placeholder for add call functionality */

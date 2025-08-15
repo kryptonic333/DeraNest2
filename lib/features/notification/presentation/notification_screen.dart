@@ -1,20 +1,26 @@
+
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/features/notification/data/providers/notification_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends ConsumerWidget {
   const NotificationScreen({super.key});
-  
-  // NotificationController required
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final notifications = ref.watch(notificationProvider.notifier);
+    final newNotifs = notifications.newNotifications;
+    final earlierNotifs = notifications.earlierNotifications;
+
     return CustomSafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+        backgroundColor: AppColors.kTransparent,
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: AppColors.kWhite,
@@ -33,143 +39,144 @@ class NotificationScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // "New" section header
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('New', style: AppTextStyle.kMediumBodyText),
-            ).padLeft(10),
-
-            // "New" notifications list
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                // final notification = controller.newNotifications[index];
-                // final String userName = controller.getUserName(
-                //   notification.sourceUserId,
-                // );
-                return Column(
-                  children: [
-                    ListTile(
-                      contentPadding: EdgeInsets.only(
-                        left: context.w(2),
-                        right: context.w(2),
-                      ),
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage(AppImages.profileImage),
-                      ),
-                      title: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Name',
-                              style: AppTextStyle.kMediumBodyText.copyWith(
-                                color: AppColors.kBlack,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const TextSpan(text: ' '),
-                            TextSpan(
-                              text: 'Message',
-                              style: AppTextStyle.kSmallBodyText.copyWith(
-                                color: AppColors.kHintTextColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      subtitle: Text(
-                        // timeAgo is utility
-                       '15 min Ago',
-                        style: AppTextStyle.kSmallBodyText.copyWith(
-                          color: AppColors.kHintTextColor,
-                        ),
-                      ),
-                      trailing: CustomIconButton(
-                        paddingAroundIcon: context.h(0.5),
-                        onTap: () {},
-                        icon: Icons.more_horiz,
-                        iconColor: AppColors.kBlack,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-
-            // "Earlier" section header
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Earlier',
-                style: AppTextStyle.kMediumBodyText,
+        body:  Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // "New" section header
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text('New', style: AppTextStyle.kMediumBodyText),
               ).padLeft(10),
-            ),
 
-            // "Earlier" notifications list
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                // final notification = controller.earlierNotifications[index];
-                // final String userName = controller.getUserName(
-                //   notification.sourceUserId,
-                // );
-                return Column(
-                  children: [
-                    ListTile(
-                      contentPadding: EdgeInsets.only(
-                        left: context.w(2),
-                        right: context.w(2),
-                      ),
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage(AppImages.profileImage),
-                      ),
-                      title: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Name',
-                              style: AppTextStyle.kMediumBodyText.copyWith(
-                                color: AppColors.kBlack,
-                                fontWeight: FontWeight.bold,
+              // "New" notifications list
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: newNotifs.length,
+                itemBuilder: (context, index) {
+                  final notification =newNotifs[index];
+                  final String userName = notifications.getUserName(
+                    notification.sourceUserId,
+                  );
+                  return Column(
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.only(
+                          left: context.w(2),
+                          right: context.w(2),
+                        ),
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(AppImages.profileImage),
+                        ),
+                        title: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: ' $userName ',
+                                style: AppTextStyle.kMediumBodyText.copyWith(
+                                  color: AppColors.kBlack,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: 'Message',
-                              style: AppTextStyle.kSmallBodyText.copyWith(
-                                color: AppColors.kHintTextColor,
+                              const TextSpan(text: ' '),
+                              TextSpan(
+                                text: ' ${notification.message ?? ""} ',
+                                style: AppTextStyle.kSmallBodyText.copyWith(
+                                  color: AppColors.kHintTextColor,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        ),
+                        subtitle: Text(
+                          "3:45 Am",
+                          // timeAgo(notification.createdAt),
+                          style: AppTextStyle.kSmallBodyText.copyWith(
+                            color: AppColors.kHintTextColor,
+                          ),
+                        ),
+                        trailing: CustomIconButton(
+                          paddingAroundIcon: context.h(0.5),
+                          onTap: () {},
+                          icon: Icons.more_horiz,
+                          iconColor: AppColors.kBlack,
                         ),
                       ),
-                      subtitle: Text(
-                        // timeAgo is utility
-                        '4:55 Am',
-                        style: AppTextStyle.kSmallBodyText.copyWith(
-                          color: AppColors.kHintTextColor,
+                    ],
+                  );
+                },
+              ),
+
+              // "Earlier" section header
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Earlier',
+                  style: AppTextStyle.kMediumBodyText,
+                ).padLeft(10),
+              ),
+
+              // "Earlier" notifications list
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: earlierNotifs.length,
+                itemBuilder: (context, index) {
+                  final notification = earlierNotifs[index];
+                  final String userName = notifications.getUserName(
+                    notification.sourceUserId,
+                  );
+                  return Column(
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.only(
+                          left: context.w(2),
+                          right: context.w(2),
+                        ),
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(AppImages.profileImage),
+                        ),
+                        title: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: ' $userName',
+                                style: AppTextStyle.kMediumBodyText.copyWith(
+                                  color: AppColors.kBlack,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' ${notification.message ?? ""}',
+                                style: AppTextStyle.kSmallBodyText.copyWith(
+                                  color: AppColors.kHintTextColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        subtitle: Text(
+                          "3:45 Am",
+                          // timeAgo(notification.createdAt),
+                          style: AppTextStyle.kSmallBodyText.copyWith(
+                            color: AppColors.kHintTextColor,
+                          ),
+                        ),
+                        trailing: CustomIconButton(
+                          paddingAroundIcon: context.h(0.5),
+                          onTap: () {},
+                          icon: Icons.more_horiz,
+                          iconColor: AppColors.kBlack,
                         ),
                       ),
-                      trailing: CustomIconButton(
-                        paddingAroundIcon: context.h(0.5),
-                        onTap: () {},
-                        icon: Icons.more_horiz,
-                        iconColor: AppColors.kBlack,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
-      ),
+      
     );
   }
 }

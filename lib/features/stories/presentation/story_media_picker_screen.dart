@@ -15,7 +15,7 @@ class StoryMediaPickerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(addStoryProvider);
+    
     final notifier = ref.read(addStoryProvider.notifier);
     final posts = profile.posts ?? [];
 

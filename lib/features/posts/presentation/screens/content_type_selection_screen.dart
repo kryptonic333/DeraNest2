@@ -1,6 +1,7 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/data/dummy_lists/profile_list.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';
@@ -13,7 +14,6 @@ import 'package:go_router/go_router.dart';
 class ContentTypeSelectionScreen extends ConsumerWidget {
   const ContentTypeSelectionScreen({super.key});
 
-  // Add Post Controller
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(addPostProvider);
@@ -31,6 +31,8 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(width: context.w(15)),
+                  const Spacer(),
                   // Create Heading
                   Text('CREATE', style: AppTextStyle.kVeryLargeBodyText),
                   const Spacer(),
@@ -200,7 +202,10 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                         child: Center(
                           child: InkWell(
                             onTap: () {
-                              context.push(Routes.storyCamera);
+                              context.push(
+                                Routes.storyMediaPicker,
+                                extra: dummyProfileList[0],
+                              );
                             },
                             child: Text(
                               'STORY',

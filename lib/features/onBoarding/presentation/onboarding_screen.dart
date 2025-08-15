@@ -4,107 +4,79 @@ import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/onBoarding/data/providers/on_board_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends ConsumerWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(onBoardingProvider);
+    final notifier = ref.read(onBoardingProvider.notifier);
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final pageController = PageController();
-  final currentPage = ValueNotifier<int>(0);
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    currentPage.dispose();
-    super.dispose();
-  }
-
-  void nextPage() {
-    if (currentPage.value < onBoardingContents.length - 1) {
-      pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void previousPage() {
-    if (currentPage.value > 0) {
-      pageController.previousPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.kTransparent,
-      body: Container(
-        color: AppColors.kWhite,
-        child: CustomSafeArea(
-          child: PageView.builder(
-            controller: pageController,
-            onPageChanged: (index) => currentPage.value = index,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: onBoardingContents.length,
-            itemBuilder: (context, index) {
-              final content = onBoardingContents[index];
-              final isLast = index == onBoardingContents.length - 1;
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _TopSection(
-                    index: index,
-                    onPrevious: previousPage,
-                    onSkip: () => pageController.jumpToPage(
-                      onBoardingContents.length - 1,
+    return Container(
+      height: double.infinity,
+      color: AppColors.kRed,
+      child: Scaffold(
+        backgroundColor: AppColors.kTransparent,
+        body: Container(
+          color: AppColors.kWhite,
+          child: CustomSafeArea(
+            child: PageView.builder(
+              controller: state.controller,
+              onPageChanged: notifier.updateCurrentPage,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: onBoardingContents.length,
+              itemBuilder: (context, index) {
+                final content = onBoardingContents[index];
+                final isLast = index == onBoardingContents.length - 1;
+      
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _TopSection(
+                      index: index,
+                      onPrevious: notifier.previousPage,
+                      onSkip: () => state.controller.jumpToPage(
+                        onBoardingContents.length - 1,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      content.title,
+                    Expanded(
+                      child: Text(
+                        content.title,
+                        style: AppTextStyle.kDefaultBodyText,
+                        textAlign: TextAlign.center,
+                      ).padOnly(top: 10),
+                    ),
+                    Text(
+                      content.subTitle,
                       style: AppTextStyle.kDefaultBodyText,
                       textAlign: TextAlign.center,
-                    ).padOnly(top: 10),
-                  ),
-                  Text(
-                    content.subTitle,
-                    style: AppTextStyle.kDefaultBodyText,
-                    textAlign: TextAlign.center,
-                  ).padOnly(top: 10, bottom: 3),
-                  ValueListenableBuilder<int>(
-                    valueListenable: currentPage,
-                    builder: (_, value, __) =>
-                        _DotsIndicator(currentIndex: value),
-                  ),
-                  SizedBox(height: context.h(4)),
-                  CustomElevatedButton(
-                    borderRadius: 10,
-                    buttonColor: AppColors.kSecondary,
-                    width: context.w(93),
-                    title: isLast ? 'Get Started' : 'Next',
-                    onPress: () {
-                      if (isLast) {
-                        
-                        context.go('/login');
-                      } else {
-                        nextPage();
-                      }
-                    },
-                  ).padOnly(bottom: context.h(10)),
-                ],
-              );
-            },
+                    ).padOnly(top: 10, bottom: 3),
+                    _DotsIndicator(currentIndex: state.currentPage),
+                    SizedBox(height: context.h(4)),
+                    CustomElevatedButton(
+                      borderRadius: 10,
+                      buttonColor: AppColors.kSecondary,
+                      width: context.w(93),
+                      title: isLast ? 'Get Started' : 'Next',
+                      onPress: () {
+                        if (isLast) {
+                          context.go(Routes.welcome);
+                        } else {
+                          notifier.nextPage();
+                        }
+                      },
+                    ).padOnly(bottom: context.h(10)),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -112,7 +84,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-// Top Section without controller dependency
 class _TopSection extends StatelessWidget {
   final int index;
   final VoidCallback onPrevious;
@@ -179,7 +150,6 @@ class _TopSection extends StatelessWidget {
   }
 }
 
-// Dots Indicator now only needs currentIndex
 class _DotsIndicator extends StatelessWidget {
   final int currentIndex;
 

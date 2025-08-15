@@ -1,7 +1,8 @@
-import 'package:deranest/core/constants/app_assets.dart';
+
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/core/data/dummy_lists/post_detail_list.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 
@@ -22,7 +23,7 @@ import 'package:go_router/go_router.dart';
 class PostDetailScreen extends ConsumerWidget {
   
   final int index;
-  // PostDetailScreen Model
+
   final PostDetailModel post;
   const PostDetailScreen({super.key, required this.post, required this.index});
 
@@ -58,13 +59,17 @@ class PostDetailScreen extends ConsumerWidget {
               BuildPostHeader( index: index),
 
               // Post image
-              Container(
-                color: AppColors.kPostBgColor,
-                height: context.h(38),
-                width: double.infinity,
-                child: Image.asset(AppImages.profileImage, fit: BoxFit.cover),
-              ),
-
+             dummyPostDetailList[index].feed.imageUrl != null
+                    ? Container(
+                        color: AppColors.kPostBgColor,
+                        height: context.h(38),
+                        width: double.infinity,
+                        child: Image.asset(
+                          dummyPostDetailList[index].feed.imageUrl!,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               // Post actions row (like, comment, share, bookmark)
               BuildActionBar(post: post),
               // People who liked row and Post info

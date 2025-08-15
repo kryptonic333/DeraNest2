@@ -2,29 +2,24 @@ import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/core/data/dummy_lists/feed_list.dart';
+import 'package:deranest/core/data/dummy_lists/post_detail_list.dart';
+import 'package:deranest/core/data/dummy_lists/profile_list.dart';
+import 'package:deranest/core/data/dummy_lists/story_list.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/feed/presentation/widgets/profile_header.dart';
 import 'package:deranest/features/feed/presentation/widgets/story_circle.dart';
+import 'package:deranest/features/posts/data/providers/post_detail_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
-// Feed Screen Controller Required
 class MainFeedScreen extends StatelessWidget {
-  // Story Model
-  final story = Story(
-    name: '',
-    id: '2',
-    userId: '34',
-    createdAt: DateTime(2022),
-    expiresAt: DateTime(2025),
-  );
-  // Feed Model
-  final feed = Feed(createdAt: DateTime(2020), id: '', userId: '');
-  MainFeedScreen({super.key});
+  const MainFeedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +32,15 @@ class MainFeedScreen extends StatelessWidget {
             SizedBox(
               height: context.h(12),
               child: ListView.builder(
+                padding: EdgeInsets.zero,
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                itemCount: 3,
+
+                itemCount: dummyStories.length,
                 itemBuilder: (context, index) {
-                  return _StoryCircleItem(index: index, story: story);
+                  return _StoryCircleItem(
+                    index: index,
+                    story: dummyStories[index],
+                  );
                 },
               ),
             ),
@@ -50,16 +49,11 @@ class MainFeedScreen extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: 3,
+                itemCount: dummyFeedList.length,
                 itemBuilder: (context, i) {
-                  return _FeedCard(
-                    feed: feed,
-                    onBookmark: () {},
-                    onComment: () {},
-                    onLike: () {},
-                    onShare: () {},
-                    index: i,
-                  );
+                  final feed = dummyFeedList[i];
+                  if (feed.imageUrl == null) return const SizedBox.shrink();
+                  return _FeedCard(feed: feed, index: i);
                 },
               ),
             ),
@@ -72,69 +66,44 @@ class MainFeedScreen extends StatelessWidget {
 
 // Story Circle
 class _StoryCircleItem extends StatelessWidget {
-  const _StoryCircleItem({
-    required this.story,
-    // required this.controller,
-    required this.index,
-  });
-  // Feed Screen Controller Required
+  const _StoryCircleItem({required this.story, required this.index});
 
-  // Story Model
   final Story story;
   final int index;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      width: context.w(20),
+
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+
         children: [
           StoryCircle(index: index),
-          //SizedBox(height: context.h(1)),
+
           Text(
-            ' ${story.name}', // Should be story.userName
+            ' ${story.name}',
             style: AppTextStyle.kDefaultBodyText,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
           ),
         ],
       ),
-    );
+    ).padSymmetric(horizontal: 2);
   }
 }
 
 // Feed Card
-class _FeedCard extends StatelessWidget {
-  _FeedCard({
-    required this.feed,
-    required this.index,
-    required this.onLike,
-    required this.onComment,
-    required this.onShare,
-    required this.onBookmark,
-  });
-  // Profile Model
-  final profile = Profile(
-    id: '',
-    name: '',
-    username: 'username',
-    createdAt: DateTime(2025),
-  );
-  // Feed Screen Controller
-  final feedController = TextEditingController();
-  // Feed Model Required
-  
+class _FeedCard extends ConsumerWidget {
+  const _FeedCard({required this.feed, required this.index});
+
   final Feed feed;
   final int index;
 
-  // Bool
-  final VoidCallback onLike;
-  final VoidCallback onComment;
-  final VoidCallback onShare;
-  final VoidCallback onBookmark;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.read(postDetailProvider.notifier);
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
@@ -147,16 +116,18 @@ class _FeedCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileHeader(index: index, user: profile).padOnly(top: 8, left: 8),
+            ProfileHeader(
+              index: index,
+              user: dummyProfileList[index],
+            ).padOnly(top: 8, left: 8),
             SizedBox(height: context.h(1)),
             GestureDetector(
               onTap: () {
                 // Navigate to Post Detail Screen
-                context.push(Routes.postDetail,extra:
-                {
-                  'post' : feed,
-                  'index' : index
-                });
+                context.push(
+                  Routes.postDetail,
+                  extra: {'post': dummyPostDetailList[index], 'index': index},
+                );
               },
               child: Container(
                 width: context.w(68),
@@ -177,10 +148,10 @@ class _FeedCard extends StatelessWidget {
                 child: _BottomActionBar(
                   feed: feed,
 
-                  onLike: onLike,
-                  onComment: onComment,
-                  onShare: onComment,
-                  onBookmark: onBookmark,
+                  onLike: notifier.onLikeClicked,
+                  onComment: notifier.onCommentClicked,
+                  onShare: notifier.onShareClicked,
+                  onBookmark: notifier.onBookmarkClicked,
                 ),
               ).centerWidget,
             ),
@@ -192,17 +163,16 @@ class _FeedCard extends StatelessWidget {
 }
 
 // Bottom Action Bar
-class _BottomActionBar extends StatelessWidget {
+class _BottomActionBar extends ConsumerWidget {
   // Feed Model Required
   final Feed feed;
-  // Feed Screen Controller
-  final feedController = TextEditingController();
+
   final VoidCallback onLike;
   final VoidCallback onComment;
   final VoidCallback onShare;
   final VoidCallback onBookmark;
 
-  _BottomActionBar({
+  const _BottomActionBar({
     required this.feed,
 
     required this.onLike,
@@ -212,7 +182,9 @@ class _BottomActionBar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(postDetailProvider);
+
     return Container(
       width: double.infinity,
       height: context.h(6),
@@ -241,7 +213,7 @@ class _BottomActionBar extends StatelessWidget {
             children: [
               _PostIconButton(
                 icon: CupertinoIcons.heart_solid,
-                color: AppColors.kWhite,
+                color: state.like ? AppColors.kRed : AppColors.kWhite,
                 onTap: onLike,
               ).padLeft(context.w(1.5)),
               Text(
@@ -278,7 +250,9 @@ class _BottomActionBar extends StatelessWidget {
               SizedBox(width: context.w(2)),
 
               _PostIconButton(
-                color: AppColors.kSecondarySupport.withAlpha(100),
+                color: state.bookmark
+                    ? AppColors.kSecondarySupport.withAlpha(100)
+                    : AppColors.kWhite,
                 icon: CupertinoIcons.bookmark_solid,
                 onTap: onBookmark,
               ).padRight(context.w(2.5)),
