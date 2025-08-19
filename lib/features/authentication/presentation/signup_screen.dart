@@ -1,7 +1,8 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/presentation/widgets/custom_drop_down_menu_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
-import 'package:deranest/core/presentation/widgets/custom_elevated_drop_down_menu.dart';
+
 import 'package:deranest/core/presentation/widgets/custom_elevated_password_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
@@ -39,7 +40,9 @@ class SignupScreen extends ConsumerWidget {
                 Text(
                   'Digital Baithak for GupShup\nConnect with friends and family\nIt\'s all here for you.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.kLargeBodyText,
+                  style: AppTextStyle.kLargeBodyText.copyWith(
+                    color: AppColors.kSecondarySupport,
+                  ),
                 ),
                 SizedBox(height: context.h(2.5)),
 
@@ -62,7 +65,7 @@ class SignupScreen extends ConsumerWidget {
                 // Gender field
                 _buildTextFieldSection(
                   label: 'Gender',
-                  field: CustomElevatedDropDownMenuButton(
+                  field: CustomDropDownMenuButton(
                     textFontColor: AppColors.kBlack,
 
                     textController: authState.genderController,
@@ -144,7 +147,6 @@ class SignupScreen extends ConsumerWidget {
                     GestureDetector(
                       onTap: () {
                         authCtrl.toggleTermsAgreed();
-                        
                       },
                       child: Container(
                         height: context.h(2.45),
@@ -152,9 +154,11 @@ class SignupScreen extends ConsumerWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                           color: AppColors.kWhite,
-                          border: Border.all(color: authState.isTermsAgreed
-                                  ? AppColors.kWhite
-                                  : AppColors.kBlack),
+                          border: Border.all(
+                            color: authState.isTermsAgreed
+                                ? AppColors.kWhite
+                                : AppColors.kBlack,
+                          ),
                         ),
                         child: authState.isTermsAgreed
                             ? Icon(
@@ -230,7 +234,7 @@ class SignupScreen extends ConsumerWidget {
       children: [
         Text(
           label,
-          style: AppTextStyle.kMediumBodyText.copyWith(
+          style: AppTextStyle.kLargeBodyText.copyWith(
             fontWeight: FontWeight.w800,
           ),
         ),

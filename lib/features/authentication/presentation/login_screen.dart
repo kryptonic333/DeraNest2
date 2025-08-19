@@ -39,7 +39,9 @@ class LoginScreen extends ConsumerWidget {
                 Text(
                   'Digital Baithak for GupShup\nConnect with friends and family\nIt\'s all here for you.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.kLargeBodyText,
+                  style: AppTextStyle.kLargeBodyText.copyWith(
+                    color: AppColors.kSecondarySupport,
+                  ),
                 ),
                 SizedBox(height: context.h(6)),
 
@@ -109,9 +111,11 @@ class LoginScreen extends ConsumerWidget {
                         context.push(Routes.termsCondition);
                       },
                       text: 'Terms & Conditions',
+                      color: AppColors.kHintTextColor,
                     ),
                     const Spacer(),
                     CustomTextButton(
+                      color: AppColors.kHintTextColor,
                       text: 'Forgot Password',
                       fontSize: 14,
                       onPressed: () {
@@ -176,7 +180,7 @@ class LoginScreen extends ConsumerWidget {
       children: [
         Text(
           labelText,
-          style: AppTextStyle.kMediumBodyText.copyWith(
+          style: AppTextStyle.kLargeBodyText.copyWith(
             fontWeight: FontWeight.w800,
           ),
         ),

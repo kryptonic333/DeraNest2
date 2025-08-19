@@ -1,4 +1,5 @@
 import 'package:deranest/core/constants/app_colors.dart';
+import 'package:deranest/core/constants/app_fonts.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
@@ -50,13 +51,21 @@ class OnboardingScreen extends ConsumerWidget {
                     Expanded(
                       child: Text(
                         content.title,
-                        style: AppTextStyle.kDefaultBodyText,
+                        style: AppTextStyle.kHeadingText.copyWith(
+                          fontSize: 30,
+                          fontFamily: AppFonts.kBold,
+                          color: AppColors.kBlack,
+                        ),
                         textAlign: TextAlign.center,
                       ).padOnly(top: 10),
                     ),
                     Text(
                       content.subTitle,
-                      style: AppTextStyle.kDefaultBodyText,
+                      style: AppTextStyle.kHeadingText.copyWith(
+                        color: AppColors.kBlack,
+                        fontSize: 18,
+                        fontFamily: AppFonts.kRegular,
+                      ),
                       textAlign: TextAlign.center,
                     ).padOnly(top: 10, bottom: 3),
                     _DotsIndicator(currentIndex: state.currentPage),

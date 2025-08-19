@@ -1,4 +1,4 @@
-// Chat List Item
+
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';

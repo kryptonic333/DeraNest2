@@ -6,10 +6,10 @@ import 'package:deranest/features/messages/presentation/widgets/text_message.dar
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  // Message Model
+ 
   final Message message;
   final bool isMe;
-  // User Profile Model
+  
   final Profile participant;
 
   const MessageBubble({

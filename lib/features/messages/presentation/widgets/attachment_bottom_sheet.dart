@@ -26,7 +26,7 @@ class AttachmentBottomSheet extends StatelessWidget {
               child: Text(
                 'Share Content',
                 textAlign: TextAlign.center,
-                style: AppTextStyle.kMediumBodyText.copyWith(fontSize: 18),
+                style: AppTextStyle.kLargeBodyText,
               ),
             ),
           ],

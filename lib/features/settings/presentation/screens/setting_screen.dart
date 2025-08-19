@@ -1,15 +1,18 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/routing/app_routers.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
@@ -30,9 +33,10 @@ class SettingsScreen extends ConsumerWidget {
           ),
           backgroundColor: AppColors.kWhite,
           elevation: 0,
-          iconTheme: IconThemeData(color: AppColors.kBlack, size: context.w(8)),
+          iconTheme: IconThemeData(color: AppColors.kBlack, size: context.w(6)),
         ),
-        body: ListView(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 20),
             Text(
@@ -42,26 +46,25 @@ class SettingsScreen extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
                 color: AppColors.kSecondary,
               ),
-            ).padHrz(16),
+            ).padLeft(context.w(6.5)),
             const SizedBox(height: 10),
             _buildSettingsCard([
               _buildSettingsListItem(
                 context,
                 icon: Icons.person_outline,
                 title: 'Edit Profile',
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.editProfile);
+                },
               ),
-              _buildSettingsListItem(
-                context,
-                icon: Icons.lock_outline,
-                title: 'Change Password',
-                onTap: () {},
-              ),
+
               _buildSettingsListItem(
                 context,
                 icon: Icons.security_outlined,
                 title: 'Privacy and Security',
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.privacySecurity);
+                },
               ),
             ]),
             const SizedBox(height: 20),
@@ -72,20 +75,24 @@ class SettingsScreen extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
                 color: AppColors.kSecondary,
               ),
-            ).padHrz(16),
+            ).padLeft(context.w(6.5)),
             const SizedBox(height: 10),
             _buildSettingsCard([
               _buildSettingsListItem(
                 context,
                 icon: Icons.notifications_outlined,
                 title: 'Push Notifications',
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.pushNotification);
+                },
               ),
               _buildSettingsListItem(
                 context,
                 icon: Icons.email_outlined,
                 title: 'Email Notifications',
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.emailNotification);
+                },
               ),
             ]),
             const SizedBox(height: 20),
@@ -96,37 +103,35 @@ class SettingsScreen extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
                 color: AppColors.kSecondary,
               ),
-            ).padHrz(16),
+            ).padLeft(context.w(6.5)),
             const SizedBox(height: 10),
             _buildSettingsCard([
               _buildSettingsListItem(
                 context,
                 icon: Icons.help_outline,
                 title: 'Help & Support',
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.helpSupport);
+                },
               ),
               _buildSettingsListItem(
                 context,
                 icon: Icons.info_outline,
                 title: 'About',
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.about);
+                },
               ),
             ]),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.kSecondarySupport,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: const Text(
-                'Logout',
-                style: TextStyle(fontSize: 16, color: AppColors.kWhite),
-              ),
-            ).padHrz(16),
+            CustomElevatedButton(
+              borderRadius: 10,
+              width: context.w(90),
+              height: context.h(7),
+              buttonColor: AppColors.kRed,
+              title: 'Logout',
+              onPress: () {},
+            ).centerWidget,
             const SizedBox(height: 20),
           ],
         ),
@@ -149,9 +154,9 @@ class SettingsScreen extends ConsumerWidget {
     required VoidCallback onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: AppColors.kPrimary),
+      leading: Icon(icon, color: AppColors.kSecondarySupport.withAlpha(100)),
       title: Text(title),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      trailing: Icon(Icons.arrow_forward_ios, size: context.w(5)),
       onTap: onTap,
     );
   }

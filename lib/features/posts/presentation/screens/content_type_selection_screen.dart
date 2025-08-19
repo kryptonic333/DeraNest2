@@ -2,11 +2,15 @@ import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/dummy_lists/profile_list.dart';
+import 'package:deranest/core/presentation/widgets/alert_dialog.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
+import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/posts/data/providers/add_post_provider.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:extensions_kit/extensions_kit.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -93,24 +97,26 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                 height: context.h(5.75),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.kBlack),
                   shape: BoxShape.circle,
                   color: AppColors.kWhite,
-                  borderRadius: BorderRadius.circular(30),
                 ),
                 child: ClipRect(
                   child: Wrap(
                     children: [
                       // Add Icon
-                      IconButton(
-                        icon: Icon(
-                          state.isExpanded ? Icons.close : Icons.add,
-                          size: context.w(6.75),
-                          color: Colors.black,
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.kBlack),
                         ),
-                        onPressed: () {
-                          controller.toggleExpanded();
-                        },
+                        child: CustomIconButton(
+                          iconSize: context.w(6.75),
+                          icon: state.isExpanded ? Icons.close : Icons.add,
+                          iconColor: AppColors.kBlack,
+                          onTap: () {
+                            controller.toggleExpanded();
+                          },
+                        ),
                       ),
                       if (state.isExpanded) ...[
                         IconButton(
@@ -122,7 +128,27 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                         //  Camera Icon
                         IconButton(
                           icon: Icon(Icons.camera_alt, size: context.w(6.75)),
-                          onPressed: () {},
+                          onPressed: () {
+                            showAlertDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              title: 'Camera Permission Required',
+                              body: Text(
+                                "This app needs access to your camera. Do you want to allow it?",
+                                style: AppTextStyle.kMediumBodyText.copyWith(
+                                  color: AppColors.kWhite,
+                                ),
+                              ),
+                              saveButtonTitle: 'Allow',
+                              saveButtonColor: AppColors.kWhite,
+                              onSave: () {
+                                context.pop(true);
+                              },
+                              onCancel: () {
+                                context.pop(false);
+                              },
+                            );
+                          },
                         ),
                         // Emojis Button
                         IconButton(
@@ -130,12 +156,73 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                             Icons.emoji_emotions,
                             size: context.w(6.75),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: SizedBox(
+                                    height: 300,
+                                    child: EmojiPicker(
+                                      onEmojiSelected: (category, emoji) {
+                                        Navigator.pop(context);
+                                      },
+                                      config: Config(
+                                        height: context.h(80),
+                                        checkPlatformCompatibility: true,
+                                        viewOrderConfig: ViewOrderConfig(),
+                                        emojiViewConfig: EmojiViewConfig(
+                                          emojiSizeMax:
+                                              context.w(5) *
+                                              (foundation.defaultTargetPlatform ==
+                                                      TargetPlatform.android
+                                                  ? 1.2
+                                                  : 1.0),
+                                        ),
+                                        skinToneConfig: const SkinToneConfig(),
+                                        categoryViewConfig:
+                                            const CategoryViewConfig(),
+                                        bottomActionBarConfig:
+                                            const BottomActionBarConfig(
+                                              enabled: false,
+                                            ),
+                                        searchViewConfig:
+                                            const SearchViewConfig(),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                         // File uploading Button
                         IconButton(
                           icon: Icon(Icons.file_upload, size: context.w(6.75)),
-                          onPressed: () {},
+                          onPressed: () {
+                            showAlertDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              title: 'File Access Permission Required',
+                              body: Text(
+                                "This app needs access to your files. \n Do you want to allow it?",
+                                style: AppTextStyle.kMediumBodyText.copyWith(
+                                  color: AppColors.kWhite,
+                                ),
+                              ),
+                              saveButtonTitle: 'Allow',
+                              saveButtonColor: AppColors.kWhite,
+                              onSave: () {
+                                context.pop(true);
+                              },
+                              onCancel: () {
+                                context.pop(false);
+                              },
+                            );
+                          },
                         ),
                       ],
                     ],

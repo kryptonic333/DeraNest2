@@ -1,8 +1,8 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
+import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
-import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +10,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ForgotPasswordScreen extends ConsumerWidget {
   const ForgotPasswordScreen({super.key});
-  
+
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Authentication Screen Controller Required
-     final authState = ref.watch(authProvider);
+    final authState = ref.watch(authProvider);
 
     return CustomSafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Forgot Password',
+            style: AppTextStyle.kLargeBodyText.copyWith(fontSize: 22),
+          ),
+        ),
         backgroundColor: AppColors.kTransparent,
         body: Form(
           key: authState.forgetFormKey,
@@ -26,8 +32,6 @@ class ForgotPasswordScreen extends ConsumerWidget {
             children: [
               SizedBox(height: context.h(5)),
 
-              Text('Forgot Password', style: AppTextStyle.kLargeBodyText),
-
               SizedBox(height: context.h(25)),
 
               Text('Email', style: AppTextStyle.kLargeBodyText),
@@ -35,7 +39,7 @@ class ForgotPasswordScreen extends ConsumerWidget {
               SizedBox(height: context.h(1.5)),
 
               // Email text field
-              CustomTextField(
+              CustomElevatedTextField(
                 cursorColor: AppColors.kBlack,
                 fontColor: AppColors.kBlack,
                 controller: authState.forgotPasswordController,
@@ -60,8 +64,8 @@ class ForgotPasswordScreen extends ConsumerWidget {
                   width: context.w(90),
                   title: 'Send',
                   onPress: () {
-                    if (authState.forgetFormKey.currentState?.validate() ?? false) 
-                    {
+                    if (authState.forgetFormKey.currentState?.validate() ??
+                        false) {
                       // Send Email to set new password
                     }
                   },

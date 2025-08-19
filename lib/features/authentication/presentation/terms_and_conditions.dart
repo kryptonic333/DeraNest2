@@ -27,7 +27,7 @@ class TermsAndConditionsScreen extends ConsumerWidget {
           backgroundColor: AppColors.kWhite,
 
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: AppColors.kAbortColor),
+            icon: const Icon(Icons.arrow_back, color: AppColors.kBlack),
             onPressed: () => context.pop(),
           ),
         ),
@@ -41,7 +41,7 @@ class TermsAndConditionsScreen extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.kSecondary,
+                  color: AppColors.kSecondarySupport,
                 ),
               ),
               const SizedBox(height: 10),

@@ -1,11 +1,14 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/core/presentation/widgets/alert_dialog.dart';
+import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
 import 'package:deranest/features/posts/presentation/widgets/comment_field.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void openCommentBottomSheet(
   BuildContext context, {
@@ -121,21 +124,33 @@ class _CommentListItem extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 60),
-          child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              padding: EdgeInsets.zero,
-              minimumSize: const Size(5, 5),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
-            child: CustomTextButton(
-              fontSize: 12,
-              color: AppColors.kHintTextColor,
-              fontWeight: FontWeight.normal,
-              text: 'Reply',
-              onPressed: () {},
-            ),
+          padding: EdgeInsets.only(left: context.w(12)),
+          child: CustomTextButton(
+            fontSize: 12,
+            color: AppColors.kHintTextColor,
+            fontWeight: FontWeight.normal,
+            text: 'Reply',
+            onPressed: () {
+              showAlertDialog(
+                barrierDismissible: false,
+                saveButtonTitle: 'Reply',
+                saveButtonColor: AppColors.kWhite,
+                context: context,
+                title: 'Reply',
+                body: CustomElevatedTextField(
+                  controller: null,
+                  hintText: 'Reply',
+                  labelText: null,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.done,
+                  validator: null,
+                ),
+                onCancel: () {
+                  context.pop();
+                },
+                onSave: () {},
+              );
+            },
           ),
         ),
       ],

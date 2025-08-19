@@ -3,23 +3,24 @@ import 'package:deranest/core/data/adapters.dart';
 
 List<Profile> dummyProfileList = [
   Profile(
-      id: 'user_001',
-      name: 'Claire Dawson',
-      username: 'claire_d',
-      profilePictureUrl: AppImages.postDetailImage,
-      bio: 'Traveler 🌍 | Nature lover | Photographer 📸',
-      followersCount: 1200,
-      followingCount: 300,
-      postsCount: 3,
-      isVerified: true,
-      createdAt: DateTime(2023, 4, 10),
-      lastSeen: DateTime.now().subtract(Duration(minutes: 5)),
-      posts: [
-        AppImages.postDetailImage,
-        AppImages.profileImage,
-        AppImages.postDetailImage
-      ],
-      coverPictureUrl: AppImages.postDetailImage),
+    id: 'user_001',
+    name: 'Claire Dawson',
+    username: '@claire_d',
+    profilePictureUrl: AppImages.postDetailImage,
+    bio: 'Traveler 🌍 | Nature lover | Photographer 📸',
+    followersCount: 1200,
+    followingCount: 300,
+    postsCount: 3,
+    isVerified: true,
+    createdAt: DateTime(2023, 4, 10),
+    lastSeen: DateTime.now().subtract(Duration(minutes: 5)),
+    posts: [
+      AppImages.postDetailImage,
+      AppImages.profileImage,
+      AppImages.postDetailImage,
+    ],
+    coverPictureUrl: AppImages.profileImage,
+  ),
   Profile(
     id: 'user_002',
     name: 'John Doe',

@@ -19,7 +19,14 @@ import 'package:deranest/features/posts/presentation/screens/content_type_select
 import 'package:deranest/features/posts/presentation/screens/post_detail_screen.dart';
 import 'package:deranest/features/posts/presentation/screens/post_gallery_screen.dart';
 import 'package:deranest/features/profile/presentation/profile_screen.dart';
-import 'package:deranest/features/settings/presentation/setting_screen.dart';
+import 'package:deranest/features/settings/presentation/screens/about_screen.dart';
+import 'package:deranest/features/settings/presentation/screens/change_pass.dart';
+import 'package:deranest/features/settings/presentation/screens/edit_profile.dart';
+import 'package:deranest/features/settings/presentation/screens/email_notification.dart';
+import 'package:deranest/features/settings/presentation/screens/help_n_support.dart';
+import 'package:deranest/features/settings/presentation/screens/privacy_n_security.dart';
+import 'package:deranest/features/settings/presentation/screens/push_noitification.dart';
+import 'package:deranest/features/settings/presentation/screens/setting_screen.dart';
 import 'package:deranest/features/splash/presentation/screens/splash_screen.dart';
 import 'package:deranest/features/stories/presentation/story_camera_screen.dart';
 import 'package:deranest/features/stories/presentation/story_media_gallery_screen.dart';
@@ -40,7 +47,7 @@ class Routes {
   static const String forgotPass = '/forgotPass';
   static const String onBoard = '/onBoard';
   static const String feed = '/feed';
-  
+
   static const String conversation = '/conversation';
   static const String inbox = '/inbox';
   static const String pollCreate = '/poll';
@@ -59,6 +66,14 @@ class Routes {
   static const String onVoiceCall = '/onVoiceCall';
   static const String incomingVideoCall = '/incomingVideoCall';
   static const String incomingVoiceCall = '/incomingVoiceCall';
+  static const String changePassword = '/changePassword';
+  static const String about = '/about';
+  static const String editProfile = '/editProfile';
+  static const String privacySecurity = '/privacySecurity';
+  static const String helpSupport = '/helpSupport';
+  static const String pushNotification = '/pushNotification';
+  static const String emailNotification = '/emailNotification';
+
 }
 
 // Global navigator key
@@ -151,8 +166,31 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => PostGalleryScreen(),
       ),
       GoRoute(
+        path: Routes.emailNotification,
+        builder: (context, state) => EmailNotificationScreen(),
+      ),
+      GoRoute(
+        path: Routes.pushNotification,
+        builder: (context, state) => PushNotificationScreen(),
+      ),
+      GoRoute(
+        path: Routes.privacySecurity,
+        builder: (context, state) => PrivacySecurityScreen(),
+      ),
+       GoRoute(
+        path: Routes.helpSupport,
+        builder: (context, state) => HelpSupportScreen(),
+      ),
+      GoRoute(
+        path: Routes.about, 
+        builder: (context, state) => AboutScreen()),
+        GoRoute(
         path: Routes.storyCamera,
         builder: (context, state) => StoryCameraScreen(),
+      ),
+      GoRoute(
+        path: Routes.editProfile,
+        builder: (context, state) => EditProfileScreen(),
       ),
       GoRoute(
         path: Routes.setting,
@@ -161,6 +199,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.storyMediaGallery,
         builder: (context, state) => StoryMediaGalleryScreen(),
+      ),
+      GoRoute(
+        path: Routes.changePassword,
+        builder: (context, state) => ChangePasswordScreen(),
       ),
       GoRoute(
         path: Routes.postDetail,

@@ -1,35 +1,31 @@
-import 'package:extensions_kit/extensions_kit.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_fonts.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
+import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
-
-
-void showAlertDialog(
-    {required BuildContext context,
-    required String title,
-    required Widget body,
-    required Function()? onSave,
-    Function()? onCancel,
-    bool? barrierDismissible,
-    bool? showSaveButton,
-    Color? saveButtonColor,
-    String? saveButtonTitle,
-    String? cancelButtonTitle}) {
+void showAlertDialog({
+  required BuildContext context,
+  required String title,
+  required Widget body,
+  required Function()? onSave,
+  Function()? onCancel,
+  bool? barrierDismissible,
+  bool? showSaveButton,
+  Color? saveButtonColor,
+  String? saveButtonTitle,
+  String? cancelButtonTitle,
+}) {
   showDialog(
     context: context,
     barrierDismissible: barrierDismissible ?? false,
     builder: (context) => Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      backgroundColor: AppColors.kSecondary,
-      insetPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 24,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      backgroundColor: AppColors.kSecondarySupport.withAlpha(
+        50,
+      ), //Secondary -> Secondary Support.withAlpha
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       surfaceTintColor: AppColors.kTransparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +37,7 @@ void showAlertDialog(
               title,
               style: AppTextStyle.kLargeBodyText.copyWith(
                 fontFamily: AppFonts.kBold,
-                color: AppColors.kPrimary,
+                color: AppColors.kWhite, //kPrimary -> kWhite
               ),
             ).padHrz(15),
           ListView(
@@ -57,13 +53,14 @@ void showAlertDialog(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               CustomTextButton(
-                onPressed: onCancel ??
+                onPressed:
+                    onCancel ??
                     () {
                       // 1.pop();
                     },
                 text: cancelButtonTitle ?? 'Cancel',
                 fontFamily: AppFonts.kMedium,
-                color: AppColors.kBlack,
+                color: AppColors.kRed, // kBLack -> kRed Color
               ),
               Visibility(
                 visible: showSaveButton ?? true,

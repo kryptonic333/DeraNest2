@@ -27,11 +27,18 @@ class AskUserAuth extends StatelessWidget {
             Text(
               'Digital Baithak for GupShup\nConnect with friends and family\nIt\'s all here for you.',
               textAlign: TextAlign.center,
-              style: AppTextStyle.kLargeBodyText,
+              style: AppTextStyle.kLargeBodyText.copyWith(
+                color: AppColors.kSecondarySupport,
+              ),
             ),
             SizedBox(height: context.h(28.75)),
             // have an account?
-            Text('Have an Account?', style: AppTextStyle.kHeadingText),
+            Text(
+              'Have an Account?',
+              style: AppTextStyle.kHeadingText.copyWith(
+                color: AppColors.kSecondarySupport,
+              ),
+            ),
             const SizedBox(height: 24),
             // login button
             CustomElevatedButton(

@@ -26,21 +26,18 @@ class PostDetailScreen extends ConsumerWidget {
     return CustomSafeArea(
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: false,
           backgroundColor: AppColors.kWhite,
           leading: CustomIconButton(
             onTap: () {
               Navigator.pop(context);
             },
             icon: Icons.arrow_back_rounded,
-            iconColor: AppColors.kSecondary,
-            iconSize: context.w(7),
+            iconColor: AppColors.kBlack,
+            iconSize: context.w(8),
             usedInAppBar: true,
-            paddingAroundIcon: context.w(2),
+            paddingAroundIcon: context.w(5),
           ),
-
-          leadingWidth: context.w(8),
-          titleSpacing: 0,
+          leadingWidth: context.w(14),
           title: AppHeader(),
         ),
 

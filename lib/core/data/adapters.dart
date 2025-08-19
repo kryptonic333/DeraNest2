@@ -605,38 +605,37 @@ class Story extends HiveObject {
 }
 
 @HiveType(typeId: 13)
-class Destination extends HiveObject{
+class Destination extends HiveObject {
   @HiveField(0)
   final String label;
   @HiveField(1)
   final IconData icon;
-  
 
   Destination({required this.label, required this.icon});
 }
 
-final destination =[
- Destination(label: '', icon: CupertinoIcons.home),
- Destination(label: '', icon: CupertinoIcons.chat_bubble_2),
- Destination(label: '', icon: Icons.add, ),
- Destination(label: '', icon: Icons.person),
- Destination(label: '', icon: CupertinoIcons.bell, ),
+final destination = [
+  Destination(label: '', icon: CupertinoIcons.home),
+  Destination(label: '', icon: CupertinoIcons.chat_bubble_2),
+  Destination(label: '', icon: Icons.add),
+  Destination(label: '', icon: Icons.person),
+  Destination(label: '', icon: CupertinoIcons.bell),
 ];
 
 List<OnBoardingModel> onBoardingContents = [
   OnBoardingModel(
-    title: "Welcome",
-    subTitle: "This is your first step in using the app.",
+    title: "Connect Across The Globe",
+    subTitle: "Connections Cross Boundaries.",
     image: AppImages.firstOnBoardImage,
   ),
   OnBoardingModel(
-    title: "Track Progress",
-    subTitle: "Easily monitor your performance over time.",
+    title: "In-App Chatting",
+    subTitle: "Chat with your Friends, Connections and Family",
     image: AppImages.secOnBoardImage,
   ),
   OnBoardingModel(
-    title: "Stay Connected",
-    subTitle: "Get updates and stay in the loop.",
+    title: "Share Your Lovely Moments",
+    subTitle: "Unite, Share, and Grow Together!",
     image: AppImages.thirdOnBoardImage,
   ),
 ];

@@ -1,5 +1,6 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
+import 'package:deranest/core/constants/app_fonts.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -20,7 +22,14 @@ class AppHeader extends StatelessWidget {
           width: context.w(9),
         ),
         SizedBox(width: context.w(2.75)),
-        Text('DeraNest', style: AppTextStyle.kHeadingText),
+        Text(
+          'DeraNest',
+          style: AppTextStyle.kHeadingText.copyWith(
+            fontSize: 30,
+            fontFamily: AppFonts.kBold,
+            color: AppColors.kSecondary,
+          ),
+        ),
       ],
     );
   }
