@@ -2,6 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<!-- Microphone Permissions Added-->
+<key>NSMicrophoneUsageDescription</key>
+<string>This app needs access to the microphone to record audio.</string>
+<!-- Gallery Permissions Added-->
+<key>NSPhotoLibraryUsageDescription</key>
+<string>$(PRODUCT_NAME)photos description.</string>
+<!-- Camera Permissions Added-->
+<key>NSCameraUsageDescription</key>
+<string>$(PRODUCT_NAME) would like to access camera!.</string>
+<!-- Contacts Permissions Added-->
+<key>NSContactsUsageDescription</key>
+<string>This app requires contacts access to function properly.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

@@ -1,5 +1,6 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
+import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,9 @@ class OnVideoCallScreen extends StatelessWidget {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
-        body: Container(
+        body: 
+        // Caller Video
+        Container(
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
@@ -25,101 +28,112 @@ class OnVideoCallScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
+              // Receiver Video
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  height: 130,
-                  width: 130,
+                  height: context.h(20),
+                  width: context.w(45),
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(AppImages.postDetailImage),
                       fit: BoxFit.cover,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.kBlack.withAlpha(100),
-                        spreadRadius: 3,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                    border: Border.all(color: AppColors.kWhite, width: 2),
+
+                    border: Border.all(
+                      color: AppColors.kHintTextColor,
+                      width: context.w(1),
+                    ),
                     color: AppColors.kHintTextColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ).padOnly(top: 40, right: 20),
+              ).padOnly(top: context.h(3), right: context.w(3)),
               Spacer(),
+              // Action Buttons (Voice_Up, reject, etc)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: AppColors.kHintTextColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(Icons.volume_up, color: AppColors.kWhite),
+                  Container(
+                    height: context.h(12),
+                    width: context.w(15),
+                    decoration: BoxDecoration(
+                      color: AppColors.kHintTextColor,
+                      shape: BoxShape.circle,
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: AppColors.kHintTextColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(Icons.mic_outlined, color: AppColors.kWhite),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: AppColors.kHintTextColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.video_call_outlined,
-                        color: AppColors.kWhite,
+                    child: Center(
+                      child: CustomIconButton(
+                        iconSize: context.w(8),
+                        iconColor: AppColors.kWhite,
+                        onTap: () {},
+                        icon: Icons.volume_up,
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: AppColors.kHintTextColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.message_outlined,
-                        color: AppColors.kWhite,
+                  Container(
+                    height: context.h(12),
+                    width: context.w(15),
+                    decoration: BoxDecoration(
+                      color: AppColors.kHintTextColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: CustomIconButton(
+                        iconSize: context.w(8),
+                        iconColor: AppColors.kWhite,
+                        onTap: () {},
+                        icon: Icons.mic_outlined,
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      // Navigate to Previous Screen\
-                      context.pop();
-                    },
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: AppColors.kRed,
-                        shape: BoxShape.circle,
+                  Container(
+                    height: context.h(12),
+                    width: context.w(15),
+                    decoration: BoxDecoration(
+                      color: AppColors.kHintTextColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: CustomIconButton(
+                        iconSize: context.w(8),
+                        iconColor: AppColors.kWhite,
+                        onTap: () {},
+                        icon: Icons.videocam,
                       ),
-                      child: Icon(Icons.close, color: AppColors.kWhite),
+                    ),
+                  ),
+                  Container(
+                    height: context.h(12),
+                    width: context.w(15),
+                    decoration: BoxDecoration(
+                      color: AppColors.kHintTextColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: CustomIconButton(
+                        iconSize: context.w(8),
+                        iconColor: AppColors.kWhite,
+                        onTap: () {},
+                        icon: Icons.message_outlined,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: context.h(12),
+                    width: context.w(15),
+                    decoration: BoxDecoration(
+                      color: AppColors.kRed,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: CustomIconButton(
+                        iconSize: context.w(8),
+                        iconColor: AppColors.kWhite,
+                        onTap: () {
+                          context.pop();
+                        },
+                        icon: Icons.close,
+                      ),
                     ),
                   ),
                 ],

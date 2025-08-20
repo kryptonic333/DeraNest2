@@ -11,12 +11,12 @@ class MessageInputBar extends ConsumerWidget {
   const MessageInputBar({super.key});
 
   void _showAttachmentSheet(BuildContext context) {
-
     showBottomSheet(context: context, builder: (b) => AttachmentBottomSheet());
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final chatCtrl = ref.read(chatProvider.notifier);
     final messageState = ref.watch(chatProvider);
     return Container(
       color: AppColors.kWhite,
@@ -60,7 +60,9 @@ class MessageInputBar extends ConsumerWidget {
                       CupertinoIcons.photo_camera,
                       color: AppColors.kBlack,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      chatCtrl.pickImageFromCamera();
+                    },
                   ),
                   IconButton(
                     icon: Icon(

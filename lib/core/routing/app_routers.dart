@@ -25,7 +25,7 @@ import 'package:deranest/features/settings/presentation/screens/edit_profile.dar
 import 'package:deranest/features/settings/presentation/screens/email_notification.dart';
 import 'package:deranest/features/settings/presentation/screens/help_n_support.dart';
 import 'package:deranest/features/settings/presentation/screens/privacy_n_security.dart';
-import 'package:deranest/features/settings/presentation/screens/push_noitification.dart';
+import 'package:deranest/features/settings/presentation/screens/push_notification.dart';
 import 'package:deranest/features/settings/presentation/screens/setting_screen.dart';
 import 'package:deranest/features/splash/presentation/screens/splash_screen.dart';
 import 'package:deranest/features/stories/presentation/story_camera_screen.dart';
@@ -73,7 +73,6 @@ class Routes {
   static const String helpSupport = '/helpSupport';
   static const String pushNotification = '/pushNotification';
   static const String emailNotification = '/emailNotification';
-
 }
 
 // Global navigator key
@@ -165,6 +164,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.postGallery,
         builder: (context, state) => PostGalleryScreen(),
       ),
+
       GoRoute(
         path: Routes.emailNotification,
         builder: (context, state) => EmailNotificationScreen(),
@@ -177,14 +177,12 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.privacySecurity,
         builder: (context, state) => PrivacySecurityScreen(),
       ),
-       GoRoute(
+      GoRoute(
         path: Routes.helpSupport,
         builder: (context, state) => HelpSupportScreen(),
       ),
+      GoRoute(path: Routes.about, builder: (context, state) => AboutScreen()),
       GoRoute(
-        path: Routes.about, 
-        builder: (context, state) => AboutScreen()),
-        GoRoute(
         path: Routes.storyCamera,
         builder: (context, state) => StoryCameraScreen(),
       ),

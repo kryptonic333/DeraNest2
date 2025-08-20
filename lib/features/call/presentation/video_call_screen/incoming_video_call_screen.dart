@@ -1,6 +1,7 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
+import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:extensions_kit/extensions_kit.dart';
@@ -15,187 +16,164 @@ class IncomingVideoCallScreen extends StatelessWidget {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: AppColors.kHintTextColor,
-            backgroundBlendMode: BlendMode.darken,
-            image: DecorationImage(
-              image: AssetImage(AppImages.postDetailImage),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(height: 200),
-              Center(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(AppImages.profileImage),
+        body:
+            // Background Image
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                backgroundBlendMode: BlendMode.darken,
+                image: DecorationImage(
+                  image: AssetImage(AppImages.postDetailImage),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Center(
-                child: Text('Khan', style: AppTextStyle.kVeryLargeBodyText),
-              ),
-              Center(
-                child: Text(
-                  'Incoming Video Call',
-                  style: AppTextStyle.kMediumBodyText.copyWith(
-                    color: AppColors.kHintTextColor,
-                  ),
+              child: Container(
+                // Gloss Effect
+                decoration: BoxDecoration(
+                  color: AppColors.kWhite.withAlpha(200),
                 ),
-              ),
-              SizedBox(height: 200),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      ShaderMask(
-                        shaderCallback: (bounds) =>
-                            RadialGradient(
-                              colors: [
-                                AppColors.kBlack,
-                                AppColors.kHintTextColor,
-                              ],
-                            ).createShader(
-                              Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                            ),
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: AppColors.kTransparent,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.kHintTextColor,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.alarm_outlined,
-                                color: AppColors.kHintTextColor,
-                              ),
-                            ),
-                          ).padAll(5),
-                        ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    // Profile Image
+                    Center(
+                      child: CircleAvatar(
+                        radius: context.w(16),
+                        backgroundImage: AssetImage(AppImages.profileImage),
                       ),
-                      Text(
-                        'Remind me later',
-                        style: AppTextStyle.kDefaultBodyText.copyWith(
-                          color: AppColors.kBlack,
-                        ), // Color will be masked
+                    ),
+                    // Name
+                    Center(
+                      child: Text(
+                        'Khan',
+                        style: AppTextStyle.kVeryLargeBodyText,
                       ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      ShaderMask(
-                        shaderCallback: (bounds) =>
-                            RadialGradient(
-                              colors: [
-                                AppColors.kBlack,
-                                AppColors.kHintTextColor,
-                              ],
-                            ).createShader(
-                              Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                            ),
-                        child: InkWell(
-                          onTap: () {
-                            //  Navigate to previous Screen
-                            context.pop();
-                          },
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: AppColors.kTransparent,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.kHintTextColor,
-                                width: 2,
-                              ),
-                            ),
-                            child: Icon(
-                              Icons.message_outlined,
-                              color: AppColors.kHintTextColor,
-                            ),
-                          ).padAll(5),
-                        ),
-                      ),
-                      Text(
-                        'Message',
-                        style: AppTextStyle.kDefaultBodyText.copyWith(
+                    ),
+                    // Call type
+                    Center(
+                      child: Text(
+                        'Incoming Video Call',
+                        style: AppTextStyle.kMediumBodyText.copyWith(
                           color: AppColors.kBlack,
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // Navigate to On Video Call Screen
-                          context.push(Routes.onVideoCall);
-                        },
-                        child: Container(
-                          height: 60,
-                          width: 60,
+                    ),
+                    SizedBox(height: context.h(27)),
+                    // Row for Action Buttons (Message, Alarm)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: context.w(0.5),
+                                  color: AppColors.kBlack,
+                                ),
+                              ),
+                              child: CustomIconButton(
+                                iconColor: AppColors.kBlack,
+                                onTap: () {},
+                                icon: Icons.alarm_outlined,
+                              ),
+                            ).padAll(context.w(1)),
+                            Text(
+                              'Remind me later',
+                              style: AppTextStyle.kDefaultBodyText.copyWith(
+                                color: AppColors.kBlack,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: context.w(0.5),
+                                  color: AppColors.kBlack,
+                                ),
+                              ),
+                              child: CustomIconButton(
+                                iconColor: AppColors.kBlack,
+                                onTap: () {
+                                  context.pop();
+                                },
+                                icon: Icons.message_outlined,
+                              ),
+                            ).padAll(context.w(1)),
+                            Text(
+                              'Message',
+                              style: AppTextStyle.kDefaultBodyText.copyWith(
+                                color: AppColors.kBlack,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: context.h(3.5)),
+                    // Row for Action Buttons (Pick Call, Reject Call)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          height: context.h(10),
+                          width: context.w(18),
                           decoration: BoxDecoration(
                             color: AppColors.kWhite,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: AppColors.kHintTextColor.withAlpha(100),
-                              width: 2,
+                              color: AppColors.kHintTextColor.withAlpha(
+                                100,
+                              ),
+                              width: context.w(0.75),
                             ),
                           ),
                           child: Center(
-                            child: Icon(Icons.phone, color: AppColors.kGreen),
+                            child: CustomIconButton(
+                              iconSize: context.w(10),
+                              iconColor: AppColors.kGreen,
+                              onTap: () {
+                                context.push(Routes.onVideoCall);
+                              },
+                              icon: Icons.phone,
+                            ),
                           ),
-                        ).padHrz(30),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // navigate to previous screen
-                          context.pop();
-                        },
-                        child: Container(
-                          height: 60,
-                          width: 60,
+                        ).padHrz(context.w(3)),
+                        Container(
+                          height: context.h(10),
+                          width: context.w(18),
                           decoration: BoxDecoration(
                             color: AppColors.kRed,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: AppColors.kRed.withAlpha(100),
-                              width: 2,
+                              color: AppColors.kWhite.withAlpha(100),
+                              width: context.w(0.75),
                             ),
                           ),
-                          child: Icon(Icons.phone, color: AppColors.kWhite),
-                        ).padHrz(3),
-                      ),
-                    ],
-                  ),
-                ],
+                          child: Center(
+                            child: CustomIconButton(
+                              iconSize: context.w(10),
+                              iconColor: AppColors.kWhite,
+                              onTap: () {
+                                context.pop();
+                              },
+                              icon: Icons.phone,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 40),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }

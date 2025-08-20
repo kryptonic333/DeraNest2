@@ -132,7 +132,8 @@ class InboxThread extends HiveObject {
   }
 }
 
-enum MessageType { sentText, receivedText, sentVoice, receivedVoice }
+enum MessageType { sentText, receivedText, sentVoice, receivedVoice ,sentImage,
+  receivedImage,}
 
 @HiveType(typeId: 4)
 class Message extends HiveObject {
