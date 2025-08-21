@@ -14,7 +14,7 @@ import 'package:deranest/features/messages/presentation/poll/poll_creation_scree
 import 'package:deranest/features/messages/presentation/stream/conversation_screen.dart';
 import 'package:deranest/features/messages/presentation/stream/inbox_screen.dart';
 import 'package:deranest/features/notification/presentation/notification_screen.dart';
-import 'package:deranest/features/onBoarding/presentation/onboarding_screen.dart';
+import 'package:deranest/features/onBoarding/presentation/screens/onboarding_screen.dart';
 import 'package:deranest/features/posts/presentation/screens/content_type_selection_screen.dart';
 import 'package:deranest/features/posts/presentation/screens/post_detail_screen.dart';
 import 'package:deranest/features/posts/presentation/screens/post_gallery_screen.dart';

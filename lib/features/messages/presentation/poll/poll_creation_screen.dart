@@ -4,6 +4,7 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
 
@@ -48,53 +49,50 @@ class PollCreationScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // --- Question Input Field ---
-                      const Text(
-                        "Your Question",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // --- Question Input Field ---
+                    const Text(
+                      "Your Question",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
-                      const SizedBox(height: 8),
-                      _buildInputField(
-                        hintText: "Ask a question...",
-                        isQuestion: true,
+                    ),
+                    const SizedBox(height: 8),
+                    _buildInputField(
+                      hintText: "Ask a question...",
+                      isQuestion: true,
+                    ),
+                    const SizedBox(height: 24),
+                    const Divider(),
+                    const SizedBox(height: 24),
+                      
+                    // --- Options Input Fields ---
+                    const Text(
+                      "Options",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
-                      const SizedBox(height: 24),
-                      const Divider(),
-                      const SizedBox(height: 24),
-      
-                      // --- Options Input Fields ---
-                      const Text(
-                        "Options",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      _buildInputField(hintText: "Option 1"),
-                      const SizedBox(height: 12),
-                      _buildInputField(hintText: "Option 2"),
-                      const SizedBox(height: 16),
-      
-                      // --- Add Option Button ---
-                      _buildAddOptionButton(),
-                      const SizedBox(height: 32),
-      
-                      // --- Create Poll Button (Primary Action) ---
-                      _buildCreatePollButton(),
-                    ],
-                  ),
-                ),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildInputField(hintText: "Option 1"),
+                    const SizedBox(height: 12),
+                    _buildInputField(hintText: "Option 2"),
+                    const SizedBox(height: 16),
+                      
+                    // --- Add Option Button ---
+                    _buildAddOptionButton(),
+                    const SizedBox(height: 32),
+                      
+                    // --- Create Poll Button (Primary Action) ---
+                    _buildCreatePollButton(),
+                  ],
+                ).padAll(20.0),
               ),
             ],
           ),
@@ -103,9 +101,9 @@ class PollCreationScreen extends StatelessWidget {
     );
   }
 
-  // --- UI BUILDER HELPER METHODS ---
+ 
 
-  /// A styled helper for creating text form fields.
+  // A styled helper for creating text form fields.
   Widget _buildInputField({required String hintText, bool isQuestion = false}) {
     return TextFormField(
       // No controllers or validators, pure UI
@@ -140,7 +138,7 @@ class PollCreationScreen extends StatelessWidget {
     );
   }
 
-  /// Design for the "Add Option" button.
+  // Design for the "Add Option" button.
   Widget _buildAddOptionButton() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +159,7 @@ class PollCreationScreen extends StatelessWidget {
     );
   }
 
-  /// Design for the main "Create Poll" action button.
+  // Design for the main "Create Poll" action button.
   Widget _buildCreatePollButton() {
     return CustomElevatedButton(
       onPress: () {

@@ -23,7 +23,9 @@ class ConversationScreen extends StatelessWidget {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
-        appBar: ConversationAppBar(
+        appBar: 
+        // Custom App Bar
+        ConversationAppBar(
           userName: conversation.participant.name,
           activeTime:
               conversation.participant.lastSeen ??
@@ -34,6 +36,7 @@ class ConversationScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
+            // Message List
             Expanded(
               child: MessageList(
                 messages: conversation.messages,
@@ -41,6 +44,7 @@ class ConversationScreen extends StatelessWidget {
                 participant: conversation.participant,
               ),
             ),
+            // Bottom Bar
             MessageInputBar(),
           ],
         ),

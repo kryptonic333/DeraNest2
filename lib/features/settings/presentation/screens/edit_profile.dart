@@ -11,16 +11,16 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.kWhite,
       appBar: AppBar(
-       backgroundColor: AppColors.kWhite,
+        backgroundColor: AppColors.kWhite,
         foregroundColor: AppColors.kBlack,
         elevation: 1,
         title: const Text("Edit Profile"),
         centerTitle: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: ListView(
         children: [
           Center(
             child: Column(
@@ -88,7 +88,7 @@ class EditProfileScreen extends StatelessWidget {
             hintText: 'Phone',
             labelText: null,
             keyboardType: TextInputType.phone,
-            textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.done,
             validator: null,
           ),
           const SizedBox(height: 30),

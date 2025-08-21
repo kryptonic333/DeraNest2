@@ -13,27 +13,27 @@ class ForgotPasswordScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Authentication Screen Controller Required
     final authState = ref.watch(authProvider);
 
     return CustomSafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Forgot Password',
-            style: AppTextStyle.kLargeBodyText.copyWith(fontSize: 22),
-          ),
+          backgroundColor: AppColors.kWhite,
+          title:
+              // Forgot Pass Text
+              Text(
+                'Forgot Password',
+                style: AppTextStyle.kLargeBodyText.copyWith(fontSize: 22),
+              ),
         ),
         backgroundColor: AppColors.kTransparent,
         body: Form(
           key: authState.forgetFormKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: context.h(5)),
-
-              SizedBox(height: context.h(25)),
-
+              // Email Text
               Text('Email', style: AppTextStyle.kLargeBodyText),
 
               SizedBox(height: context.h(1.5)),
@@ -52,11 +52,14 @@ class ForgotPasswordScreen extends ConsumerWidget {
 
               SizedBox(height: context.h(2)),
 
+              // Description Text
               Text(
                 'Enter Email on which you want to Reset Password',
                 style: AppTextStyle.kMediumBodyText,
               ),
               SizedBox(height: context.h(20)),
+
+              // Elevated Button
               Center(
                 child: CustomElevatedButton(
                   borderRadius: 10,
@@ -71,11 +74,9 @@ class ForgotPasswordScreen extends ConsumerWidget {
                   },
                 ),
               ),
-
-              SizedBox(height: context.h(8)),
             ],
           ),
-        ).padHrz(context.h(3)),
+        ).padHrz(context.h(2)),
       ),
     );
   }

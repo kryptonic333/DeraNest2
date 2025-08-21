@@ -2,8 +2,6 @@ import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_fonts.dart';
 import 'package:flutter/material.dart';
 
-
-
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
     super.key,
@@ -36,8 +34,6 @@ class CustomElevatedButton extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          // added shadow color
-          shadowColor: AppColors.kBlack,
           // added elevation
           elevation: 5,
           surfaceTintColor: AppColors.kTransparent,

@@ -54,6 +54,7 @@ class OnVideoCallScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  // Volume Widget
                   Container(
                     height: context.h(12),
                     width: context.w(15),
@@ -70,6 +71,7 @@ class OnVideoCallScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Mic Widget
                   Container(
                     height: context.h(12),
                     width: context.w(15),
@@ -86,6 +88,7 @@ class OnVideoCallScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Video Cam Widget
                   Container(
                     height: context.h(12),
                     width: context.w(15),
@@ -102,6 +105,7 @@ class OnVideoCallScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Message Widget
                   Container(
                     height: context.h(12),
                     width: context.w(15),
@@ -118,6 +122,7 @@ class OnVideoCallScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // End Call Widget
                   Container(
                     height: context.h(12),
                     width: context.w(15),

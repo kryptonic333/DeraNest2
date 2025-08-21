@@ -85,9 +85,6 @@ class ImageMessage extends StatelessWidget {
         ],
       ).padSymmetric(vertical: 4.0, horizontal: 12.0),
     );
-    //Align(
-    //   alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-    //   child:
-    // );
+    
   }
 }

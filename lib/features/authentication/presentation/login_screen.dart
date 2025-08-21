@@ -29,6 +29,7 @@ class LoginScreen extends ConsumerWidget {
           child: Form(
             key: authState.loginFormKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: context.h(5)),
@@ -47,6 +48,7 @@ class LoginScreen extends ConsumerWidget {
 
                 // Email Field Section
                 _buildTextFieldSection(
+                  context: context,
                   labelText: 'Email',
                   child: CustomElevatedTextField(
                     cursorColor: AppColors.kBlack,
@@ -63,6 +65,7 @@ class LoginScreen extends ConsumerWidget {
 
                 // Password Field Section
                 _buildTextFieldSection(
+                  context: context,
                   labelText: 'Password',
                   child: CustomElevatedPasswordTextField(
                     cursorColor: AppColors.kBlack,
@@ -146,6 +149,7 @@ class LoginScreen extends ConsumerWidget {
                 ),
                 SizedBox(height: context.h(1.7)),
 
+                // OR Button
                 Text('OR', style: AppTextStyle.kDefaultBodyText),
                 SizedBox(height: context.h(1.7)),
 
@@ -170,8 +174,9 @@ class LoginScreen extends ConsumerWidget {
     );
   }
 
-  // Helper method to avoid duplicating the label + textfield column structure.
+  // Helper method (label + textfield)
   Widget _buildTextFieldSection({
+    required BuildContext context,
     required String labelText,
     required Widget child,
   }) {
@@ -184,7 +189,7 @@ class LoginScreen extends ConsumerWidget {
             fontWeight: FontWeight.w800,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: context.h(1)),
         child,
       ],
     );

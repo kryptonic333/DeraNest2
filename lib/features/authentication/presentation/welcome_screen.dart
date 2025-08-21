@@ -55,7 +55,7 @@ class AskUserAuth extends StatelessWidget {
             // register button
             CustomElevatedButton(
               borderRadius: 10,
-              // i have changed the color but its not being displayed.
+
               buttonColor: AppColors.kWhite,
               textColor: AppColors.kBlack,
               title: 'Register',

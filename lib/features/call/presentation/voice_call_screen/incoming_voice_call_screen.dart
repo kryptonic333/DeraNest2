@@ -58,6 +58,7 @@ class IncomingVoiceCallScreen extends StatelessWidget {
                   // Row for Action Buttons (Pick Call, Reject Call)
                   Row(
                     children: [
+                      // Pick Call Widget
                       Container(
                         height: context.h(10),
                         width: context.w(18),
@@ -81,6 +82,7 @@ class IncomingVoiceCallScreen extends StatelessWidget {
                         ),
                       ).padHrz(context.w(10)),
                       SizedBox(width: context.w(35)),
+                      // Reject Call Widget
                       Container(
                         height: context.h(10),
                         width: context.w(18),

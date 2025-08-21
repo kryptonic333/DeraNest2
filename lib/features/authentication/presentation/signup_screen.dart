@@ -1,8 +1,7 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/presentation/widgets/custom_drop_down_menu_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
-
+import 'package:deranest/core/presentation/widgets/custom_elevated_drop_down_menu.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_password_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
@@ -49,6 +48,7 @@ class SignupScreen extends ConsumerWidget {
                 // --- Form Fields ---
                 // Name field
                 _buildTextFieldSection(
+                  context: context,
                   label: 'Name',
                   field: CustomElevatedTextField(
                     maxLength: 1,
@@ -64,8 +64,9 @@ class SignupScreen extends ConsumerWidget {
 
                 // Gender field
                 _buildTextFieldSection(
+                  context: context,
                   label: 'Gender',
-                  field: CustomDropDownMenuButton(
+                  field: CustomElevatedDropDownMenuButton(
                     textFontColor: AppColors.kBlack,
 
                     textController: authState.genderController,
@@ -86,6 +87,7 @@ class SignupScreen extends ConsumerWidget {
 
                 // Phone field
                 _buildTextFieldSection(
+                  context: context,
                   label: 'Phone Number',
                   field: CustomElevatedTextField(
                     fontColor: AppColors.kBlack,
@@ -100,6 +102,7 @@ class SignupScreen extends ConsumerWidget {
 
                 // Email field
                 _buildTextFieldSection(
+                  context: context,
                   label: 'Email',
                   field: CustomElevatedTextField(
                     labelText: null,
@@ -114,6 +117,7 @@ class SignupScreen extends ConsumerWidget {
 
                 // Password field
                 _buildTextFieldSection(
+                  context: context,
                   label: 'Password',
                   field: CustomElevatedPasswordTextField(
                     fontColor: AppColors.kBlack,
@@ -128,6 +132,7 @@ class SignupScreen extends ConsumerWidget {
 
                 // Confirm Password field
                 _buildTextFieldSection(
+                  context: context,
                   label: 'Confirm Password',
                   field: CustomElevatedPasswordTextField(
                     labelText: null,
@@ -168,6 +173,8 @@ class SignupScreen extends ConsumerWidget {
                             : null,
                       ),
                     ),
+
+                    // Terms and Condition Button
                     CustomTextButton(
                       fontSize: 16,
                       onPressed: () {
@@ -181,6 +188,7 @@ class SignupScreen extends ConsumerWidget {
                 SizedBox(height: context.h(3)),
 
                 // --- Action Buttons ---
+                // Register Button
                 CustomElevatedButton(
                   borderRadius: 10,
                   buttonColor: AppColors.kSecondary,
@@ -201,9 +209,11 @@ class SignupScreen extends ConsumerWidget {
                 ),
                 SizedBox(height: context.h(1.7)),
 
+                // OR Button
                 Text('OR', style: AppTextStyle.kDefaultBodyText),
                 SizedBox(height: context.h(1.7)),
 
+                // Login Button
                 CustomElevatedButton(
                   borderRadius: 10,
                   textColor: AppColors.kBlack,
@@ -224,8 +234,9 @@ class SignupScreen extends ConsumerWidget {
     );
   }
 
-  // A private helper widget to build a labeled form field, reducing code duplication.
+  // Helper method (label + textfield)
   Widget _buildTextFieldSection({
+    required BuildContext context,
     required String label,
     required Widget field,
   }) {
@@ -238,7 +249,7 @@ class SignupScreen extends ConsumerWidget {
             fontWeight: FontWeight.w800,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: context.h(1)),
         field,
         const SizedBox(height: 16),
       ],

@@ -66,6 +66,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                       children: [
                         Column(
                           children: [
+                            // Reminder Widget
                             Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
@@ -80,6 +81,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                                 icon: Icons.alarm_outlined,
                               ),
                             ).padAll(context.w(1)),
+                            // Reminder Widget Text
                             Text(
                               'Remind me later',
                               style: AppTextStyle.kDefaultBodyText.copyWith(
@@ -90,6 +92,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                         ),
                         Column(
                           children: [
+                            // Message Widget
                             Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
@@ -106,6 +109,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                                 icon: Icons.message_outlined,
                               ),
                             ).padAll(context.w(1)),
+                            // Message Widget Text
                             Text(
                               'Message',
                               style: AppTextStyle.kDefaultBodyText.copyWith(
@@ -121,6 +125,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
+                        // Pick Call Widget
                         Container(
                           height: context.h(10),
                           width: context.w(18),
@@ -143,6 +148,8 @@ class IncomingVideoCallScreen extends StatelessWidget {
                             ),
                           ),
                         ).padHrz(context.w(3)),
+                        
+                        // Reject Call Widget
                         Container(
                           height: context.h(10),
                           width: context.w(18),

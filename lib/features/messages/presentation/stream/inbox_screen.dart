@@ -40,7 +40,9 @@ class InboxScreen extends ConsumerWidget {
         ),
         body: Column(
           children: [
+            // Search Bar 
             InboxSearchBar(),
+            // List for Chats - Whom we're chatting with.
             Expanded(
               child: ChatListView(
                 conversations: conversations,
