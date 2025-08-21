@@ -1,7 +1,6 @@
-import 'package:circle_bottom_navigation/circle_bottom_navigation.dart';
-import 'package:circle_bottom_navigation/widgets/tab_data.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/data/adapters.dart';
+import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,19 +13,28 @@ class MainTabScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: CircleBottomNavigation(
-        circleColor: AppColors.kPrimary,
-        barBackgroundColor: AppColors.kSecondary,
-        tabs: destination
-            .map((d) => TabData(title: d.label, icon: d.icon))
+      bottomNavigationBar: 
+      // Bottom Navigation Bar
+      NavigationBar(
+         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide, 
+        surfaceTintColor: AppColors.kBlack,
+        indicatorShape: CircleBorder(),
+        indicatorColor: AppColors.kTransparent,
+        backgroundColor: AppColors.kSecondary,
+        height: context.h(7.5),
+        destinations: destination
+            .map(
+              (d) => NavigationDestination(
+                label: d.label,
+                icon: Icon(d.icon, color: AppColors.kWhite, size: context.w(8)).centerWidget,
+              ),
+            )
             .toList(),
-        onTabChangedListener: (index) {
-          navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
-          );
-        },
-        initialSelection: navigationShell.currentIndex,
+        onDestinationSelected: (index) => navigationShell.goBranch(
+          index,
+          initialLocation: index == navigationShell.currentIndex,
+        ),
+        selectedIndex: navigationShell.currentIndex,
       ),
     );
   }

@@ -63,6 +63,6 @@ List<Message> dummyMessages = [
     sentAt: DateTime.now().subtract(Duration(minutes: 1)),
     isDelivered: true,
     isRead: false,
-    messageType: MessageType.sentText,
+    messageType: MessageType.sentImage,
   ),
 ];

@@ -22,7 +22,6 @@ class IncomingVideoCallScreen extends StatelessWidget {
               height: double.infinity,
               width: double.infinity,
               decoration: BoxDecoration(
-                backgroundBlendMode: BlendMode.darken,
                 image: DecorationImage(
                   image: AssetImage(AppImages.postDetailImage),
                   fit: BoxFit.cover,
@@ -129,9 +128,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                             color: AppColors.kWhite,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: AppColors.kHintTextColor.withAlpha(
-                                100,
-                              ),
+                              color: AppColors.kHintTextColor.withAlpha(100),
                               width: context.w(0.75),
                             ),
                           ),

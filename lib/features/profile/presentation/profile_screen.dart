@@ -64,7 +64,7 @@ class ProfileScreen extends ConsumerWidget {
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50),
                         ),
-                        color: AppColors.kHintTextColor.withAlpha(200),
+                        color: AppColors.kWhite.withAlpha(150),
                       ),
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
@@ -85,12 +85,12 @@ class ProfileScreen extends ConsumerWidget {
                                       Text(
                                         profile.postsCount.toString(),
                                         style: AppTextStyle.kVeryLargeBodyText
-                                            .copyWith(color: AppColors.kWhite),
+                                            .copyWith(color: AppColors.kBlack),
                                       ),
                                       Text(
                                         'Posts',
                                         style: AppTextStyle.kLargeBodyText
-                                            .copyWith(color: AppColors.kWhite),
+                                            .copyWith(color: AppColors.kBlack),
                                       ),
                                     ],
                                   ),
@@ -98,7 +98,7 @@ class ProfileScreen extends ConsumerWidget {
                                     height: context.h(5),
                                     width: context.w(0.5),
                                     decoration: BoxDecoration(
-                                      color: AppColors.kWhite,
+                                      color: AppColors.kBlack,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                   ),
@@ -107,12 +107,12 @@ class ProfileScreen extends ConsumerWidget {
                                       Text(
                                         profile.followersCount.toString(),
                                         style: AppTextStyle.kVeryLargeBodyText
-                                            .copyWith(color: AppColors.kWhite),
+                                            .copyWith(color: AppColors.kBlack),
                                       ),
                                       Text(
                                         'Followers',
                                         style: AppTextStyle.kLargeBodyText
-                                            .copyWith(color: AppColors.kWhite),
+                                            .copyWith(color: AppColors.kBlack),
                                       ),
                                     ],
                                   ),
@@ -120,7 +120,7 @@ class ProfileScreen extends ConsumerWidget {
                                     height: context.h(5),
                                     width: context.w(0.5),
                                     decoration: BoxDecoration(
-                                      color: AppColors.kWhite,
+                                      color: AppColors.kBlack,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                   ),
@@ -129,12 +129,12 @@ class ProfileScreen extends ConsumerWidget {
                                       Text(
                                         profile.followingCount.toString(),
                                         style: AppTextStyle.kVeryLargeBodyText
-                                            .copyWith(color: AppColors.kWhite),
+                                            .copyWith(color: AppColors.kBlack),
                                       ),
                                       Text(
                                         'Following',
                                         style: AppTextStyle.kLargeBodyText
-                                            .copyWith(color: AppColors.kWhite),
+                                            .copyWith(color: AppColors.kBlack),
                                       ),
                                     ],
                                   ),
@@ -145,7 +145,7 @@ class ProfileScreen extends ConsumerWidget {
                               Text(
                                 profile.name,
                                 style: AppTextStyle.kVeryLargeBodyText.copyWith(
-                                  color: AppColors.kWhite,
+                                  color: AppColors.kBlack,
                                 ),
                               ),
                               SizedBox(height: 5),
@@ -153,7 +153,7 @@ class ProfileScreen extends ConsumerWidget {
                               Text(
                                 profile.username,
                                 style: AppTextStyle.kLargeBodyText.copyWith(
-                                  color: AppColors.kWhite,
+                                  color: AppColors.kBlack,
                                 ),
                               ),
                               SizedBox(height: context.h(1.5)),
@@ -161,7 +161,7 @@ class ProfileScreen extends ConsumerWidget {
                               Text(
                                 profile.bio,
                                 style: AppTextStyle.kDefaultBodyText.copyWith(
-                                  color: AppColors.kWhite,
+                                  color: AppColors.kBlack,
                                 ),
                                 textAlign: TextAlign.center,
                               ).padHrz(context.h(6)),
@@ -171,7 +171,7 @@ class ProfileScreen extends ConsumerWidget {
                                 height: context.h(40),
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: AppColors.kWhite,
+                                  color: AppColors.kWhite.withAlpha(200),
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(50),
                                     topRight: Radius.circular(50),
