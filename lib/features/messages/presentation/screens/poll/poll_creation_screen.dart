@@ -1,13 +1,11 @@
-
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
+import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
-
-
 
 class PollCreationScreen extends StatelessWidget {
   const PollCreationScreen({super.key});
@@ -18,7 +16,7 @@ class PollCreationScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.kWhite,
           foregroundColor: AppColors.kSecondary,
           elevation: 1,
           title: ShaderMask(
@@ -27,19 +25,19 @@ class PollCreationScreen extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-      
+
             child: Text(
               'Create Poll',
               style: AppTextStyle.kVeryLargeBodyText.copyWith(
                 color: AppColors.kWhite,
-                fontSize: 22,
+                fontSize: context.w(2.9),
               ),
             ),
           ),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(context.w(2)),
           child: Column(
             children: [
               // --- The main card containing the poll creation form ---
@@ -55,44 +53,35 @@ class PollCreationScreen extends StatelessWidget {
                     // --- Question Input Field ---
                     const Text(
                       "Your Question",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
+                      style: AppTextStyle.kLargeBodyText,
                     ),
-                    const SizedBox(height: 8),
+                    context.h(1).heightBox,
+
                     _buildInputField(
                       hintText: "Ask a question...",
                       isQuestion: true,
                     ),
-                    const SizedBox(height: 24),
+
+                    context.h(3).heightBox,
                     const Divider(),
-                    const SizedBox(height: 24),
-                      
+                    context.h(3).heightBox,
+
                     // --- Options Input Fields ---
-                    const Text(
-                      "Options",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
+                    const Text("Options", style: AppTextStyle.kLargeBodyText),
+                    context.h(2).heightBox,
                     _buildInputField(hintText: "Option 1"),
-                    const SizedBox(height: 12),
+                    context.h(2).heightBox,
                     _buildInputField(hintText: "Option 2"),
-                    const SizedBox(height: 16),
-                      
+                    context.h(2).heightBox,
+
                     // --- Add Option Button ---
-                    _buildAddOptionButton(),
-                    const SizedBox(height: 32),
-                      
+                    _buildAddOptionButton(context),
+                    context.h(4).heightBox,
+
                     // --- Create Poll Button (Primary Action) ---
                     _buildCreatePollButton(),
                   ],
-                ).padAll(20.0),
+                ).padAll(context.w(2.7)),
               ),
             ],
           ),
@@ -101,50 +90,26 @@ class PollCreationScreen extends StatelessWidget {
     );
   }
 
- 
-
   // A styled helper for creating text form fields.
   Widget _buildInputField({required String hintText, bool isQuestion = false}) {
-    return TextFormField(
-      // No controllers or validators, pure UI
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(
-          color: Colors.grey[400],
-          fontWeight: FontWeight.normal,
-        ),
-        filled: true,
-        fillColor: Colors.grey[100],
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 16,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.kSecondary, width: 2),
-        ),
-      ),
-      maxLines: isQuestion ? 3 : 1,
-      minLines: isQuestion ? 2 : 1,
+    return CustomElevatedTextField(
+      maxLength: isQuestion ? 3:1,
+      minLines: isQuestion?2:1,
+      controller: null,
+      hintText: hintText,
+      labelText: null,
+      keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.done,
+      validator: null,
     );
   }
 
   // Design for the "Add Option" button.
-  Widget _buildAddOptionButton() {
+  Widget _buildAddOptionButton(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomIconButton(
-          iconSize: 20,
+          iconSize: context.w(2.7),
           onTap: () {},
           icon: Icons.add_circle_outline,
           iconColor: AppColors.kSecondary,

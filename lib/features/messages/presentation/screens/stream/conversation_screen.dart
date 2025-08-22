@@ -7,33 +7,31 @@ import 'package:deranest/features/messages/presentation/widgets/message_input_ba
 import 'package:deranest/features/messages/presentation/widgets/message_list.dart';
 import 'package:flutter/material.dart';
 
-class ConversationScreen extends StatelessWidget {
+class ConversationScreen extends StatelessWidget 
+{
   final Conversation conversation;
-
   final Profile currentUser;
-
   const ConversationScreen({
     super.key,
     required this.conversation,
     required this.currentUser,
   });
-
   @override
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
-        appBar: 
-        // Custom App Bar
-        ConversationAppBar(
-          userName: conversation.participant.name,
-          activeTime:
-              conversation.participant.lastSeen ??
-              conversation.participant.createdAt,
-          profileImageUrl:
-              conversation.participant.profilePictureUrl ??
-              AppImages.profileImage,
-        ),
+        appBar:
+            // Custom App Bar
+            ConversationAppBar(
+              userName: conversation.participant.name,
+              activeTime:
+                  conversation.participant.lastSeen ??
+                  conversation.participant.createdAt,
+              profileImageUrl:
+                  conversation.participant.profilePictureUrl ??
+                  AppImages.profileImage,
+            ),
         body: Column(
           children: [
             // Message List

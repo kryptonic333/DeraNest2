@@ -11,7 +11,8 @@ class NotificationScreen extends ConsumerWidget {
   const NotificationScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) 
+  {
     final notifications = ref.watch(notificationProvider.notifier);
     final newNotifs = notifications.newNotifications;
     final earlierNotifs = notifications.earlierNotifications;

@@ -2,6 +2,7 @@ import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/features/messages/presentation/widgets/date_chip.dart';
 import 'package:deranest/features/messages/presentation/widgets/image_bubble.dart';
 import 'package:deranest/features/messages/presentation/widgets/message_bubble.dart';
+import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +23,7 @@ class MessageList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
       reverse: true,
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding:  EdgeInsets.symmetric(vertical: context.h(1)),
       itemCount: messages.length,
       itemBuilder: (context, index) {
         final msgIndex = messages.length - 1 - index;

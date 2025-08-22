@@ -24,7 +24,7 @@ class FeedCard extends ConsumerWidget {
     final notifier = ref.read(postDetailProvider.notifier);
     return Center(
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0),
+        margin:  EdgeInsets.symmetric(vertical: context.h(1.2)),
         width: context.w(80),
         height: context.h(40),
         decoration: BoxDecoration(
@@ -37,8 +37,8 @@ class FeedCard extends ConsumerWidget {
             ProfileHeader(
               index: index,
               user: dummyProfileList[index],
-            ).padOnly(top: 8, left: 8),
-            SizedBox(height: context.h(1)),
+            ).padOnly(top: context.h(1), left: context.w(1)),
+            context.h(1).heightBox,
             GestureDetector(
               onTap: () {
                 // Navigate to Post Detail Screen
@@ -50,7 +50,6 @@ class FeedCard extends ConsumerWidget {
               child: Container(
                 width: context.w(68),
                 height: context.h(30),
-
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   image: feed.imageUrl != null
@@ -60,12 +59,9 @@ class FeedCard extends ConsumerWidget {
                         )
                       : null,
                 ),
-
                 alignment: Alignment.bottomCenter,
-
                 child: BottomActionBar(
                   feed: feed,
-
                   onLike: notifier.onLikeClicked,
                   onComment: notifier.onCommentClicked,
                   onShare: notifier.onShareClicked,

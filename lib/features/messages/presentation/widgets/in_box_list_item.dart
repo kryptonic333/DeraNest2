@@ -5,19 +5,16 @@ import 'package:deranest/core/data/adapters.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
-class InboxListItem extends StatelessWidget {
-  // Conversation Model Required
+class InboxListItem extends StatelessWidget 
+{
   final Conversation conversation;
-
   const InboxListItem({super.key,required this.conversation});
-
   @override
   Widget build(BuildContext context) {
     final participant = conversation.participant;
     final lastMessage = conversation.messages.isNotEmpty
         ? conversation.messages.last
         : null;
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,7 +24,7 @@ class InboxListItem extends StatelessWidget {
               : null,
           radius: context.w(6),
         ),
-        const SizedBox(width: 10),
+        context.w(1.2).widthBox,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,11 +50,11 @@ class InboxListItem extends StatelessWidget {
             lastMessage != null ? '3:45 Am' : '',
             style: AppTextStyle.kDefaultBodyText.copyWith(
               color: AppColors.kHintTextColor,
-              fontSize: 11,
+              fontSize: context.w(1.2),
             ),
           ),
         ),
       ],
-    ).padSymmetric(horizontal: 12, vertical: 10);
+    ).padSymmetric(vertical: context.h(0.5), horizontal: context.w(1.7));
   }
 }

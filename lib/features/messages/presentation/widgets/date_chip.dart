@@ -11,7 +11,7 @@ class DateChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding:  EdgeInsets.symmetric(horizontal: context.w(1.7), vertical: context.h(0.5)),
         decoration: BoxDecoration(
           color: AppColors.kWhite,
           borderRadius: BorderRadius.circular(10),
@@ -20,7 +20,7 @@ class DateChip extends StatelessWidget {
         child: Text(
           // time utility - Specified for specific functionality
           // messageTime(time),
-          '12:34 Am',
+          'Monday',
           style: AppTextStyle.kSmallBodyText.copyWith(color: AppColors.kBlack),
         ),
       ),

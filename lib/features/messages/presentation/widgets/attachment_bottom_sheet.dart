@@ -19,12 +19,14 @@ class AttachmentBottomSheet extends ConsumerWidget {
       children: [
         Row(
           children: [
+            // Popping Icon
             InkWell(
               onTap: () {
                 context.pop();
               },
               child: const Icon(Icons.close_rounded, color: AppColors.kBlack),
             ).padLeft(context.w(2)),
+            // Share Content Heading
             Expanded(
               child: Text(
                 'Share Content',
@@ -36,9 +38,10 @@ class AttachmentBottomSheet extends ConsumerWidget {
         ).padBottom(context.h(1)).padTop(context.h(1)),
         Divider(
           color: AppColors.kHintTextColor,
-          thickness: 1,
+          thickness: context.h(.1),
           height: context.h(1),
         ),
+        // Camera Option
         BuildAttachmentOption(
           onTap: () {
             chatCtrl.pickImageFromCamera();
@@ -47,11 +50,13 @@ class AttachmentBottomSheet extends ConsumerWidget {
           icon: Icons.camera_alt_outlined,
           label: 'Camera',
         ),
+        // Document Option
         BuildAttachmentOption(
           onTap: () {},
           icon: Icons.description_outlined,
           label: 'Documents',
         ),
+        // Poll Option
         BuildAttachmentOption(
           onTap: () {
             context.push(Routes.pollCreate);
@@ -59,6 +64,7 @@ class AttachmentBottomSheet extends ConsumerWidget {
           icon: Icons.poll_outlined,
           label: 'Create a Poll',
         ),
+        // Media Option
         BuildAttachmentOption(
           onTap: () {
             chatCtrl.pickImageFromGallery();
@@ -67,11 +73,13 @@ class AttachmentBottomSheet extends ConsumerWidget {
           icon: Icons.perm_media_outlined,
           label: 'Media',
         ),
+        // Contacts Option
         BuildAttachmentOption(
           onTap: () {},
           icon: Icons.contacts_outlined,
           label: 'Contacts',
         ),
+        // Location Option
         BuildAttachmentOption(
           onTap: () {},
           icon: Icons.location_on_outlined,

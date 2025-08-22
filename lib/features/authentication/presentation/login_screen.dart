@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-// Authentication Screen Controller Required
+
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
@@ -32,9 +32,12 @@ class LoginScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: context.h(5)),
+                // Top Space
+                context.h(5).heightBox,
+                //  App Header
                 const AppHeader(),
-                SizedBox(height: context.h(2)),
+                // Header's bottom spacing
+                context.h(5).heightBox,
 
                 // App Tagline
                 Text(
@@ -44,7 +47,7 @@ class LoginScreen extends ConsumerWidget {
                     color: AppColors.kSecondarySupport,
                   ),
                 ),
-                SizedBox(height: context.h(6)),
+                context.h(6).heightBox,
 
                 // Email Field Section
                 _buildTextFieldSection(
@@ -54,14 +57,14 @@ class LoginScreen extends ConsumerWidget {
                     cursorColor: AppColors.kBlack,
                     fontColor: AppColors.kBlack,
                     controller: authState.loginEmailController,
-                    hintText: 'Email',
+                    hintText: '....@gmail.com',
                     labelText: null,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
                   ),
                 ),
-                SizedBox(height: context.h(1.75)),
+                context.h(1.75).heightBox,
 
                 // Password Field Section
                 _buildTextFieldSection(
@@ -71,14 +74,14 @@ class LoginScreen extends ConsumerWidget {
                     cursorColor: AppColors.kBlack,
                     fontColor: AppColors.kBlack,
                     controller: authState.loginPasswordController,
-                    hintText: 'Password',
+                    hintText: '********',
                     labelText: null,
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                     validator: FieldValidator.required(),
                   ),
                 ),
-                SizedBox(height: context.h(1)),
+                context.h(1).heightBox,
 
                 // Terms and conditions and forgot password
                 Row(
@@ -108,7 +111,7 @@ class LoginScreen extends ConsumerWidget {
                       ),
                     ),
                     CustomTextButton(
-                      fontSize: 14,
+                      fontSize: context.h(1.8),
                       onPressed: () {
                         // Navigate to Terms and Conditions Screen
                         context.push(Routes.termsCondition);
@@ -120,7 +123,7 @@ class LoginScreen extends ConsumerWidget {
                     CustomTextButton(
                       color: AppColors.kHintTextColor,
                       text: 'Forgot Password',
-                      fontSize: 14,
+                      fontSize: context.h(1.6),
                       onPressed: () {
                         //  Navigate to Forgot Password Screen
                         context.push(Routes.forgotPass);
@@ -128,10 +131,10 @@ class LoginScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: context.h(2)),
+                context.h(2).heightBox,
                 // Login button
                 CustomElevatedButton(
-                  borderRadius: 10,
+                  borderRadius: context.h(1.2),
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
                   title: 'Login',
@@ -147,15 +150,14 @@ class LoginScreen extends ConsumerWidget {
                     }
                   },
                 ),
-                SizedBox(height: context.h(1.7)),
-
+                context.h(1.7).heightBox,
                 // OR Button
                 Text('OR', style: AppTextStyle.kDefaultBodyText),
-                SizedBox(height: context.h(1.7)),
+                context.h(1.7).heightBox,
 
                 // Register button
                 CustomElevatedButton(
-                  borderRadius: 10,
+                  borderRadius: context.h(1.2),
                   textColor: AppColors.kBlack,
                   buttonColor: AppColors.kWhite,
                   title: 'Register',
@@ -165,7 +167,7 @@ class LoginScreen extends ConsumerWidget {
                     context.go(Routes.register);
                   },
                 ),
-                SizedBox(height: context.h(5)),
+                context.h(5).heightBox
               ],
             ),
           ).padHrz(context.w(4)),

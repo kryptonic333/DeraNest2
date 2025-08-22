@@ -8,8 +8,8 @@ import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class AskUserAuth extends StatelessWidget {
-  const AskUserAuth({super.key});
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +18,12 @@ class AskUserAuth extends StatelessWidget {
         backgroundColor: AppColors.kTransparent,
         body: Column(
           children: [
-            SizedBox(height: context.h(24)),
+            context.h(24).heightBox,
             // Screen Header
             AppHeader(),
-            SizedBox(height: context.h(2.25)),
+            context.h(2.25).heightBox,
 
-            // app tagline
+            // App Tagline
             Text(
               'Digital Baithak for GupShup\nConnect with friends and family\nIt\'s all here for you.',
               textAlign: TextAlign.center,
@@ -31,7 +31,7 @@ class AskUserAuth extends StatelessWidget {
                 color: AppColors.kSecondarySupport,
               ),
             ),
-            SizedBox(height: context.h(28.75)),
+            context.h(28.75).heightBox,
             // have an account?
             Text(
               'Have an Account?',
@@ -39,10 +39,10 @@ class AskUserAuth extends StatelessWidget {
                 color: AppColors.kSecondarySupport,
               ),
             ),
-            const SizedBox(height: 24),
+            context.h(3).heightBox,
             // login button
             CustomElevatedButton(
-              borderRadius: 10,
+              borderRadius: context.h(1.2),
               buttonColor: AppColors.kSecondary,
               width: context.w(90),
               title: 'Login',
@@ -51,10 +51,10 @@ class AskUserAuth extends StatelessWidget {
                 context.go(Routes.login);
               },
             ),
-            SizedBox(height: context.h(2.5)),
+            context.h(2.5).heightBox,
             // register button
             CustomElevatedButton(
-              borderRadius: 10,
+              borderRadius: context.h(1.2),
 
               buttonColor: AppColors.kWhite,
               textColor: AppColors.kBlack,

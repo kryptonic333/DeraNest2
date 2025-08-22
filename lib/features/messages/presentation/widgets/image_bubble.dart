@@ -31,7 +31,7 @@ class ImageMessage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
-                  radius: 18,
+                  radius: context.w(2.2),
 
                   backgroundImage: AssetImage(
                     participant.profilePictureUrl ?? AppImages.profileImage,
@@ -40,7 +40,7 @@ class ImageMessage extends StatelessWidget {
                 ),
               ],
             ),
-          if (!isMe) const SizedBox(height: 4),
+          if (!isMe) context.h(0.5).heightBox,
           Container(
             constraints: BoxConstraints(
               maxWidth: context.w(60),
@@ -60,8 +60,12 @@ class ImageMessage extends StatelessWidget {
                   : null,
               color: isMe ? null : AppColors.kHintTextColor.withAlpha(20),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(isMe ? 12 : 4),
-                topRight: Radius.circular(isMe ? 4 : 12),
+                topLeft: Radius.circular(
+                  isMe ? context.w(1.7) : context.h(0.5),
+                ),
+                topRight: Radius.circular(
+                  isMe ? context.h(0.5) : context.w(1.7),
+                ),
                 bottomLeft: const Radius.circular(12),
                 bottomRight: const Radius.circular(12),
               ),
@@ -74,8 +78,8 @@ class ImageMessage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-          ).padSymmetric(vertical: 4.0, horizontal: 12.0),
-          const SizedBox(height: 4),
+          ).padSymmetric(vertical: context.h(0.5), horizontal: context.w(1.7)),
+          context.h(0.5).heightBox,
           Text(
             // time utility - Specified for specific functionality
             // formatTimeOnly(message.sentAt),
@@ -83,8 +87,7 @@ class ImageMessage extends StatelessWidget {
             style: AppTextStyle.kSmallBodyText,
           ),
         ],
-      ).padSymmetric(vertical: 4.0, horizontal: 12.0),
+      ).padSymmetric(vertical: context.h(0.5), horizontal: context.w(1.7)),
     );
-    
   }
 }

@@ -11,13 +11,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InboxScreen extends ConsumerWidget {
   const InboxScreen({super.key});
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) 
+  {
     final List<Conversation> conversations = dummyConversations;
-
     final Profile currentUser = dummyProfileList[1];
-
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,

@@ -7,19 +7,15 @@ import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
- 
   final Message message;
   final bool isMe;
-  
   final Profile participant;
-
   const MessageBubble({
     super.key,
     required this.message,
     required this.isMe,
     required this.participant,
   });
-
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -35,8 +31,7 @@ class MessageBubble extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
-                  radius: 18,
-      
+                  radius: context.w(2.2),
                   backgroundImage: AssetImage(
                     participant.profilePictureUrl ?? AppImages.profileImage,
                   ),
@@ -44,7 +39,7 @@ class MessageBubble extends StatelessWidget {
                 ),
               ],
             ),
-          if (!isMe) const SizedBox(height: 4),
+          if (!isMe) context.h(0.5).heightBox,
           if (message.message != null)
             TextMessage(message: message.message!, isMe: isMe),
           const SizedBox(height: 4),
@@ -55,7 +50,7 @@ class MessageBubble extends StatelessWidget {
             style: AppTextStyle.kSmallBodyText,
           ),
         ],
-      ).padSymmetric(vertical: 4.0, horizontal: 12.0),
+      ).padSymmetric(vertical: context.h(0.5), horizontal: context.w(1.7)),
     );
   }
 }

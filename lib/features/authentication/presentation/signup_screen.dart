@@ -31,9 +31,12 @@ class SignupScreen extends ConsumerWidget {
             key: authState.signUpFormKey,
             child: Column(
               children: [
-                SizedBox(height: context.h(5)),
+                // Top Space
+                 context.h(5).heightBox,
+                //  App Header
                 const AppHeader(),
-                SizedBox(height: context.h(2)),
+                // Header's bottom spacing
+                 context.h(5).heightBox,
 
                 // App tagline
                 Text(
@@ -43,7 +46,7 @@ class SignupScreen extends ConsumerWidget {
                     color: AppColors.kSecondarySupport,
                   ),
                 ),
-                SizedBox(height: context.h(2.5)),
+                context.h(2.5).heightBox,
 
                 // --- Form Fields ---
                 // Name field
@@ -56,7 +59,7 @@ class SignupScreen extends ConsumerWidget {
                     labelText: null,
                     keyboardType: TextInputType.name,
                     controller: authState.nameController,
-                    hintText: 'Name',
+                    hintText: 'Ali',
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
                   ),
@@ -68,7 +71,7 @@ class SignupScreen extends ConsumerWidget {
                   label: 'Gender',
                   field: CustomElevatedDropDownMenuButton(
                     textFontColor: AppColors.kBlack,
-
+                    label: 'Male/Female/?',
                     textController: authState.genderController,
                     width: double.infinity,
                     dropdownMenuEntries: const [
@@ -108,7 +111,7 @@ class SignupScreen extends ConsumerWidget {
                     labelText: null,
                     fontColor: AppColors.kBlack,
                     controller: authState.signupEmailController,
-                    hintText: 'Email',
+                    hintText: '....@gmail.com',
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
@@ -124,7 +127,7 @@ class SignupScreen extends ConsumerWidget {
                     keyboardType: TextInputType.visiblePassword,
                     labelText: null,
                     controller: authState.signupPasswordController,
-                    hintText: 'Password',
+                    hintText: '********',
                     textInputAction: TextInputAction.next,
                     validator: FieldValidator.required(),
                   ),
@@ -139,7 +142,7 @@ class SignupScreen extends ConsumerWidget {
                     fontColor: AppColors.kBlack,
                     keyboardType: TextInputType.visiblePassword,
                     controller: authState.confirmPasswordController,
-                    hintText: 'Password',
+                    hintText: '********',
                     textInputAction: TextInputAction.done,
                     validator: FieldValidator.required(),
                   ),
@@ -176,7 +179,7 @@ class SignupScreen extends ConsumerWidget {
 
                     // Terms and Condition Button
                     CustomTextButton(
-                      fontSize: 16,
+                      fontSize: context.h(2),
                       onPressed: () {
                         // Navigate to Terms and Conditions Screen
                         context.push(Routes.termsCondition);
@@ -185,12 +188,12 @@ class SignupScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: context.h(3)),
+               context.h(3).heightBox,
 
                 // --- Action Buttons ---
                 // Register Button
                 CustomElevatedButton(
-                  borderRadius: 10,
+                  borderRadius: context.h(1.2),
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
                   title: 'Register',
@@ -207,25 +210,25 @@ class SignupScreen extends ConsumerWidget {
                     }
                   },
                 ),
-                SizedBox(height: context.h(1.7)),
+                context.h(1.7).heightBox,
 
                 // OR Button
                 Text('OR', style: AppTextStyle.kDefaultBodyText),
-                SizedBox(height: context.h(1.7)),
+                context.h(1.7).heightBox,
 
                 // Login Button
                 CustomElevatedButton(
-                  borderRadius: 10,
+                  borderRadius: context.h(1.2),
                   textColor: AppColors.kBlack,
                   buttonColor: AppColors.kWhite,
                   title: 'Login',
                   width: double.infinity,
                   onPress: () {
                     // Navigate to Login Screen
-                    context.go('/login');
+                    context.go(Routes.login);
                   },
                 ),
-                SizedBox(height: context.h(3)),
+                context.h(3).heightBox
               ],
             ),
           ).padHrz(context.w(4)),

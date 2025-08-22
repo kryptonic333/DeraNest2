@@ -59,7 +59,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: context.h(27)),
+                    context.h(27).heightBox,
                     // Row for Action Buttons (Message, Alarm)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -120,7 +120,7 @@ class IncomingVideoCallScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: context.h(3.5)),
+                   context.h(3.5).heightBox,
                     // Row for Action Buttons (Pick Call, Reject Call)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

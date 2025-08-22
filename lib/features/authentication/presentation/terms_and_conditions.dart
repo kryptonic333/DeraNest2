@@ -34,7 +34,7 @@ class TermsAndConditionsScreen extends ConsumerWidget {
           ),
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
+          padding:  EdgeInsets.all(context.w(2.7)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,7 +45,7 @@ class TermsAndConditionsScreen extends ConsumerWidget {
                   color: AppColors.kSecondarySupport,
                 ),
               ),
-              SizedBox(height: context.h(1.75)),
+              context.h(1.75).heightBox,
               // Last Updated Text
               Text(
                 'Last Updated: July 23, 2025',
@@ -53,42 +53,42 @@ class TermsAndConditionsScreen extends ConsumerWidget {
                   color: AppColors.kHintTextColor,
                 ),
               ),
-              SizedBox(height: context.h(4.5)),
+             context.h(4.5).heightBox,
               // Intro Title
-              _buildSectionTitle('1. Introduction'),
+              _buildSectionTitle('1. Introduction',context),
               // Intro Para
               _buildSectionContent(
-                'By accessing or using our service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the service. These Terms and Conditions govern your use of our social media application and any related services provided.',
+                'By accessing or using our service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the service. These Terms and Conditions govern your use of our social media application and any related services provided.',context
               ),
               // UserAccount Title
-              _buildSectionTitle('2. User Accounts'),
+              _buildSectionTitle('2. User Accounts',context),
               // UserAccount Para
               _buildSectionContent(
-                'When you create an account with us, you must provide us with information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our service. You are responsible for safeguarding the password that you use to access the service and for any activities or actions under your password.',
+                'When you create an account with us, you must provide us with information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our service. You are responsible for safeguarding the password that you use to access the service and for any activities or actions under your password.',context
               ),
               // Content Title
-              _buildSectionTitle('3. Content Ownership and Responsibility'),
+              _buildSectionTitle('3. Content Ownership and Responsibility',context),
               // Content Para
               _buildSectionContent(
-                'Our service allows you to post, link, store, share, and otherwise make available certain information, text, graphics, videos, or other material ("Content"). You are responsible for the Content that you post to the service, including its legality, reliability, and appropriateness. By posting Content to the service, you grant us the right and license to use, modify, publicly perform, publicly display, reproduce, and distribute such Content on and through the service.',
+                'Our service allows you to post, link, store, share, and otherwise make available certain information, text, graphics, videos, or other material ("Content"). You are responsible for the Content that you post to the service, including its legality, reliability, and appropriateness. By posting Content to the service, you grant us the right and license to use, modify, publicly perform, publicly display, reproduce, and distribute such Content on and through the service.',context
               ),
               // Prohibited Title
-              _buildSectionTitle('4. Prohibited Activities'),
+              _buildSectionTitle('4. Prohibited Activities',context),
               // Prohibited Para
               _buildSectionContent(
-                'You may not use the service for any illegal or unauthorized purpose. You agree to comply with all laws, rules, and regulations applicable to your use of the service. You are strictly prohibited from engaging in harassment, hate speech, impersonation, or distributing spam and malicious content.',
+                'You may not use the service for any illegal or unauthorized purpose. You agree to comply with all laws, rules, and regulations applicable to your use of the service. You are strictly prohibited from engaging in harassment, hate speech, impersonation, or distributing spam and malicious content.',context
               ),
               // Termination Title
-              _buildSectionTitle('5. Termination'),
+              _buildSectionTitle('5. Termination',context),
               // Termination Para
               _buildSectionContent(
-                'We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. Upon termination, your right to use the service will immediately cease. If you wish to terminate your account, you may simply discontinue using the service.',
+                'We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. Upon termination, your right to use the service will immediately cease. If you wish to terminate your account, you may simply discontinue using the service.',context
               ),
               // Changes to Terms Title
-              _buildSectionTitle('6. Changes to Terms'),
+              _buildSectionTitle('6. Changes to Terms',context),
               // Changes to Terms Para
               _buildSectionContent(
-                'We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide at least 30 days\' notice prior to any new terms taking effect. By continuing to access or use our service after those revisions become effective, you agree to be bound by the revised terms.',
+                'We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide at least 30 days\' notice prior to any new terms taking effect. By continuing to access or use our service after those revisions become effective, you agree to be bound by the revised terms.', context
               ),
             ],
           ),
@@ -96,37 +96,36 @@ class TermsAndConditionsScreen extends ConsumerWidget {
         bottomNavigationBar:
             // Bottom Nav Bar
             CustomElevatedButton(
-              borderRadius: 10,
+              borderRadius: context.h(1.2),
               buttonColor: AppColors.kSecondary,
               onPress: () {
                 if (!state.isTermsAgreed) {
                   authCtrl.toggleTermsAgreed();
                 }
-
                 context.pop();
               },
               title: 'Accept & Continue',
-            ).padSymmetric(horizontal: 20.0, vertical: 15.0),
+            ).padSymmetric(horizontal: context.w(2.8), vertical: context.h(1.9)),
       ),
     );
   }
 
   // Titles Helper widget 
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(String title,BuildContext context) {
     return Text(
       title,
       style: AppTextStyle.kLargeBodyText.copyWith(fontFamily: AppFonts.kBold),
-    ).padBottom(5).padTop(5);
+    ).padBottom(context.h(0.6)).padTop(context.h(0.6));
   }
 
   // Section content Helper widget 
-  Widget _buildSectionContent(String content) {
+  Widget _buildSectionContent(String content,BuildContext context) {
     return Text(
       content,
       textAlign: TextAlign.justify,
       style: AppTextStyle.kDefaultBodyText.copyWith(
-        fontSize: 15,
-        height: 1.5,
+        fontSize: context.w(1.9),
+        height: context.w(0.15),
         color: AppColors.kHintTextColor,
       ),
     );

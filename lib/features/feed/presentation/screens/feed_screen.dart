@@ -37,7 +37,7 @@ class MainFeedScreen extends StatelessWidget {
             // Feed Section
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: context.w(2)),
                 itemCount: dummyFeedList.length,
                 itemBuilder: (context, i) {
                   final feed = dummyFeedList[i];

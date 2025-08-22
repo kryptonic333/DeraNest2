@@ -23,7 +23,7 @@ class ForgotPasswordScreen extends ConsumerWidget {
               // Forgot Pass Text
               Text(
                 'Forgot Password',
-                style: AppTextStyle.kLargeBodyText.copyWith(fontSize: 22),
+                style: AppTextStyle.kLargeBodyText.copyWith(fontSize: context.h(2.9)),
               ),
         ),
         backgroundColor: AppColors.kTransparent,
@@ -36,33 +36,33 @@ class ForgotPasswordScreen extends ConsumerWidget {
               // Email Text
               Text('Email', style: AppTextStyle.kLargeBodyText),
 
-              SizedBox(height: context.h(1.5)),
+              context.h(1.5).heightBox,
 
               // Email text field
               CustomElevatedTextField(
                 cursorColor: AppColors.kBlack,
                 fontColor: AppColors.kBlack,
                 controller: authState.forgotPasswordController,
-                hintText: 'Email',
+                hintText: '....@gmail.com',
                 labelText: null,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.done,
                 validator: FieldValidator.required(),
               ),
 
-              SizedBox(height: context.h(2)),
+              context.h(2).heightBox,
 
               // Description Text
               Text(
                 'Enter Email on which you want to Reset Password',
                 style: AppTextStyle.kMediumBodyText,
               ),
-              SizedBox(height: context.h(20)),
+              context.h(20).heightBox,
 
               // Elevated Button
               Center(
                 child: CustomElevatedButton(
-                  borderRadius: 10,
+                  borderRadius: context.h(1.2),
                   buttonColor: AppColors.kSecondary,
                   width: context.w(90),
                   title: 'Send',

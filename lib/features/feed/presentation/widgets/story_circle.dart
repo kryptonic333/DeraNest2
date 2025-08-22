@@ -9,17 +9,16 @@ import 'package:go_router/go_router.dart';
 
 class StoryCircle extends ConsumerWidget {
   const StoryCircle({super.key, required this.index});
-  // Feed Screen Controller
-
   final int index;
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) 
+  {
     final state = ref.watch(postDetailProvider);
     final notifier = ref.read(postDetailProvider.notifier);
     return GestureDetector(
       onTap: () {
-        if (!state.isStoryViewed) {
+        if (!state.isStoryViewed) 
+        {
           notifier.onStoryClicked();
         }
         context.push(Routes.storyViewer);

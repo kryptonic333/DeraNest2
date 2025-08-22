@@ -1,5 +1,5 @@
 
-// NO CHANGES NEEDED FOR THE WIDGETS BELOW
+
 
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
@@ -15,7 +15,7 @@ class TextMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(maxWidth: context.w(75)),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding:  EdgeInsets.symmetric(horizontal: context.w(1.8), vertical: context.h(1.2)),
       decoration: BoxDecoration(
         gradient: isMe
             ? LinearGradient(
@@ -26,8 +26,8 @@ class TextMessage extends StatelessWidget {
             : null,
         color: isMe ? null : AppColors.kHintTextColor.withAlpha(20),
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(isMe ? 12 : 4),
-          topRight: Radius.circular(isMe ? 4 : 12),
+          topLeft: Radius.circular(isMe ? context.w(1.6) : context.w(0.5)),
+          topRight: Radius.circular(isMe ? context.w(0.5) : context.w(1.6) ),
           bottomLeft: const Radius.circular(12),
           bottomRight: const Radius.circular(12),
         ),

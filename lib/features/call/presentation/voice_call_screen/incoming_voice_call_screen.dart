@@ -11,8 +11,7 @@ class IncomingVoiceCallScreen extends StatelessWidget {
   const IncomingVoiceCallScreen({super.key});
 
   @override
-  Widget build(BuildContext context) 
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.kTransparent,
       body:
@@ -81,7 +80,7 @@ class IncomingVoiceCallScreen extends StatelessWidget {
                           ),
                         ),
                       ).padHrz(context.w(10)),
-                      SizedBox(width: context.w(35)),
+                      context.w(35).widthBox,
                       // Reject Call Widget
                       Container(
                         height: context.h(10),

@@ -11,7 +11,7 @@ class OnVoiceCallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The main build method is clean, delegating UI to smaller widgets.
+   
     return Scaffold(
       backgroundColor: AppColors.kTransparent,
       body:
@@ -32,7 +32,7 @@ class OnVoiceCallScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  SizedBox(height: context.h(10)),
+                  context.h(10).heightBox,
                   // Profile Image
                   Center(
                     child: CircleAvatar(

@@ -10,9 +10,9 @@ import 'package:deranest/features/call/presentation/voice_call_screen/incoming_v
 import 'package:deranest/features/call/presentation/voice_call_screen/on_voice_call_screen.dart';
 import 'package:deranest/features/feed/presentation/screens/feed_screen.dart';
 import 'package:deranest/features/main_tab/presentation/screens/main_tab_screen.dart';
-import 'package:deranest/features/messages/presentation/poll/poll_creation_screen.dart';
-import 'package:deranest/features/messages/presentation/stream/conversation_screen.dart';
-import 'package:deranest/features/messages/presentation/stream/inbox_screen.dart';
+import 'package:deranest/features/messages/presentation/screens/poll/poll_creation_screen.dart';
+import 'package:deranest/features/messages/presentation/screens/stream/conversation_screen.dart';
+import 'package:deranest/features/messages/presentation/screens/stream/inbox_screen.dart';
 import 'package:deranest/features/notification/presentation/notification_screen.dart';
 import 'package:deranest/features/onBoarding/presentation/screens/onboarding_screen.dart';
 import 'package:deranest/features/posts/presentation/screens/content_type_selection_screen.dart';
@@ -87,7 +87,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       // --- Auth and splash outside of tabs ---
       GoRoute(path: Routes.splash, builder: (context, state) => SplashScreen()),
       GoRoute(path: Routes.login, builder: (context, state) => LoginScreen()),
-      GoRoute(path: Routes.welcome, builder: (context, state) => AskUserAuth()),
+      GoRoute(path: Routes.welcome, builder: (context, state) => WelcomeScreen()),
       GoRoute(
         path: Routes.register,
         builder: (context, state) => SignupScreen(),

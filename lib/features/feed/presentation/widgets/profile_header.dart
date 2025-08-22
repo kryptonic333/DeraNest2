@@ -3,6 +3,7 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/data/dummy_lists/story_list.dart';
 import 'package:deranest/core/routing/app_routers.dart';
+
 import 'package:deranest/features/posts/data/providers/post_detail_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileHeader extends ConsumerWidget {
-  
   final Profile user;
-  
- 
+
   final int index;
   const ProfileHeader({super.key, required this.user, required this.index});
 
@@ -23,6 +22,8 @@ class ProfileHeader extends ConsumerWidget {
     final notifier = ref.read(postDetailProvider.notifier);
     return Row(
       children: [
+        
+        // Story Circle
         GestureDetector(
           onTap: () {
             if (!state.isStoryViewed) {
@@ -50,17 +51,19 @@ class ProfileHeader extends ConsumerWidget {
             ),
           ).topLeftAlign,
         ),
-        SizedBox(width: context.w(0.125)),
+        context.w(0.125).widthBox,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Name
             Text(
               ' ${user.name}',
               style: AppTextStyle.kLargeBodyText.copyWith(
-                fontSize: 17,
+                fontSize: context.w(2.1),
                 fontWeight: FontWeight.w900,
               ),
             ),
+            // User Name
             Text(
               ' @${user.username}',
               style: AppTextStyle.kMediumBodyText.copyWith(
@@ -69,7 +72,7 @@ class ProfileHeader extends ConsumerWidget {
             ),
           ],
         ),
-        Divider(color: AppColors.kHintTextColor, thickness: 1),
+        Divider(color: AppColors.kHintTextColor, thickness: context.w(0.1)),
       ],
     );
   }
