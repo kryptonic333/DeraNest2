@@ -22,9 +22,9 @@ void showAlertDialog({
     barrierDismissible: barrierDismissible ?? false,
     builder: (context) => Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      backgroundColor: AppColors.kSecondarySupport.withAlpha(
-        50,
-      ), //Secondary -> Secondary Support.withAlpha
+      backgroundColor: AppColors.kHintTextColor.withAlpha(
+        100,
+      ), //Secondary -> kHintTextColor
       insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       surfaceTintColor: AppColors.kTransparent,
       child: Column(

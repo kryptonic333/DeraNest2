@@ -22,8 +22,6 @@ class ProfileScreen extends ConsumerWidget {
         .toList();
     return CustomSafeArea(
       child: Container(
-        height: double.infinity,
-        width: double.infinity,
         decoration: BoxDecoration(
           color: AppColors.kWhite,
           image: DecorationImage(
@@ -49,7 +47,7 @@ class ProfileScreen extends ConsumerWidget {
                 ),
               ),
               // Top area
-              Expanded(child: Container()),
+              Expanded(child: SizedBox()),
               // Bottom area
               SizedBox(
                 height: context.h(55),
@@ -140,7 +138,7 @@ class ProfileScreen extends ConsumerWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: context.h(2)),
+                              context.h(2).heightBox,
                               // Name
                               Text(
                                 profile.name,
@@ -148,7 +146,7 @@ class ProfileScreen extends ConsumerWidget {
                                   color: AppColors.kBlack,
                                 ),
                               ),
-                              SizedBox(height: 5),
+                              context.h(2).heightBox,
                               // Username
                               Text(
                                 profile.username,
@@ -156,7 +154,7 @@ class ProfileScreen extends ConsumerWidget {
                                   color: AppColors.kBlack,
                                 ),
                               ),
-                              SizedBox(height: context.h(1.5)),
+                              context.h(1.5).heightBox,
                               // Bio
                               Text(
                                 profile.bio,
@@ -165,7 +163,7 @@ class ProfileScreen extends ConsumerWidget {
                                 ),
                                 textAlign: TextAlign.center,
                               ).padHrz(context.h(6)),
-                              SizedBox(height: 20),
+                             context.h(2.3).heightBox,
                               // Grid Container
                               Container(
                                 height: context.h(40),

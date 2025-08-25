@@ -5,7 +5,7 @@ List<Profile> dummyProfileList = [
   Profile(
     id: 'user_001',
     name: 'Claire Dawson',
-    username: '@claire_d',
+    username: 'claire_d',
     profilePictureUrl: AppImages.postDetailImage,
     bio: 'Traveler 🌍 | Nature lover | Photographer 📸',
     followersCount: 1200,

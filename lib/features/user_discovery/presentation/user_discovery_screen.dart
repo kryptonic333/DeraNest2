@@ -10,15 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class UserDiscoveryScreen extends StatelessWidget {
-  // Person
-  final PeopleOnApp person = PeopleOnApp(
-    email: '',
-    id: '1',
-    name: 'name',
-    username: 'username',
-    createdAt: DateTime(2025),
-  );
-  UserDiscoveryScreen({super.key});
+  const UserDiscoveryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +20,7 @@ class UserDiscoveryScreen extends StatelessWidget {
         appBar: AppBar(
           leading: const Icon(Icons.add_box),
           elevation: 10,
-          backgroundColor: AppColors.kPrimary.withAlpha(100),
+          backgroundColor: AppColors.kHintTextColor.withAlpha(50),
           title: Text('People You May Know', style: AppTextStyle.kHeadingText),
         ),
         body: Column(
@@ -89,7 +81,7 @@ class _PersonCard extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundColor: AppColors.kBlack,
-          radius: 30,
+          radius: context.h(2.5),
           backgroundImage: person.profilePictureUrl != null
               ? NetworkImage(person.profilePictureUrl!)
               : null,
@@ -102,7 +94,7 @@ class _PersonCard extends StatelessWidget {
                 )
               : null,
         ),
-        const SizedBox(width: 12),
+        context.w(2).widthBox,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -114,14 +106,14 @@ class _PersonCard extends StatelessWidget {
         CustomElevatedButton(
           width: context.w(29),
           buttonColor: AppColors.kPrimary,
-          textColor: AppColors.kWhite,
+          textColor: AppColors.kBlack,
           title: 'Follow',
           onPress: () {
             // Future: Add follow logic here
           },
-          borderRadius: 8,
+          borderRadius: context.h(1),
         ),
       ],
-    ).padSymmetric(horizontal: 16, vertical: 8);
+    ).padSymmetric(horizontal: context.h(2), vertical: context.h(1));
   }
 }

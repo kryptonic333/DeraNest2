@@ -1,14 +1,12 @@
-
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
-class InboxListItem extends StatelessWidget 
-{
+class InboxListItem extends StatelessWidget {
   final Conversation conversation;
-  const InboxListItem({super.key,required this.conversation});
+  const InboxListItem({super.key, required this.conversation});
   @override
   Widget build(BuildContext context) {
     final participant = conversation.participant;
@@ -24,7 +22,7 @@ class InboxListItem extends StatelessWidget
               : null,
           radius: context.w(6),
         ),
-        context.w(1.2).widthBox,
+        context.w(2.2).widthBox,
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +33,7 @@ class InboxListItem extends StatelessWidget
                   color: AppColors.kBlack,
                 ),
               ),
-              const SizedBox(height: 4),
+              context.h(1).heightBox,
               Text(
                 lastMessage?.message ?? 'No messages yet',
                 maxLines: 1,
@@ -50,11 +48,11 @@ class InboxListItem extends StatelessWidget
             lastMessage != null ? '3:45 Am' : '',
             style: AppTextStyle.kDefaultBodyText.copyWith(
               color: AppColors.kHintTextColor,
-              fontSize: context.w(1.2),
+              fontSize: context.h(1.5),
             ),
           ),
         ),
       ],
-    ).padSymmetric(vertical: context.h(0.5), horizontal: context.w(1.7));
+    ).padSymmetric(vertical: context.h(1.5), horizontal: context.w(1.8));
   }
 }

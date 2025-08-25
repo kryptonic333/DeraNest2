@@ -177,7 +177,7 @@ class StoryMediaPickerScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: context.w(13), color: AppColors.kWhite),
-            SizedBox(height: 8),
+            context.h(1).heightBox,
             Text(
               label,
               style: AppTextStyle.kMediumBodyText.copyWith(

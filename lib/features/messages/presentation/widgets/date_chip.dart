@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 
 class DateChip extends StatelessWidget {
   final DateTime time;
-  const DateChip({super.key,required this.time});
+  const DateChip({super.key, required this.time});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding:  EdgeInsets.symmetric(horizontal: context.w(1.7), vertical: context.h(0.5)),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.w(1.7),
+          vertical: context.h(0.5),
+        ),
         decoration: BoxDecoration(
           color: AppColors.kWhite,
           borderRadius: BorderRadius.circular(10),
@@ -24,6 +27,6 @@ class DateChip extends StatelessWidget {
           style: AppTextStyle.kSmallBodyText.copyWith(color: AppColors.kBlack),
         ),
       ),
-    ).padSymmetric(vertical: 8.0);
+    ).padSymmetric(vertical: context.h(0.5));
   }
 }

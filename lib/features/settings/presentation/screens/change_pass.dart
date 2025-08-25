@@ -16,9 +16,10 @@ class ChangePasswordScreen extends StatelessWidget {
         backgroundColor: AppColors.kWhite,
         title: Text('Change Password', style: AppTextStyle.kLargeBodyText),
       ),
-      body: Column(
+      body: ListView(
         children: [
           _buildTextFieldSection(
+            context: context,
             label: 'Old Password',
             field: CustomElevatedPasswordTextField(
               labelText: null,
@@ -31,6 +32,7 @@ class ChangePasswordScreen extends StatelessWidget {
             ),
           ),
           _buildTextFieldSection(
+            context: context,
             label: 'New Password',
             field: CustomElevatedPasswordTextField(
               labelText: null,
@@ -43,6 +45,7 @@ class ChangePasswordScreen extends StatelessWidget {
             ),
           ),
           _buildTextFieldSection(
+            context: context,
             label: 'Confirm Password',
             field: CustomElevatedPasswordTextField(
               labelText: null,
@@ -58,7 +61,7 @@ class ChangePasswordScreen extends StatelessWidget {
           CustomElevatedButton(
             height: context.h(7),
             width: context.w(95),
-            borderRadius: 18,
+            borderRadius: context.h(2.1),
             buttonColor: AppColors.kSecondarySupport,
             title: 'Change Password',
             onPress: () {},
@@ -70,6 +73,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
   // A private helper widget to build a labeled form field, reducing code duplication.
   Widget _buildTextFieldSection({
+    required BuildContext context,
     required String label,
     required Widget field,
   }) {
@@ -82,9 +86,9 @@ class ChangePasswordScreen extends StatelessWidget {
             fontWeight: FontWeight.w800,
           ),
         ),
-        const SizedBox(height: 4),
+        context.h(0.5).heightBox,
         field,
-        const SizedBox(height: 16),
+        context.h(2).heightBox,
       ],
     );
   }

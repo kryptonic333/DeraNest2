@@ -26,11 +26,9 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: // Create Heading
-          Text(
-            'CREATE',
-            style: AppTextStyle.kVeryLargeBodyText,
-          ),
+          title:
+              // Create Heading
+              Text('CREATE', style: AppTextStyle.kVeryLargeBodyText),
           backgroundColor: AppColors.kWhite,
           actions: [
             //  Publish Button
@@ -72,7 +70,7 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                     radius: context.w(5),
                     backgroundImage: AssetImage(AppImages.postDetailImage),
                   ),
-                  SizedBox(width: context.w(3)),
+                  context.w(3).widthBox,
                   Expanded(
                     child: CustomElevatedTextField(
                       controller: state.textController,
@@ -86,7 +84,7 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              SizedBox(height: context.h(2)),
+              context.h(2).heightBox,
               // Animated Container - for adding media
               AnimatedContainer(
                 curve: Curves.decelerate,
@@ -229,7 +227,7 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              SizedBox(height: context.h(1)),
+              context.h(1).heightBox,
               //  Post Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
@@ -237,9 +235,9 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                   image: AssetImage(AppImages.profileImage),
                   fit: BoxFit.fill,
                 ),
-              ).padAll(5),
+              ).padAll(context.w(0.5)),
 
-              // Content Type Selection (post or story)
+              // Content Type Selection Container (post or story)
               Center(
                 child: Container(
                   height: context.h(5),
@@ -308,9 +306,9 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-              ),
+              ).padTop(context.h(1)),
             ],
-          ).padAll(10),
+          ).padAll(context.w(1.1)),
         ),
       ),
     );

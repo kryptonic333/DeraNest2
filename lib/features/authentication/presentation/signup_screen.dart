@@ -32,11 +32,11 @@ class SignupScreen extends ConsumerWidget {
             child: Column(
               children: [
                 // Top Space
-                 context.h(5).heightBox,
+                context.h(5).heightBox,
                 //  App Header
                 const AppHeader(),
                 // Header's bottom spacing
-                 context.h(5).heightBox,
+                context.h(5).heightBox,
 
                 // App tagline
                 Text(
@@ -71,7 +71,7 @@ class SignupScreen extends ConsumerWidget {
                   label: 'Gender',
                   field: CustomElevatedDropDownMenuButton(
                     textFontColor: AppColors.kBlack,
-                    label: 'Male/Female/?',
+                    hintText: 'Male/Female',
                     textController: authState.genderController,
                     width: double.infinity,
                     dropdownMenuEntries: const [
@@ -188,7 +188,7 @@ class SignupScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-               context.h(3).heightBox,
+                context.h(3).heightBox,
 
                 // --- Action Buttons ---
                 // Register Button
@@ -228,7 +228,7 @@ class SignupScreen extends ConsumerWidget {
                     context.go(Routes.login);
                   },
                 ),
-                context.h(3).heightBox
+                context.h(3).heightBox,
               ],
             ),
           ).padHrz(context.w(4)),

@@ -38,17 +38,17 @@ class SettingsScreen extends ConsumerWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(height: 20),
+            context.h(2.8).heightBox,
             Text(
               'Account',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: context.h(2.2),
                 fontWeight: FontWeight.bold,
                 color: AppColors.kSecondary,
               ),
             ).padLeft(context.w(6.5)),
-            const SizedBox(height: 10),
-            _buildSettingsCard([
+            context.h(1.2).heightBox,
+            _buildSettingsCard(context, [
               _buildSettingsListItem(
                 context,
                 icon: Icons.person_outline,
@@ -67,17 +67,17 @@ class SettingsScreen extends ConsumerWidget {
                 },
               ),
             ]),
-            const SizedBox(height: 20),
+            context.h(2.8).heightBox,
             Text(
               'Notifications',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: context.h(2.2),
                 fontWeight: FontWeight.bold,
                 color: AppColors.kSecondary,
               ),
             ).padLeft(context.w(6.5)),
-            const SizedBox(height: 10),
-            _buildSettingsCard([
+            context.h(1.2).heightBox,
+            _buildSettingsCard(context, [
               _buildSettingsListItem(
                 context,
                 icon: Icons.notifications_outlined,
@@ -95,17 +95,17 @@ class SettingsScreen extends ConsumerWidget {
                 },
               ),
             ]),
-            const SizedBox(height: 20),
+            context.h(2.8).heightBox,
             Text(
               'More',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: context.h(2.2),
                 fontWeight: FontWeight.bold,
                 color: AppColors.kSecondary,
               ),
             ).padLeft(context.w(6.5)),
-            const SizedBox(height: 10),
-            _buildSettingsCard([
+            context.h(1.2).heightBox,
+            _buildSettingsCard(context, [
               _buildSettingsListItem(
                 context,
                 icon: Icons.help_outline,
@@ -125,7 +125,7 @@ class SettingsScreen extends ConsumerWidget {
             ]),
             const SizedBox(height: 20),
             CustomElevatedButton(
-              borderRadius: 10,
+              borderRadius: context.h(1.2),
               width: context.w(90),
               height: context.h(7),
               buttonColor: AppColors.kRed,
@@ -139,12 +139,12 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSettingsCard(List<Widget> children) {
+  Widget _buildSettingsCard(BuildContext context, List<Widget> children) {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: Column(children: children),
-    ).padHrz(16);
+    ).padHrz(context.w(2));
   }
 
   Widget _buildSettingsListItem(

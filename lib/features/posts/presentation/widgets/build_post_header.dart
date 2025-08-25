@@ -14,11 +14,13 @@ class BuildPostHeader extends StatelessWidget {
     return Container(
       height: context.h(6.5),
       color: AppColors.kWhite,
-      padding: const EdgeInsets.only(left: 5.0),
+      padding: EdgeInsets.only(left: context.w(0.5)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Profile Header
           ProfileHeader(user: dummyProfileList[index], index: index),
+          // ... Button
           PopupMenuButton(
             color: AppColors.kWhite,
             itemBuilder: (context) => [

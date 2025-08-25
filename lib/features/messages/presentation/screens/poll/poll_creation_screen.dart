@@ -30,7 +30,7 @@ class PollCreationScreen extends StatelessWidget {
               'Create Poll',
               style: AppTextStyle.kVeryLargeBodyText.copyWith(
                 color: AppColors.kWhite,
-                fontSize: context.w(2.9),
+                fontSize: context.h(2.5),
               ),
             ),
           ),
@@ -93,8 +93,8 @@ class PollCreationScreen extends StatelessWidget {
   // A styled helper for creating text form fields.
   Widget _buildInputField({required String hintText, bool isQuestion = false}) {
     return CustomElevatedTextField(
-      maxLength: isQuestion ? 3:1,
-      minLines: isQuestion?2:1,
+      maxLength: isQuestion ? 3 : 1,
+      minLines: isQuestion ? 2 : 1,
       controller: null,
       hintText: hintText,
       labelText: null,
@@ -104,12 +104,13 @@ class PollCreationScreen extends StatelessWidget {
     );
   }
 
-  // Design for the "Add Option" button.
+  // "Add Option" button.
   Widget _buildAddOptionButton(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomIconButton(
-          iconSize: context.w(2.7),
+          iconSize: context.h(2.7),
           onTap: () {},
           icon: Icons.add_circle_outline,
           iconColor: AppColors.kSecondary,
@@ -124,11 +125,11 @@ class PollCreationScreen extends StatelessWidget {
     );
   }
 
-  // Design for the main "Create Poll" action button.
+  // "Create Poll" action button.
   Widget _buildCreatePollButton() {
     return CustomElevatedButton(
       onPress: () {
-        // No logic here - pure UI
+        // Creating a poll
       },
       buttonColor: AppColors.kSecondary,
       title: "Create Poll",

@@ -28,7 +28,7 @@ class PostGalleryScreen extends ConsumerWidget {
                 child: Text(
                   'Cancel',
                   style: AppTextStyle.kDefaultBodyText.copyWith(
-                    fontSize: 19,
+                    fontSize: context.h(1.2),
                     color: AppColors.kAbortColor,
                   ),
                 ),
@@ -49,7 +49,7 @@ class PostGalleryScreen extends ConsumerWidget {
                       'Next',
                       style: AppTextStyle.kDefaultBodyText.copyWith(
                         color: AppColors.kWhite,
-                        fontSize: 19,
+                        fontSize: context.h(1.2),
                       ),
                     ),
                   ),

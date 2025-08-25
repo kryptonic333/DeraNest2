@@ -15,8 +15,8 @@ class BuildActionBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(postDetailProvider); 
-    final notifier = ref.read(postDetailProvider.notifier); 
+    final state = ref.watch(postDetailProvider);
+    final notifier = ref.read(postDetailProvider.notifier);
 
     return Container(
       height: context.h(7),
@@ -24,7 +24,6 @@ class BuildActionBar extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          
           Row(
             children: [
               // Like Button
@@ -32,16 +31,16 @@ class BuildActionBar extends ConsumerWidget {
                 icon: Icon(
                   CupertinoIcons.heart_solid,
                   color: state.like ? AppColors.kRed : AppColors.kWhite,
-                  size: 28,
+                  size: context.h(3.8),
                 ),
                 onPressed: notifier.onLikeClicked,
               ),
               // Comment Button
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   CupertinoIcons.chat_bubble_text_fill,
                   color: AppColors.kWhite,
-                  size: 28,
+                  size: context.h(3.8),
                 ),
                 onPressed: () {
                   openCommentBottomSheet(context, post: post);
@@ -60,11 +59,10 @@ class BuildActionBar extends ConsumerWidget {
                   width: context.w(6.5),
                 ),
               ),
-              
-          // Bookmark Button   
-          IconButton(
-                onPressed: () 
-                {
+
+              // Bookmark Button
+              IconButton(
+                onPressed: () {
                   notifier.onBookmarkClicked();
                 },
                 icon: Icon(
@@ -72,7 +70,7 @@ class BuildActionBar extends ConsumerWidget {
                   color: state.bookmark
                       ? AppColors.kSecondarySupport.withAlpha(100)
                       : AppColors.kWhite,
-                  size: 28,
+                  size: context.h(3.8),
                 ),
               ),
             ],

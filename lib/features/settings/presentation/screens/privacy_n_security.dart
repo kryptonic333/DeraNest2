@@ -20,11 +20,11 @@ class PrivacySecurityScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+           Text(
             "Privacy",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: context.h(2.2), fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
+          context.h(1.2).heightBox,
 
           ListTile(
             leading: const Icon(Icons.lock_outline),
@@ -36,7 +36,7 @@ class PrivacySecurityScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.block),
             title: const Text("Blocked Accounts"),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            trailing:  Icon(Icons.arrow_forward_ios, size: context.h(2.2)),
             onTap: () {},
           ),
           const Divider(),
@@ -44,22 +44,22 @@ class PrivacySecurityScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.visibility_off),
             title: const Text("Hide Story From"),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            trailing:  Icon(Icons.arrow_forward_ios, size: context.h(2.2)),
             onTap: () {},
           ),
           const Divider(),
 
-          const SizedBox(height: 20),
-          const Text(
+          context.h(1.2).heightBox,
+           Text(
             "Security",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: context.h(2.2), fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
+          context.h(2.8).heightBox,
 
           ListTile(
             leading: const Icon(Icons.key),
             title: const Text("Change Password"),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            trailing:  Icon(Icons.arrow_forward_ios, size: context.h(2.2)),
             onTap: () {
               context.push(Routes.changePassword);
             },
@@ -69,7 +69,7 @@ class PrivacySecurityScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.devices),
             title: const Text("Login Activity"),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            trailing:  Icon(Icons.arrow_forward_ios, size: context.h(2.2)),
             onTap: () {},
           ),
           const Divider(),
@@ -77,7 +77,7 @@ class PrivacySecurityScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.verified_user_outlined),
             title: const Text("Two-Factor Authentication"),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+            trailing:  Icon(Icons.arrow_forward_ios, size: context.h(2.2)),
             onTap: () {},
           ),
           const Divider(),

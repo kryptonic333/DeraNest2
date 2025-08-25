@@ -24,7 +24,7 @@ class AboutScreen extends StatelessWidget {
         children: [
           // App Logo
           CircleAvatar(
-            radius: 60,
+            radius: context.h(7.9),
             backgroundColor: AppColors.kWhite,
             child: VectorGraphic(
               loader: AssetBytesLoader(SvgAssets.appLogo),
@@ -35,14 +35,14 @@ class AboutScreen extends StatelessWidget {
               width: context.w(18),
             ),
           ),
-          const SizedBox(height: 20),
+          context.h(2.4).heightBox,
 
           // App Name
           const Text(
             "DeraNest",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 8),
+          context.h(1).heightBox,
 
           // Version
           Text(
@@ -59,7 +59,7 @@ class AboutScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyle.kLargeBodyText,
           ),
-          const SizedBox(height: 30),
+          context.h(3.9).heightBox,
 
           // Developer Info Card
           Container(

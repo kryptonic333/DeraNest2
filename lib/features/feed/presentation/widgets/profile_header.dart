@@ -3,7 +3,6 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/data/dummy_lists/story_list.dart';
 import 'package:deranest/core/routing/app_routers.dart';
-
 import 'package:deranest/features/posts/data/providers/post_detail_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ class ProfileHeader extends ConsumerWidget {
     final notifier = ref.read(postDetailProvider.notifier);
     return Row(
       children: [
-        
         // Story Circle
         GestureDetector(
           onTap: () {
@@ -59,13 +57,13 @@ class ProfileHeader extends ConsumerWidget {
             Text(
               ' ${user.name}',
               style: AppTextStyle.kLargeBodyText.copyWith(
-                fontSize: context.w(2.1),
+                fontSize: context.w(4.8),
                 fontWeight: FontWeight.w900,
               ),
             ),
             // User Name
             Text(
-              ' @${user.username}',
+              user.username,
               style: AppTextStyle.kMediumBodyText.copyWith(
                 color: AppColors.kHintTextColor,
               ),

@@ -73,8 +73,8 @@ class StoryCameraScreen extends ConsumerWidget {
                         }
                       },
                       child: Container(
-                        height: 30,
-                        width: 100,
+                        height: context.h(3.2),
+                        width: context.h(12.2),
                         decoration: BoxDecoration(
                           color: AppColors.kSecondary,
                           borderRadius: BorderRadius.circular(15),
@@ -119,10 +119,10 @@ class StoryCameraScreen extends ConsumerWidget {
                                   color: AppColors.kWhite,
                                   size: context.h(3.5),
                                 ),
-                              ).padAll(5),
+                              ).padAll(context.h(.5)),
                             ),
                           ),
-                          SizedBox(height: context.h(2)),
+                         context.h(2).heightBox,
                           GestureDetector(
                             onTap: () {
                               notifier.showColorsToggle();
@@ -181,19 +181,19 @@ class StoryCameraScreen extends ConsumerWidget {
                               child: Icon(
                                 Icons.cancel,
                                 color: AppColors.kWhite,
-                                size: 30,
+                                size: context.h(3.7),
                               ),
                             ),
                           );
                         } else {
                           return Container(
                             margin: const EdgeInsets.symmetric(horizontal: 8),
-                            width: 40,
-                            height: 40,
+                            width: context.h(5),
+                            height: context.h(5),
                             decoration: BoxDecoration(
                               color: AppColors.kHintTextColor,
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(color: AppColors.kWhite, width: 2),
                             ),
                           );
                         }

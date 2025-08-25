@@ -29,7 +29,7 @@ class EditProfileScreen extends StatelessWidget {
                   radius: context.w(20),
                   backgroundImage: AssetImage(AppImages.profileImage),
                 ),
-                const SizedBox(height: 8),
+                context.h(1).heightBox,
                 TextButton(
                   onPressed: () {},
                   child: const Text(
@@ -40,7 +40,7 @@ class EditProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          context.h(2.8).heightBox,
 
           // Name
           CustomElevatedTextField(
@@ -61,7 +61,7 @@ class EditProfileScreen extends StatelessWidget {
             textInputAction: TextInputAction.next,
             validator: null,
           ),
-          const SizedBox(height: 16),
+          context.h(2).heightBox,
           // Bio
           CustomElevatedTextField(
             controller: null,
@@ -71,7 +71,7 @@ class EditProfileScreen extends StatelessWidget {
             textInputAction: TextInputAction.next,
             validator: null,
           ),
-          const SizedBox(height: 16),
+          context.h(2).heightBox,
           // Email
           CustomElevatedTextField(
             controller: null,
@@ -81,7 +81,7 @@ class EditProfileScreen extends StatelessWidget {
             textInputAction: TextInputAction.next,
             validator: null,
           ),
-          const SizedBox(height: 16),
+          context.h(2).heightBox,
           // Phone
           CustomElevatedTextField(
             controller: null,
@@ -91,7 +91,7 @@ class EditProfileScreen extends StatelessWidget {
             textInputAction: TextInputAction.done,
             validator: null,
           ),
-          const SizedBox(height: 30),
+          context.h(3.9).heightBox,
 
           // Save Button
           CustomElevatedButton(

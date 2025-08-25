@@ -31,7 +31,7 @@ class MessageBubble extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
-                  radius: context.w(2.2),
+                  radius: context.h(2.2),
                   backgroundImage: AssetImage(
                     participant.profilePictureUrl ?? AppImages.profileImage,
                   ),
@@ -42,7 +42,7 @@ class MessageBubble extends StatelessWidget {
           if (!isMe) context.h(0.5).heightBox,
           if (message.message != null)
             TextMessage(message: message.message!, isMe: isMe),
-          const SizedBox(height: 4),
+          context.h(0.5).heightBox,
           Text(
             // time utility - Specified for specific functionality
             // formatTimeOnly(message.sentAt),

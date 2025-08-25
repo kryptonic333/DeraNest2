@@ -5,7 +5,7 @@ import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 
 class LikedByRow extends StatelessWidget {
-  const LikedByRow({super.key,required this.likedBy});
+  const LikedByRow({super.key, required this.likedBy});
   // User Profile Model
   final List<Profile> likedBy;
 
@@ -18,11 +18,11 @@ class LikedByRow extends StatelessWidget {
           width: context.w(40),
           child: Stack(
             children: List.generate(
-              likedBy.length > 3 ? 3 : likedBy.length, // Show max 3 avatars
+              likedBy.length > 3 ? 3 : likedBy.length,
               (index) => Positioned(
-                left: (15.0 * index), // Overlapping effect
+                left: (context.h(1.9) * index),
                 child: CircleAvatar(
-                  radius: 20,
+                  radius: context.h(2.5),
                   backgroundImage: AssetImage(
                     likedBy[index].profilePictureUrl!,
                   ),
@@ -31,7 +31,7 @@ class LikedByRow extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: context.w(3)),
+        context.w(3).widthBox,
         Expanded(
           child: RichText(
             text: TextSpan(

@@ -17,7 +17,7 @@ class BuildPostInfoSection extends StatelessWidget {
       children: [
         // Overlapping avatars and "Liked By" text
         LikedByRow(likedBy: post.likedBy),
-        SizedBox(height: context.h(3)),
+        context.h(3).heightBox,
 
         // Post Caption
         Text.rich(
@@ -26,7 +26,7 @@ class BuildPostInfoSection extends StatelessWidget {
               TextSpan(
                 text: '${post.user.name} ',
                 style: AppTextStyle.kMediumBodyText.copyWith(
-                  fontSize: 17,
+                  fontSize: context.h(2.1),
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -34,13 +34,13 @@ class BuildPostInfoSection extends StatelessWidget {
                 text: post.feed.caption,
                 style: AppTextStyle.kDefaultBodyText.copyWith(
                   color: AppColors.kHintTextColor,
-                  fontSize: 15,
+                  fontSize: context.h(1.9),
                 ),
               ),
             ],
           ),
-        ).padSymmetric(horizontal: 7),
-        const SizedBox(height: 5),
+        ).padSymmetric(horizontal: context.w(1)),
+        context.h(0.8).heightBox,
 
         // "View all comments" link
         GestureDetector(
@@ -62,9 +62,9 @@ class BuildPostInfoSection extends StatelessWidget {
                 ),
               ],
             ),
-          ).padAll(10),
+          ).padAll(context.h(1)),
         ),
-        const SizedBox(height: 5),
+        context.h(0.8).heightBox,
 
         // Single Comment Preview
         Text.rich(
@@ -82,15 +82,15 @@ class BuildPostInfoSection extends StatelessWidget {
               ),
             ],
           ),
-        ).padOnly(left: 12, right: 7),
+        ).padOnly(left: context.w(1.2), right: context.w(1.2)),
         Text(
           // timeAgo is a utility
           '4:50 Am',
           style: AppTextStyle.kSmallBodyText.copyWith(
             color: AppColors.kHintTextColor,
           ),
-        ).padAll(5),
+        ).padAll(context.h(0.5)),
       ],
-    ).padAll(5);
+    ).padAll(context.h(0.5));
   }
 }

@@ -21,11 +21,11 @@ class AppHeader extends StatelessWidget {
           colorFilter: ColorFilter.mode(AppColors.kSecondary, BlendMode.srcIn),
           width: context.w(9),
         ),
-        SizedBox(width: context.w(2.75)),
+        context.w(2.75).widthBox,
         Text(
           'DeraNest',
           style: AppTextStyle.kHeadingText.copyWith(
-            fontSize: 30,
+            fontSize: context.h(3.8),
             fontFamily: AppFonts.kBold,
             color: AppColors.kSecondary,
           ),

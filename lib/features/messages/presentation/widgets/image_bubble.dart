@@ -31,7 +31,7 @@ class ImageMessage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
-                  radius: context.w(2.2),
+                  radius: context.h(2),
 
                   backgroundImage: AssetImage(
                     participant.profilePictureUrl ?? AppImages.profileImage,
@@ -74,7 +74,7 @@ class ImageMessage extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
                 imageUrl,
-                width: context.w(60),
+                width: context.h(60),
                 fit: BoxFit.cover,
               ),
             ),

@@ -1,16 +1,13 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_fonts.dart';
-import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
-
-
 
 class CustomElevatedDropDownMenuButton extends StatelessWidget {
   const CustomElevatedDropDownMenuButton({
     super.key,
     // Removed required Keyword
-    this.label,
+    this.hintText,
     required this.dropdownMenuEntries,
     required this.onSelected,
     this.width,
@@ -24,7 +21,7 @@ class CustomElevatedDropDownMenuButton extends StatelessWidget {
   });
 
   // CHANGED: Made label nullable
-  final String? label;
+  final String? hintText;
   final List<DropdownMenuEntry<dynamic>> dropdownMenuEntries;
   final void Function(dynamic)? onSelected;
   final TextEditingController? textController;
@@ -60,18 +57,8 @@ class CustomElevatedDropDownMenuButton extends StatelessWidget {
           surfaceTintColor: WidgetStateProperty.all(AppColors.kTransparent),
         ),
         controller: textController,
-        label:
-            // CHANGED: Conditionally render Text widget if label is not null
-            label != null
-            ? Text(
-                label!, // Use ! to assert non-null after the check
-                style: AppTextStyle.kDefaultBodyText.copyWith(
-                  fontFamily: AppFonts.kMedium,
-                  color: AppColors.kPrimary,
-                ),
-              )
-            // If label is null, pass null to DropdownMenu's label
-            : null,
+        hintText: hintText,
+        //  Label removed
         textStyle: TextStyle(
           fontFamily: textFontFamily,
           fontSize: textFontSize,

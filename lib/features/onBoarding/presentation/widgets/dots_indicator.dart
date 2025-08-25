@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 class DotsIndicator extends StatelessWidget {
   final int currentIndex;
 
-  const DotsIndicator({
-    super.key,
-    required this.currentIndex});
+  const DotsIndicator({super.key, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class DotsIndicator extends StatelessWidget {
                 ? AppColors.kSecondarySupport
                 : AppColors.kHintTextColor,
           ),
-        ).padOnly(right: 5, top: context.h(8)),
+        ).padOnly(right: context.w(0.9), top: context.h(8)),
       ),
     );
   }
