@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:riverpod/riverpod.dart';
 
 // Provider
@@ -6,35 +7,37 @@ final addPostProvider = StateNotifierProvider<AddPostController, AddPostState>(
   (ref) => AddPostController(),
 );
 
-
-
-
-
-
 // State class to hold all the fields
 class AddPostState {
   final bool isExpanded;
-  final bool isGesture;
+  final bool isImagePicked;
   final bool isStoryScreen;
   final TextEditingController textController;
+  final XFile? pickedImage;
 
   AddPostState({
+    this.pickedImage,
+    required this.isImagePicked,
     required this.isExpanded,
-    required this.isGesture,
+   
     required this.isStoryScreen,
     required this.textController,
   });
 
   //copyWith Method
   AddPostState copyWith({
+    final XFile? pickedImage,
+    bool? isImagePicked,
     bool? isExpanded,
-    bool? isGesture,
+
     bool? isStoryScreen,
     TextEditingController? textController,
   }) {
     return AddPostState(
+      pickedImage: pickedImage ?? this.pickedImage,
+      isImagePicked: isImagePicked ?? this.isImagePicked,
       isExpanded: isExpanded ?? this.isExpanded,
-      isGesture: isGesture ?? this.isGesture,
+      
       isStoryScreen: isStoryScreen ?? this.isStoryScreen,
       textController: textController ?? this.textController,
     );
@@ -43,30 +46,59 @@ class AddPostState {
 
 class AddPostController extends StateNotifier<AddPostState> {
   AddPostController()
-      : super(
-          AddPostState(
-            isExpanded: false,
-            isGesture: true,
-            isStoryScreen: false,
-            textController: TextEditingController(),
-          ),
-        );
+    : super(
+        AddPostState(
+          isImagePicked: false,
+          isExpanded: false,
+          
+          isStoryScreen: false,
+          textController: TextEditingController(),
+        ),
+      );
+  final ImagePicker _picker = ImagePicker();
 
+  // Pick image from Gallery
+  Future<void> pickImageFromGallery() async {
+    final image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      state = state.copyWith(pickedImage: image);
+    }
+  }
+
+  // Pick video from Gallery
+  Future<void> pickVideoFromGallery() async {
+    final image = await _picker.pickVideo(source: ImageSource.gallery);
+    if (image != null) {
+      state = state.copyWith(pickedImage: image);
+    }
+  }
+
+  // Pick image from Camera
+  Future<void> pickImageFromCamera() async {
+    final image = await _picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      state = state.copyWith(pickedImage: image);
+    }
+  }
+
+  // ImagePicked or Not
+  void toggleImagePicked() {
+    state = state.copyWith(
+      isImagePicked: !state.isImagePicked,
+      pickedImage: null,
+    );
+  }
+
+  // Is It a Story Screen Or Not
   void toggleStoryScreen() {
     state = state.copyWith(isStoryScreen: !state.isStoryScreen);
   }
 
+  // Animated Container Expansion Control func()
   void toggleExpanded() {
     state = state.copyWith(isExpanded: !state.isExpanded);
   }
 
-  void toggleGesture() {
-    state = state.copyWith(isGesture: !state.isGesture);
-  }
-
-  void collapse() {
-    state = state.copyWith(isExpanded: false);
-  }
 
   @override
   void dispose() {

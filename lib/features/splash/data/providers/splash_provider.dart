@@ -1,24 +1,32 @@
-import 'package:deranest/core/data/local_storage.dart';
-import 'package:deranest/core/routing/app_routers.dart';
+
+import 'package:deranest/core/data/services/auth_services.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 final splashProvider = StateNotifierProvider<SplashProvider, SplashState>((
   ref,
 ) {
-  return SplashProvider();
+  final authService = AuthServices();
+  return SplashProvider(authService);
 });
 
 class SplashProvider extends StateNotifier<SplashState> {
-  SplashProvider() : super(SplashState(loginStatus: LocalStorage.loginStatus));
+  final AuthServices _authService;
+  SplashProvider(this._authService)
+    : super(SplashState(loginStatus:false) )
+    {
+      _checkLoginStatus();
+    }
+  
+  void _checkLoginStatus() 
+  {
 
-  void login() {
-    state = state.copyWith(loginStatus: true);
-    LocalStorage.updateLoginStatus(true);
-  }
-
-  // Check for notification route when needed
-  Future<String> getNavigationRoute() async {
-    return Routes.feed;
+    if (_authService.currentUser != null) {
+      state = state.copyWith(loginStatus: true);
+    } else {
+      state = state.copyWith(loginStatus: false);
+    }
   }
 }
 

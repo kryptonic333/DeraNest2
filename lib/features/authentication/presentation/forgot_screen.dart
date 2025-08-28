@@ -14,6 +14,7 @@ class ForgotPasswordScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
+    final authCtrl = ref.read(authProvider.notifier);
 
     return CustomSafeArea(
       child: Scaffold(
@@ -23,7 +24,9 @@ class ForgotPasswordScreen extends ConsumerWidget {
               // Forgot Pass Text
               Text(
                 'Forgot Password',
-                style: AppTextStyle.kLargeBodyText.copyWith(fontSize: context.h(2.9)),
+                style: AppTextStyle.kLargeBodyText.copyWith(
+                  fontSize: context.h(2.9),
+                ),
               ),
         ),
         backgroundColor: AppColors.kTransparent,
@@ -66,11 +69,11 @@ class ForgotPasswordScreen extends ConsumerWidget {
                   buttonColor: AppColors.kSecondary,
                   width: context.w(90),
                   title: 'Send',
-                  onPress: () {
-                    if (authState.forgetFormKey.currentState?.validate() ??
-                        false) {
-                      // Send Email to set new password
-                    }
+                  onPress: () async {
+                    // Store the Status of Process
+                    await authCtrl.resetPassword(context);
+                   
+                    
                   },
                 ),
               ),

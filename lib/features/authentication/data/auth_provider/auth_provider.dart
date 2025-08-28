@@ -1,11 +1,18 @@
+import 'package:deranest/core/data/services/auth_services.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-final authProvider =
-    StateNotifierProvider<AuthController, AuthState>((ref) {
-  return AuthController();
+final authServiceProvider = Provider<AuthServices>((ref) {
+  return AuthServices();
 });
+
+final authProvider = StateNotifierProvider<AuthController, AuthState>((ref) {
+  final authService = ref.watch(authServiceProvider);
+  return AuthController(authService);
+});
+
 class AuthState {
   //Form Keys
   final GlobalKey<FormState> loginFormKey;
@@ -87,25 +94,91 @@ class AuthState {
 }
 
 class AuthController extends StateNotifier<AuthState> {
-  AuthController()
+  final AuthServices _authService;
+  AuthController(this._authService)
     : super(
         AuthState(
           loginFormKey: GlobalKey<FormState>(),
-        signUpFormKey: GlobalKey<FormState>(),
-        forgetFormKey: GlobalKey<FormState>(),
-        loginEmailController: TextEditingController(),
-        loginPasswordController: TextEditingController(),
-        phoneController: TextEditingController(),
-        genderController: TextEditingController(),
-        nameController: TextEditingController(),
-        signupEmailController: TextEditingController(),
-        confirmPasswordController: TextEditingController(),
-        signupPasswordController: TextEditingController(),
-        forgotPasswordController: TextEditingController(),
-        isTermsAgreed: false,)
+          signUpFormKey: GlobalKey<FormState>(),
+          forgetFormKey: GlobalKey<FormState>(),
+          loginEmailController: TextEditingController(),
+          loginPasswordController: TextEditingController(),
+          phoneController: TextEditingController(),
+          genderController: TextEditingController(),
+          nameController: TextEditingController(),
+          signupEmailController: TextEditingController(),
+          confirmPasswordController: TextEditingController(),
+          signupPasswordController: TextEditingController(),
+          forgotPasswordController: TextEditingController(),
+          isTermsAgreed: false,
+        ),
       );
 
   void toggleTermsAgreed() {
-   state = state.copyWith(isTermsAgreed : !state.isTermsAgreed);
+    state = state.copyWith(isTermsAgreed: !state.isTermsAgreed);
+  }
+
+  // Authentication Methods\
+  Future<void> logout(BuildContext context) async {
+    try {
+      await _authService.signOut();
+      ShowSnackbar1.success(context, 'Logged out successfully');
+     
+    } catch (e) {
+      ShowSnackbar1.error(context, 'Logout failed: $e');
+    }
+  }
+  // SignIn
+  Future<bool> signInUser(BuildContext context) async {
+    if (state.loginFormKey.currentState?.validate() ?? false) {
+      try {
+        await _authService.signInWithEmail(
+          email: state.loginEmailController.text.trim(),
+          password: state.loginPasswordController.text.trim(),
+        );
+        ShowSnackbar1.success(context, 'Sign In successful');
+        return true;
+      } catch (e) {
+        ShowSnackbar1.error(context, '$e');
+        return false;
+      }
+    }
+    return false;
+  }
+
+  // SignUp
+  Future<bool> signUpUser(BuildContext context) async {
+    if (state.signUpFormKey.currentState?.validate() ?? false) {
+      try {
+        await _authService.signUpWithEmail(
+          email: state.signupEmailController.text.trim(),
+          password: state.signupPasswordController.text.trim(),
+        );
+
+        ShowSnackbar1.success(context, 'Sign up successful');
+        return true;
+      } catch (e) {
+        ShowSnackbar1.error(context, '$e');
+        return false;
+      }
+    }
+    return false;
+  }
+
+  // Reset Password
+  Future<bool> resetPassword(BuildContext context) async {
+    if (state.forgetFormKey.currentState?.validate() ?? false) {
+      try {
+        _authService.sendPasswordResetEmail(
+          email: state.forgotPasswordController.text.trim(),
+        );
+        ShowSnackbar1.success(context, 'Email Sent Successfully');
+        return true;
+      } catch (e) {
+        ShowSnackbar1.error(context, e.toString());
+        return false;
+      }
+    }
+    return false;
   }
 }

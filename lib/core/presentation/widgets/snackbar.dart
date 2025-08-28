@@ -30,11 +30,11 @@ class ShowSnackbar1 {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         padding: 15.padAll(),
-        backgroundColor: AppColors.kPrimary,
+        backgroundColor: AppColors.kGreen, // kPrimary -> kGreen
         content: Text(
           msg,
           style: AppTextStyle.kMediumBodyText.copyWith(
-            color: AppColors.kBlack,
+            color: AppColors.kWhite, //kBlack -> kWhite
             fontFamily: AppFonts.kMedium,
           ),
         ),

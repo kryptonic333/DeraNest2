@@ -22,9 +22,7 @@ void showAlertDialog({
     barrierDismissible: barrierDismissible ?? false,
     builder: (context) => Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      backgroundColor: AppColors.kHintTextColor.withAlpha(
-        100,
-      ), //Secondary -> kHintTextColor
+      backgroundColor: AppColors.kWhite, //Secondary -> kHintTextColor
       insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       surfaceTintColor: AppColors.kTransparent,
       child: Column(
@@ -37,7 +35,7 @@ void showAlertDialog({
               title,
               style: AppTextStyle.kLargeBodyText.copyWith(
                 fontFamily: AppFonts.kBold,
-                color: AppColors.kWhite, //kPrimary -> kWhite
+                color: AppColors.kSecondary, //kPrimary -> kWhite
               ),
             ).padHrz(15),
           ListView(

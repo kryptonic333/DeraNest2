@@ -53,7 +53,7 @@ class TopSection extends StatelessWidget {
               isLast
                   ? SizedBox(width: context.h(1))
                   : CustomElevatedButton(
-                      buttonColor: AppColors.kPrimary,
+                      buttonColor: AppColors.kWhite,
                       textColor: AppColors.kBlack,
                       title: 'Skip',
                       onPress: onSkip,

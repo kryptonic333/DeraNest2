@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
@@ -21,7 +23,7 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(addPostProvider);
-    final controller = ref.read(addPostProvider.notifier);
+    final postCtrl = ref.read(addPostProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -35,6 +37,9 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
             GestureDetector(
               onTap: () {
                 // Perform action to publish post
+                if (state.isImagePicked == true) {
+                  postCtrl.toggleImagePicked();
+                }
               },
               child: Container(
                 height: context.h(4),
@@ -112,15 +117,39 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                           icon: state.isExpanded ? Icons.close : Icons.add,
                           iconColor: AppColors.kBlack,
                           onTap: () {
-                            controller.toggleExpanded();
+                            postCtrl.toggleExpanded();
                           },
                         ),
                       ),
                       if (state.isExpanded) ...[
+                        // Gallery Icon
                         IconButton(
                           icon: Icon(Icons.photo, size: context.w(6.75)),
                           onPressed: () {
-                            context.push(Routes.postGallery);
+                            showAlertDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              title: 'File Access Permission Required!',
+                              body: Text(
+                                "This app needs access to your gallery. \n Do you want to allow it?",
+                                style: AppTextStyle.kMediumBodyText.copyWith(
+                                  color: AppColors.kHintTextColor,
+                                ),
+                              ),
+                              saveButtonTitle: 'Allow',
+
+                              saveButtonColor: AppColors.kSecondarySupport,
+                              onSave: () {
+                                context.pop(true);
+                                postCtrl.pickImageFromGallery();
+                                if (state.isImagePicked == false) {
+                                  postCtrl.toggleImagePicked();
+                                }
+                              },
+                              onCancel: () {
+                                context.pop(false);
+                              },
+                            );
                           },
                         ),
                         //  Camera Icon
@@ -130,17 +159,21 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                             showAlertDialog(
                               barrierDismissible: true,
                               context: context,
-                              title: 'Camera Permission Required',
+                              title: 'Camera Permission Required!',
                               body: Text(
                                 "This app needs access to your camera. Do you want to allow it?",
                                 style: AppTextStyle.kMediumBodyText.copyWith(
-                                  color: AppColors.kWhite,
+                                  color: AppColors.kHintTextColor,
                                 ),
                               ),
                               saveButtonTitle: 'Allow',
-                              saveButtonColor: AppColors.kWhite,
+                              saveButtonColor: AppColors.kSecondarySupport,
                               onSave: () {
                                 context.pop(true);
+                                postCtrl.pickImageFromCamera();
+                                if (state.isImagePicked == false) {
+                                  postCtrl.toggleImagePicked();
+                                }
                               },
                               onCancel: () {
                                 context.pop(false);
@@ -204,15 +237,16 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                             showAlertDialog(
                               barrierDismissible: true,
                               context: context,
-                              title: 'File Access Permission Required',
+                              title: 'File Access Permission Required!',
                               body: Text(
                                 "This app needs access to your files. \n Do you want to allow it?",
                                 style: AppTextStyle.kMediumBodyText.copyWith(
-                                  color: AppColors.kWhite,
+                                  color: AppColors.kHintTextColor,
                                 ),
                               ),
                               saveButtonTitle: 'Allow',
-                              saveButtonColor: AppColors.kWhite,
+
+                              saveButtonColor: AppColors.kSecondarySupport,
                               onSave: () {
                                 context.pop(true);
                               },
@@ -229,13 +263,39 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
               ),
               context.h(1).heightBox,
               //  Post Image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: const Image(
-                  image: AssetImage(AppImages.profileImage),
-                  fit: BoxFit.fill,
+              if (!state.isImagePicked)
+                SizedBox(
+                  height: context.h(60),
+                  width: context.w(95),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        size: context.w(20),
+                        Icons.perm_media_rounded,
+                        color: AppColors.kHintTextColor,
+                      ),
+                      Text(
+                        'Select Image to Upload ',
+                        style: AppTextStyle.kLargeBodyText.copyWith(
+                          color: AppColors.kHintTextColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ).padAll(context.w(0.5)),
+              if (state.isImagePicked)
+                ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(10),
+                  child: Image(
+                    fit: BoxFit.contain,
+                    image: state.pickedImage != null
+                        ? FileImage(File(state.pickedImage!.path))
+                        : const AssetImage(AppImages.errorImage),
+                  ),
+                ),
 
               // Content Type Selection Container (post or story)
               Center(

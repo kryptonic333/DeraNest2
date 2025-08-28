@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
-import 'package:deranest/features/stories/data/story_provider.dart';
+import 'package:deranest/features/stories/data/add_story_provider.dart';
 import 'package:deranest/features/stories/presentation/widgets/corner_frame_painter.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +19,16 @@ class StoryCameraScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(addStoryProvider);
     final notifier = ref.read(addStoryProvider.notifier);
+
     return CustomSafeArea(
       child: Container(
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(AppImages.postDetailImage),
+            image: state.pickedImage != null
+                ? FileImage(File(state.pickedImage!.path))
+                : AssetImage(AppImages.errorImage),
             fit: BoxFit.cover,
           ),
         ),
@@ -122,7 +127,7 @@ class StoryCameraScreen extends ConsumerWidget {
                               ).padAll(context.h(.5)),
                             ),
                           ),
-                         context.h(2).heightBox,
+                          context.h(2).heightBox,
                           GestureDetector(
                             onTap: () {
                               notifier.showColorsToggle();
@@ -193,7 +198,10 @@ class StoryCameraScreen extends ConsumerWidget {
                             decoration: BoxDecoration(
                               color: AppColors.kHintTextColor,
                               shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.kWhite, width: 2),
+                              border: Border.all(
+                                color: AppColors.kWhite,
+                                width: 2,
+                              ),
                             ),
                           );
                         }

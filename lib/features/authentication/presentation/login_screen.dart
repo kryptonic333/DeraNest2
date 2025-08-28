@@ -5,6 +5,7 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
@@ -12,7 +13,6 @@ import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -61,7 +61,7 @@ class LoginScreen extends ConsumerWidget {
                     labelText: null,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
-                    validator: FieldValidator.required(),
+                    validator: FieldValidator.email(),
                   ),
                 ),
                 context.h(1.75).heightBox,
@@ -78,7 +78,7 @@ class LoginScreen extends ConsumerWidget {
                     labelText: null,
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
-                    validator: FieldValidator.required(),
+                    validator: FieldValidator.password(),
                   ),
                 ),
                 context.h(1).heightBox,
@@ -138,14 +138,16 @@ class LoginScreen extends ConsumerWidget {
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
                   title: 'Login',
-                  onPress: () {
+                  onPress: () async {
+                    // Check whether the user has agreed to terms and conditions
                     if (authState.isTermsAgreed == false) {
-                      // Show SnackBar for Error
+                      ShowSnackbar1.error(context, 'Accept Terms!');
                       return;
                     }
-                    if (authState.loginFormKey.currentState?.validate() ??
-                        false) {
-                      // Navigate to MainScreen
+                    // Store the Status of Signin
+                    final success = await authCtrl.signInUser(context);
+                   // If true, proceed to feed screen
+                    if (success) {
                       context.go(Routes.feed);
                     }
                   },
@@ -163,11 +165,11 @@ class LoginScreen extends ConsumerWidget {
                   title: 'Register',
                   width: double.infinity,
                   onPress: () {
-                    // Navigate to Signup Screen
+                    // Navigate to signup screen
                     context.go(Routes.register);
                   },
                 ),
-                context.h(5).heightBox
+                context.h(5).heightBox,
               ],
             ),
           ).padHrz(context.w(4)),

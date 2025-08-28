@@ -2,8 +2,9 @@ import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
-import 'package:deranest/features/stories/data/story_provider.dart';
+import 'package:deranest/features/stories/data/add_story_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,7 @@ class StoryMediaPickerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(addStoryProvider);
     final notifier = ref.read(addStoryProvider.notifier);
     final posts = profile.posts ?? [];
 
@@ -54,9 +56,15 @@ class StoryMediaPickerScreen extends ConsumerWidget {
                   context: context,
                   icon: Icons.image_sharp,
                   label: 'Images',
-                  onTap: () {
-                    // Navigate to Story Media Gallery Screen
-                    context.push(Routes.storyMediaGallery);
+                  onTap: () async {
+                    await notifier.pickImageFromGallery();
+                    if (state.isImagePicked == true) {
+                      ShowSnackbar1.success(context, 'Image Picked!');
+                      context.push(Routes.storyCamera);
+                    }
+                    if (state.isCamera == false) {
+                      notifier.toggleCamera();
+                    }
                   },
                 ),
                 SizedBox(width: context.w(5)),
@@ -64,9 +72,17 @@ class StoryMediaPickerScreen extends ConsumerWidget {
                   context: context,
                   icon: Icons.video_collection,
                   label: 'Videos',
-                  onTap: () {
+                  onTap: () async {
                     // Navigate to Story Media Gallery Screen
-                    context.push(Routes.storyMediaGallery);
+
+                    await notifier.pickVideoFromGallery();
+                    if (state.isVideoPicked == true) {
+                      ShowSnackbar1.success(context, 'Video Picked!');
+                      context.push(Routes.storyCamera);
+                    }
+                    if (state.isCamera == false) {
+                      notifier.toggleCamera();
+                    }
                   },
                 ),
               ],
@@ -102,10 +118,14 @@ class StoryMediaPickerScreen extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        
                         // Navigate to Story Camera Screen
+                        await notifier.pickImageFromCamera();
                         context.push(Routes.storyCamera);
-                        notifier.toggleCamera();
+                        if (state.isCamera == false) {
+                          notifier.toggleCamera();
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(

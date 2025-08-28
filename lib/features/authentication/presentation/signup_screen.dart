@@ -6,6 +6,7 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
@@ -70,6 +71,7 @@ class SignupScreen extends ConsumerWidget {
                   context: context,
                   label: 'Gender',
                   field: CustomElevatedDropDownMenuButton(
+                    
                     textFontColor: AppColors.kBlack,
                     hintText: 'Male/Female',
                     textController: authState.genderController,
@@ -99,7 +101,7 @@ class SignupScreen extends ConsumerWidget {
                     hintText: '03xxxxxxxxx',
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
-                    validator: FieldValidator.required(),
+                    validator: FieldValidator.number(),
                   ),
                 ),
 
@@ -114,7 +116,7 @@ class SignupScreen extends ConsumerWidget {
                     hintText: '....@gmail.com',
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
-                    validator: FieldValidator.required(),
+                    validator: FieldValidator.email(),
                   ),
                 ),
 
@@ -129,7 +131,11 @@ class SignupScreen extends ConsumerWidget {
                     controller: authState.signupPasswordController,
                     hintText: '********',
                     textInputAction: TextInputAction.next,
-                    validator: FieldValidator.required(),
+                    validator: FieldValidator.password(
+                      shouldContainCapitalLetter: true,
+                      shouldContainNumber: true,
+                      shouldContainSpecialChars: true,
+                    ),
                   ),
                 ),
 
@@ -144,7 +150,11 @@ class SignupScreen extends ConsumerWidget {
                     controller: authState.confirmPasswordController,
                     hintText: '********',
                     textInputAction: TextInputAction.done,
-                    validator: FieldValidator.required(),
+                    validator: FieldValidator.password(
+                      shouldContainCapitalLetter: true,
+                      shouldContainNumber: true,
+                      shouldContainSpecialChars: true,
+                    ),
                   ),
                 ),
 
@@ -197,25 +207,25 @@ class SignupScreen extends ConsumerWidget {
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
                   title: 'Register',
-                  onPress: () {
+                  onPress: () async 
+                  {                    
+                    // Check whether the user has agreed to terms and conditions
                     if (authState.isTermsAgreed == false) {
-                      // Show Snackbar For Error
+                      ShowSnackbar1.error(context, 'Accept Terms!');
                       return;
                     }
-
-                    if (authState.signUpFormKey.currentState?.validate() ??
-                        false) {
-                      //  Navigate to Show People Screen
-                      context.go(Routes.userDiscovery);
+                    // Store the Status of Signup
+                    final success = await authCtrl.signUpUser(context);                    
+                    // If true, proceed to userDiscoveryScreen
+                    if (success) {
+                      context.go(Routes.userDiscovery);                     
                     }
-                  },
+                    },
                 ),
                 context.h(1.7).heightBox,
-
                 // OR Button
                 Text('OR', style: AppTextStyle.kDefaultBodyText),
                 context.h(1.7).heightBox,
-
                 // Login Button
                 CustomElevatedButton(
                   borderRadius: context.h(1.2),
@@ -237,6 +247,7 @@ class SignupScreen extends ConsumerWidget {
     );
   }
 
+
   // Helper method (label + textfield)
   Widget _buildTextFieldSection({
     required BuildContext context,
@@ -254,7 +265,7 @@ class SignupScreen extends ConsumerWidget {
         ),
         SizedBox(height: context.h(1)),
         field,
-        const SizedBox(height: 16),
+       context.h(2).heightBox,
       ],
     );
   }
