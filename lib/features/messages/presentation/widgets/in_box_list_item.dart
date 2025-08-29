@@ -1,6 +1,6 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/messages/data/model/conversation_model.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 

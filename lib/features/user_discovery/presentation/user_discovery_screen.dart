@@ -1,10 +1,10 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/data/dummy_lists/people_on_app.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/user_discovery/data/model/user_discovery_model.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -71,7 +71,7 @@ class UserDiscoveryScreen extends StatelessWidget {
 
 class _PersonCard extends StatelessWidget {
   // " people registered on app " Model
-  final PeopleOnApp person;
+  final UserDiscoveryModel person;
 
   const _PersonCard({required this.person});
 

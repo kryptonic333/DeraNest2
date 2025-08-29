@@ -1,8 +1,8 @@
 import 'package:deranest/core/constants/app_colors.dart';
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/data/dummy_lists/post_detail_list.dart';
 import 'package:deranest/core/data/dummy_lists/profile_list.dart';
 import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/feed/data/model/feed_model.dart';
 import 'package:deranest/features/feed/presentation/widgets/bottom_action_bar.dart';
 import 'package:deranest/features/feed/presentation/widgets/profile_header.dart';
 import 'package:deranest/features/posts/data/providers/post_detail_provider.dart';

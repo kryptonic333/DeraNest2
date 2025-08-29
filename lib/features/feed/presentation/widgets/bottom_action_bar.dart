@@ -2,7 +2,7 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/feed/data/model/feed_model.dart';
 import 'package:deranest/features/feed/presentation/widgets/post_icon_button.dart';
 import 'package:deranest/features/posts/data/providers/post_detail_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';

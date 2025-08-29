@@ -1,6 +1,6 @@
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/data/dummy_lists/notification_list.dart';
 import 'package:deranest/core/data/dummy_lists/user_names_notify.dart';
+import 'package:deranest/features/notification/data/model/notification_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final notificationProvider =

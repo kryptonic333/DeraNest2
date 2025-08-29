@@ -1,9 +1,9 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
+import 'package:deranest/features/profile/data/model/profile_model.dart';
 import 'package:deranest/features/stories/data/add_story_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';

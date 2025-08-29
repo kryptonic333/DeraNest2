@@ -1,7 +1,8 @@
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/messages/data/model/message_model.dart';
 import 'package:deranest/features/messages/presentation/widgets/date_chip.dart';
 import 'package:deranest/features/messages/presentation/widgets/image_bubble.dart';
 import 'package:deranest/features/messages/presentation/widgets/message_bubble.dart';
+import 'package:deranest/features/profile/data/model/profile_model.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

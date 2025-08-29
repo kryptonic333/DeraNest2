@@ -1,7 +1,7 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_fonts.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/core/data/dummy_lists/on_board_list.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';

@@ -1,4 +1,5 @@
-import 'package:deranest/core/data/adapters.dart';
+
+import 'package:deranest/features/notification/data/model/notification_model.dart';
 
 List<Notification> dummyNotificationList = [
   Notification(

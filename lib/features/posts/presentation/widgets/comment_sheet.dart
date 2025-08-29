@@ -1,6 +1,6 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/posts/data/model/post_detail_model.dart';
 import 'package:deranest/features/posts/presentation/widgets/comment_field.dart';
 import 'package:deranest/features/posts/presentation/widgets/comment_list_item.dart';
 import 'package:extensions_kit/extensions_kit.dart';

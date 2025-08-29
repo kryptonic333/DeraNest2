@@ -1,10 +1,11 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/constants/app_colors.dart';
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/features/messages/data/model/conversation_model.dart';
 import 'package:deranest/features/messages/presentation/widgets/conversation_app_bar.dart';
 import 'package:deranest/features/messages/presentation/widgets/message_input_bar.dart';
 import 'package:deranest/features/messages/presentation/widgets/message_list.dart';
+import 'package:deranest/features/profile/data/model/profile_model.dart';
 import 'package:flutter/material.dart';
 
 class ConversationScreen extends StatelessWidget 

@@ -1,9 +1,9 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/data/dummy_lists/story_list.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/posts/data/providers/post_detail_provider.dart';
+import 'package:deranest/features/profile/data/model/profile_model.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

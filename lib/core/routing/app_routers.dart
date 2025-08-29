@@ -1,4 +1,3 @@
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/features/authentication/presentation/forgot_screen.dart';
 import 'package:deranest/features/authentication/presentation/login_screen.dart';
 import 'package:deranest/features/authentication/presentation/signup_screen.dart';
@@ -10,14 +9,16 @@ import 'package:deranest/features/call/presentation/voice_call_screen/incoming_v
 import 'package:deranest/features/call/presentation/voice_call_screen/on_voice_call_screen.dart';
 import 'package:deranest/features/feed/presentation/screens/feed_screen.dart';
 import 'package:deranest/features/main_tab/presentation/screens/main_tab_screen.dart';
+import 'package:deranest/features/messages/data/model/conversation_model.dart';
 import 'package:deranest/features/messages/presentation/screens/poll/poll_creation_screen.dart';
 import 'package:deranest/features/messages/presentation/screens/stream/conversation_screen.dart';
 import 'package:deranest/features/messages/presentation/screens/stream/inbox_screen.dart';
 import 'package:deranest/features/notification/presentation/notification_screen.dart';
 import 'package:deranest/features/onBoarding/presentation/screens/onboarding_screen.dart';
+import 'package:deranest/features/posts/data/model/post_detail_model.dart';
 import 'package:deranest/features/posts/presentation/screens/content_type_selection_screen.dart';
 import 'package:deranest/features/posts/presentation/screens/post_detail_screen.dart';
-import 'package:deranest/features/posts/presentation/screens/post_gallery_screen.dart';
+import 'package:deranest/features/profile/data/model/profile_model.dart';
 import 'package:deranest/features/profile/presentation/profile_screen.dart';
 import 'package:deranest/features/settings/presentation/screens/about_screen.dart';
 import 'package:deranest/features/settings/presentation/screens/change_pass.dart';
@@ -29,7 +30,6 @@ import 'package:deranest/features/settings/presentation/screens/push_notificatio
 import 'package:deranest/features/settings/presentation/screens/setting_screen.dart';
 import 'package:deranest/features/splash/presentation/screens/splash_screen.dart';
 import 'package:deranest/features/stories/presentation/story_camera_screen.dart';
-import 'package:deranest/features/stories/presentation/story_media_gallery_screen.dart';
 import 'package:deranest/features/stories/presentation/story_media_picker_screen.dart';
 import 'package:deranest/features/stories/presentation/story_viewer_screen.dart';
 import 'package:deranest/features/user_discovery/presentation/user_discovery_screen.dart';
@@ -37,7 +37,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-// Defines all route paths as constants
+// Route paths as constants
 class Routes {
   static const String splash = '/';
   static const String termsCondition = '/termsCondition';
@@ -47,18 +47,15 @@ class Routes {
   static const String forgotPass = '/forgotPass';
   static const String onBoard = '/onBoard';
   static const String feed = '/feed';
-
   static const String conversation = '/conversation';
   static const String inbox = '/inbox';
   static const String pollCreate = '/poll';
   static const String notification = '/notification';
-  static const String postGallery = '/phoneGallery';
   static const String postDetail = '/postDetail';
   static const String contentTypeSelect = '/contentTypeSelect';
   static const String profile = '/profile';
   static const String setting = '/setting';
   static const String userDiscovery = '/userDiscovery';
-  static const String storyMediaGallery = '/storyMediaGallery';
   static const String storyCamera = '/storyCamera';
   static const String storyMediaPicker = '/storyMediaPicker';
   static const String storyViewer = '/storyViewer';
@@ -78,38 +75,47 @@ class Routes {
 // Global navigator key
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-// Routing setup using GoRouter and Riverpod
+// Routing Setup
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
     routes: [
-      // --- Auth and splash outside of tabs ---
+      // Splash
       GoRoute(path: Routes.splash, builder: (context, state) => SplashScreen()),
+      // Login
       GoRoute(path: Routes.login, builder: (context, state) => LoginScreen()),
-      GoRoute(path: Routes.welcome, builder: (context, state) => WelcomeScreen()),
+      // Welcome
+      GoRoute(
+        path: Routes.welcome,
+        builder: (context, state) => WelcomeScreen(),
+      ),
+      // Signup
       GoRoute(
         path: Routes.register,
         builder: (context, state) => SignupScreen(),
       ),
+      // Terms And Conditions
       GoRoute(
         path: Routes.termsCondition,
         builder: (context, state) => TermsAndConditionsScreen(),
       ),
+      // Forgot Password
       GoRoute(
         path: Routes.forgotPass,
         builder: (context, state) => ForgotPasswordScreen(),
       ),
+      // Onboard
       GoRoute(
         path: Routes.onBoard,
         builder: (context, state) => OnboardingScreen(),
       ),
-
+      // Users on App - User Discovery
       GoRoute(
         path: Routes.userDiscovery,
         builder: (context, state) => UserDiscoveryScreen(),
       ),
-      // Screens with Persistent View
+      // -------Screens with Persistent View-------
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return MainTabScreen(navigationShell: navigationShell);
@@ -117,6 +123,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         branches: [
           StatefulShellBranch(
             routes: [
+              // Feed
               GoRoute(
                 path: Routes.feed,
                 builder: (context, state) => MainFeedScreen(),
@@ -125,6 +132,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [
+              // Inbox
               GoRoute(
                 path: Routes.inbox,
                 builder: (context, state) => InboxScreen(),
@@ -133,6 +141,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [
+              // Story/Post
               GoRoute(
                 path: Routes.contentTypeSelect,
                 builder: (context, state) {
@@ -143,6 +152,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [
+              // Profile
               GoRoute(
                 path: Routes.profile,
                 builder: (context, state) => ProfileScreen(),
@@ -151,6 +161,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [
+              // Notification
               GoRoute(
                 path: Routes.notification,
                 builder: (context, state) => NotificationScreen(),
@@ -159,49 +170,50 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      // Other App Screens
-      GoRoute(
-        path: Routes.postGallery,
-        builder: (context, state) => PostGalleryScreen(),
-      ),
 
+      // Email Notification
       GoRoute(
         path: Routes.emailNotification,
         builder: (context, state) => EmailNotificationScreen(),
       ),
+      // Push Notification
       GoRoute(
         path: Routes.pushNotification,
         builder: (context, state) => PushNotificationScreen(),
       ),
+      // Privacy And Security
       GoRoute(
         path: Routes.privacySecurity,
         builder: (context, state) => PrivacySecurityScreen(),
       ),
+      //  Help and Support
       GoRoute(
         path: Routes.helpSupport,
         builder: (context, state) => HelpSupportScreen(),
       ),
+      // About
       GoRoute(path: Routes.about, builder: (context, state) => AboutScreen()),
+      // Story Camera
       GoRoute(
         path: Routes.storyCamera,
         builder: (context, state) => StoryCameraScreen(),
       ),
+      // Edit Profile
       GoRoute(
         path: Routes.editProfile,
         builder: (context, state) => EditProfileScreen(),
       ),
+      // Setting
       GoRoute(
         path: Routes.setting,
         builder: (context, state) => SettingsScreen(),
       ),
-      GoRoute(
-        path: Routes.storyMediaGallery,
-        builder: (context, state) => StoryMediaGalleryScreen(),
-      ),
+      // Change Password
       GoRoute(
         path: Routes.changePassword,
         builder: (context, state) => ChangePasswordScreen(),
       ),
+      // Post Detail
       GoRoute(
         path: Routes.postDetail,
         builder: (context, state) {
@@ -212,10 +224,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           return PostDetailScreen(post: post, index: index);
         },
       ),
+      // Poll Create
       GoRoute(
         path: Routes.pollCreate,
         builder: (context, state) => PollCreationScreen(),
       ),
+      // Story Media Picker
       GoRoute(
         path: Routes.storyMediaPicker,
         builder: (context, state) {
@@ -223,27 +237,32 @@ final routerProvider = Provider<GoRouter>((ref) {
           return StoryMediaPickerScreen(profile: profile);
         },
       ),
+      // Story Viewer
       GoRoute(
         path: Routes.storyViewer,
         builder: (context, state) => StoryViewerScreen(),
       ),
+      // On Video Call
       GoRoute(
         path: Routes.onVideoCall,
         builder: (context, state) => OnVideoCallScreen(),
       ),
+      // On Voice Call
       GoRoute(
         path: Routes.onVoiceCall,
         builder: (context, state) => OnVoiceCallScreen(),
       ),
+      // Incoming Video Call
       GoRoute(
         path: Routes.incomingVideoCall,
         builder: (context, state) => IncomingVideoCallScreen(),
       ),
+      // Incoming Voice Call
       GoRoute(
         path: Routes.incomingVoiceCall,
         builder: (context, state) => IncomingVoiceCallScreen(),
       ),
-
+      // Conversation
       GoRoute(
         path: Routes.conversation,
         builder: (context, state) {

@@ -1,5 +1,5 @@
 import 'package:deranest/core/constants/app_assets.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/messages/data/model/message_model.dart';
 
 List<Message> dummyMessages = [
   //1

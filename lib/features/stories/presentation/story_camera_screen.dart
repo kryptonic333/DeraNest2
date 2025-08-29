@@ -6,7 +6,6 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_field.dart';
 import 'package:deranest/features/stories/data/add_story_provider.dart';
-import 'package:deranest/features/stories/presentation/widgets/corner_frame_painter.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +28,7 @@ class StoryCameraScreen extends ConsumerWidget {
             image: state.pickedImage != null
                 ? FileImage(File(state.pickedImage!.path))
                 : AssetImage(AppImages.errorImage),
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ),
         child: Scaffold(
@@ -46,108 +45,126 @@ class StoryCameraScreen extends ConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      child: Text(
-                        'Discard',
+                    if (state.isUploading)
+                      Text(
+                        'Uploading',
                         style: AppTextStyle.kLargeBodyText.copyWith(
                           color: AppColors.kAbortColor,
                         ),
                       ),
-                    ),
+
+                    if (!state.isUploading)
+                      TextButton(
+                        onPressed: () {
+                          context.pop();
+                        },
+                        child: Text(
+                          'Discard',
+                          style: AppTextStyle.kLargeBodyText.copyWith(
+                            color: AppColors.kAbortColor,
+                          ),
+                        ),
+                      ),
                     Text(
                       'STORY',
                       style: AppTextStyle.kVeryLargeBodyText.copyWith(
                         color: AppColors.kBlack,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        if (state.isShotTaken && !state.isCamera) {
-                          notifier.publishStory(context);
-                          notifier.toggleShotTaken();
-                          notifier.toggleCamera();
-                          return;
-                        }
-                        // changes the value
-                        if (state.isCamera) {
-                          notifier.toggleShotTaken();
-                          notifier.toggleCamera();
-                        }
-                      },
-                      child: Container(
-                        height: context.h(3.2),
+                    if (!state.isUploading)
+                      InkWell(
+                        onTap: () {
+                          if (state.isShotTaken && !state.isCamera) {
+                            notifier.publishStory(context);
+                            notifier.toggleShotTaken();
+                            notifier.toggleCamera();
+                            return;
+                          }
+                          // changes the value
+                          if (state.isCamera) {
+                            notifier.toggleShotTaken();
+                            notifier.toggleCamera();
+                          }
+                        },
+                        child: Container(
+                          height: context.h(4.2),
+                          width: context.h(12.2),
+                          decoration: BoxDecoration(
+                            color: AppColors.kSecondary,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Publish',
+                              style: AppTextStyle.kMediumBodyText.copyWith(
+                                color: AppColors.kWhite,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ).padAll(context.h(0.75)),
+                    if (state.isUploading)
+                      Container(
+                        height: context.h(4.2),
                         width: context.h(12.2),
                         decoration: BoxDecoration(
                           color: AppColors.kSecondary,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Center(
-                          child: Text(
-                            state.isCamera ? 'Shot' : 'Publish',
-                            style: AppTextStyle.kMediumBodyText.copyWith(
-                              color: AppColors.kWhite,
-                            ),
+                          child: CircularProgressIndicator(
+                            color: AppColors.kWhite,
                           ),
                         ),
-                      ),
-                    ),
+                      ).padAll(context.h(0.75)),
                   ],
                 ),
               ),
 
               // Main Body View
-              state.isCamera
-                  ? SizedBox(
-                      height: context.h(80),
-                      width: context.w(80),
-                      child: CustomPaint(painter: CornerFramePainter()),
-                    )
-                  : Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              notifier.showTextFieldToggle();
-                            },
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: CircleAvatar(
-                                radius: context.h(4),
-                                backgroundColor: AppColors.kHintTextColor,
-                                child: Icon(
-                                  Icons.text_fields_sharp,
-                                  color: AppColors.kWhite,
-                                  size: context.h(3.5),
-                                ),
-                              ).padAll(context.h(.5)),
-                            ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        notifier.showTextFieldToggle();
+                      },
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: CircleAvatar(
+                          radius: context.h(4),
+                          backgroundColor: AppColors.kHintTextColor,
+                          child: Icon(
+                            Icons.text_fields_sharp,
+                            color: AppColors.kWhite,
+                            size: context.h(3.5),
                           ),
-                          context.h(2).heightBox,
-                          GestureDetector(
-                            onTap: () {
-                              notifier.showColorsToggle();
-                            },
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: CircleAvatar(
-                                radius: context.h(4),
-                                backgroundColor: AppColors.kHintTextColor,
-                                child: Icon(
-                                  Icons.edit,
-                                  color: AppColors.kWhite,
-                                  size: context.h(3.5),
-                                ),
-                              ).padAll(5),
-                            ),
-                          ),
-                        ],
+                        ).padAll(context.h(.5)),
                       ),
                     ),
+                    context.h(2).heightBox,
+                    GestureDetector(
+                      onTap: () {
+                        notifier.showColorsToggle();
+                      },
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: CircleAvatar(
+                          radius: context.h(4),
+                          backgroundColor: AppColors.kHintTextColor,
+                          child: Icon(
+                            Icons.edit,
+                            color: AppColors.kWhite,
+                            size: context.h(3.5),
+                          ),
+                        ).padAll(5),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               if (state.showTextField && !state.isCamera)
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -181,7 +198,7 @@ class StoryCameraScreen extends ConsumerWidget {
                               notifier.showColorsToggle();
                             },
                             child: CircleAvatar(
-                              radius: 15,
+                              radius: context.h(1.9),
                               backgroundColor: AppColors.kRed,
                               child: Icon(
                                 Icons.cancel,
@@ -192,7 +209,9 @@ class StoryCameraScreen extends ConsumerWidget {
                           );
                         } else {
                           return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            margin: EdgeInsets.symmetric(
+                              horizontal: context.h(1),
+                            ),
                             width: context.h(5),
                             height: context.h(5),
                             decoration: BoxDecoration(
@@ -200,7 +219,7 @@ class StoryCameraScreen extends ConsumerWidget {
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: AppColors.kWhite,
-                                width: 2,
+                                width: context.h(.2),
                               ),
                             ),
                           );

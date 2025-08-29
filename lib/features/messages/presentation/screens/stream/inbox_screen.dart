@@ -1,11 +1,12 @@
 import 'package:deranest/core/constants/app_colors.dart';
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/core/data/dummy_lists/conversation_list.dart';
 import 'package:deranest/core/data/dummy_lists/profile_list.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/features/messages/data/model/conversation_model.dart';
 import 'package:deranest/features/messages/presentation/widgets/chat_list_view.dart';
 import 'package:deranest/features/messages/presentation/widgets/inbox_search_bar.dart';
+import 'package:deranest/features/profile/data/model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

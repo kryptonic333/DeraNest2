@@ -1,5 +1,5 @@
 import 'package:deranest/core/constants/app_assets.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/onBoarding/data/model/on_board_model.dart';
 
 List<OnBoardingModel> onBoardingContents = [
   OnBoardingModel(

@@ -1,5 +1,5 @@
 import 'package:deranest/core/constants/app_colors.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/core/data/content_lists/destination_list.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

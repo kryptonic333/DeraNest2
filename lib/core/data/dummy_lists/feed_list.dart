@@ -1,5 +1,5 @@
 import 'package:deranest/core/constants/app_assets.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/feed/data/model/feed_model.dart';
 
 List<Feed> dummyFeedList = [
   //1

@@ -8,6 +8,7 @@ import 'package:deranest/core/presentation/widgets/alert_dialog.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_icon_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/posts/data/providers/add_post_provider.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -34,30 +35,35 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
           backgroundColor: AppColors.kWhite,
           actions: [
             //  Publish Button
-            GestureDetector(
-              onTap: () {
-                // Perform action to publish post
-                if (state.isImagePicked == true) {
-                  postCtrl.toggleImagePicked();
-                }
-              },
-              child: Container(
-                height: context.h(4),
-                width: context.w(28),
-                decoration: BoxDecoration(
-                  color: AppColors.kSecondary,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(
-                  child: Text(
-                    'Publish',
-                    style: AppTextStyle.kMediumBodyText.copyWith(
-                      color: AppColors.kWhite,
+            if (!state.isUploading)
+              GestureDetector(
+                onTap: () {
+                  // Perform action to publish post
+                  if (state.isImagePicked == true) {
+                    postCtrl.toggleImagePicked();
+                    postCtrl.publishPost(context);
+                  }
+                  if (state.isImagePicked == false) {
+                    ShowSnackbar1.error(context, 'Pick Image!');
+                  }
+                },
+                child: Container(
+                  height: context.h(4),
+                  width: context.w(28),
+                  decoration: BoxDecoration(
+                    color: AppColors.kSecondary,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Publish',
+                      style: AppTextStyle.kMediumBodyText.copyWith(
+                        color: AppColors.kWhite,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ).padRight(context.w(1)),
+              ).padRight(context.w(1)),
           ],
         ),
         backgroundColor: AppColors.kTransparent,
@@ -262,8 +268,8 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                 ),
               ),
               context.h(1).heightBox,
-              //  Post Image
-              if (!state.isImagePicked)
+              // Container Instead of Post Image
+              if (!state.isImagePicked && !state.isUploading)
                 SizedBox(
                   height: context.h(60),
                   width: context.w(95),
@@ -286,7 +292,8 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-              if (state.isImagePicked)
+              // Post Image
+              if (state.isImagePicked && !state.isUploading)
                 ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(10),
                   child: Image(
@@ -295,6 +302,13 @@ class ContentTypeSelectionScreen extends ConsumerWidget {
                         ? FileImage(File(state.pickedImage!.path))
                         : const AssetImage(AppImages.errorImage),
                   ),
+                ),
+              // Showing Circular Progress Indicator
+              if (state.isUploading)
+                SizedBox(
+                  height: context.h(60),
+                  width: context.w(95),
+                  child: Center(child: CircularProgressIndicator()),
                 ),
 
               // Content Type Selection Container (post or story)

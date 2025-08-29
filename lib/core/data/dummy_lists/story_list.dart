@@ -1,5 +1,5 @@
 import 'package:deranest/core/constants/app_assets.dart';
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/stories/data/model/story_model.dart';
 
 List<Story> dummyStories = [
   // 1

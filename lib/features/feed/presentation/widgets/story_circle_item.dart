@@ -1,6 +1,6 @@
 import 'package:deranest/core/constants/app_text_styles.dart';
-import 'package:deranest/core/data/adapters.dart';
 import 'package:deranest/features/feed/presentation/widgets/story_circle.dart';
+import 'package:deranest/features/stories/data/model/story_model.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
-import 'package:deranest/core/data/adapters.dart';
+import 'package:deranest/features/user_discovery/data/model/user_discovery_model.dart';
 
-List<PeopleOnApp> dummyPeople = [
-  PeopleOnApp(
+List<UserDiscoveryModel> dummyPeople = [
+  UserDiscoveryModel(
     id: 'user_001',
     name: 'Alice Smith',
     username: 'alice_s',
@@ -12,7 +12,7 @@ List<PeopleOnApp> dummyPeople = [
     following: ['user_004'],
     createdAt: DateTime(2023, 1, 15, 10, 30),
   ),
-  PeopleOnApp(
+  UserDiscoveryModel(
     id: 'user_002',
     name: 'Bob Johnson',
     username: 'bob_j',
@@ -23,7 +23,7 @@ List<PeopleOnApp> dummyPeople = [
     following: ['user_001', 'user_003'],
     createdAt: DateTime(2023, 2, 20, 14, 0),
   ), 
-  PeopleOnApp(
+  UserDiscoveryModel(
     id: 'user_003',
     name: 'Charlie Brown',
     username: 'charlie_b',
@@ -34,7 +34,7 @@ List<PeopleOnApp> dummyPeople = [
     following: ['user_002'],
     createdAt: DateTime(2023, 3, 5, 8, 45),
   ),
-  PeopleOnApp(
+  UserDiscoveryModel(
     id: 'user_004',
     name: 'Diana Prince',
     username: 'diana_p',

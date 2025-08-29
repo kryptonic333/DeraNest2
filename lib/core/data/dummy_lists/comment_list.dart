@@ -1,5 +1,6 @@
 import 'package:deranest/core/constants/app_assets.dart';
-import 'package:deranest/core/data/adapters.dart' ;
+import 'package:deranest/features/posts/data/model/comment_model.dart';
+import 'package:deranest/features/profile/data/model/profile_model.dart';
 
 final List<Comment> dummyComments = [
   Comment(
