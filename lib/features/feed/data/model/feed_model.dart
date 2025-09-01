@@ -8,8 +8,8 @@ class Feed {
   final int commentsCount;
   final int sharesCount;
   final bool isLiked;
-  final bool isBookmarked; 
-  final DateTime createdAt;  
+  final bool isBookmarked;
+  final DateTime createdAt;
   final DateTime? updatedAt;
 
   Feed({
@@ -25,7 +25,6 @@ class Feed {
     this.isBookmarked = false,
     required this.createdAt,
     this.updatedAt,
-  
   });
 
   Feed copyWith({
@@ -60,24 +59,24 @@ class Feed {
 
   // toJson() Method
   Map<String, dynamic> toJson() {
-  return {
-    'id': id,
-    'userId': userId,
-    'imageUrl': imageUrl,
-    'videoUrl': videoUrl,
-    'caption': caption,
-    'likesCount': likesCount,
-    'commentsCount': commentsCount,
-    'sharesCount': sharesCount,
-    'isLiked': isLiked,
-    'isBookmarked': isBookmarked,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt?.toIso8601String(),
-  };
-}
+    return {
+      'id': id,
+      'userId': userId,
+      'imageUrl': imageUrl,
+      'videoUrl': videoUrl,
+      'caption': caption,
+      'likesCount': likesCount,
+      'commentsCount': commentsCount,
+      'sharesCount': sharesCount,
+      'isLiked': isLiked,
+      'isBookmarked': isBookmarked,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+    };
+  }
 
-// fromJson() Method
-factory Feed.fromJson(Map<String, dynamic> json) {
+  // fromJson() Method
+  factory Feed.fromJson(Map<String, dynamic> json) {
     return Feed(
       id: json['id'],
       userId: json['userId'],
@@ -93,5 +92,4 @@ factory Feed.fromJson(Map<String, dynamic> json) {
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );
   }
-
 }

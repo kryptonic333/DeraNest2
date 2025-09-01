@@ -3,9 +3,7 @@ import 'package:deranest/features/profile/data/model/profile_model.dart';
 
 class Conversation {
   final String id;
-
   final Profile participant;
-
   final List<Message> messages;
 
   Conversation({

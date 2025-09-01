@@ -1,25 +1,16 @@
 enum CallType { voice, video }
 
-class Call {
-  
-  final String id;
-  
-  final String initiatorId;
-  
-  final List<String> participantIds;
-  
-  final CallType type;
- 
-  final DateTime startTime;
-  
-  final DateTime? endTime;
- 
-  final String status;
- 
-  final Duration? duration;
- 
+class Call {  
+  final String id;  
+  final String initiatorId;  
+  final List<String> participantIds;  
+  final CallType type; 
+  final DateTime startTime;  
+  final DateTime? endTime; 
+  final String status; 
+  final Duration? duration; 
   final String? conversationId;
-
+  
   Call({
     required this.id,
     required this.initiatorId,
