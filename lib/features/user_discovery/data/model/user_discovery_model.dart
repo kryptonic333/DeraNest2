@@ -45,4 +45,18 @@ class UserDiscoveryModel {
       createdAt: createdAt ?? this.createdAt,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'username': username,
+      'email': email,
+      'profilePictureUrl': profilePictureUrl,
+      'gender': gender,
+      'followers': followers,
+      'following': following,
+      'createdAt': createdAt, // Firestore handles DateTime automatically
+    };
+  }
 }

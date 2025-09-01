@@ -48,4 +48,19 @@ class Story {
       isViewed: isViewed ?? this.isViewed,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'id': id,
+      'userId': userId,
+      'imageUrl': imageUrl,
+      'videoUrl': videoUrl,
+      'text': text,
+      'createdAt': createdAt.toIso8601String(),
+      'expiresAt': expiresAt.toIso8601String(),
+      'viewedBy': viewedBy,
+      'isViewed': isViewed,
+    };
+  }
 }

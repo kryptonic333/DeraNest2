@@ -48,4 +48,17 @@ class InboxThread  {
       isGroupChat: isGroupChat ?? this.isGroupChat,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'participantIds': participantIds,
+      'title': title,
+      'imageUrl': imageUrl,
+      'lastMessageContent': lastMessageContent,
+      'lastMessageTime': lastMessageTime.toIso8601String(),
+      'unreadCount': unreadCount,
+      'isGroupChat': isGroupChat,
+    };
+  }
 }

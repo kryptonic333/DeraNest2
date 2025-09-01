@@ -57,4 +57,21 @@ class Feed {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+  Map<String, dynamic> toJson() {
+  return {
+    'id': id,
+    'userId': userId,
+    'imageUrl': imageUrl,
+    'videoUrl': videoUrl,
+    'caption': caption,
+    'likesCount': likesCount,
+    'commentsCount': commentsCount,
+    'sharesCount': sharesCount,
+    'isLiked': isLiked,
+    'isBookmarked': isBookmarked,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt?.toIso8601String(),
+  };
+}
+
 }

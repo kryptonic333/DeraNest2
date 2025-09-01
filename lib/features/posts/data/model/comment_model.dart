@@ -14,4 +14,15 @@ class Comment {
     required this.commentText,
     required this.commentedAt,
   });
+
+  // toJson() Method
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'postId': postId,
+      'user': user.toJson(), 
+      'commentText': commentText,
+      'commentedAt': commentedAt.toIso8601String(),
+    };
+  }
 }

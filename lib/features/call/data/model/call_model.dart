@@ -55,4 +55,19 @@ class Call {
       conversationId: conversationId ?? this.conversationId,
     );
   }
+
+    Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'initiatorId': initiatorId,
+      'participantIds': participantIds,
+      'type': type.toString().split('.').last, 
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime?.toIso8601String(),
+      'status': status,
+      'duration': duration?.inSeconds, 
+      'conversationId': conversationId,
+    };
+  }
+
 }

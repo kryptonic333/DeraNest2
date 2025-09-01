@@ -1,24 +1,17 @@
 
-class Notification  {
-  
-  final String id;
- 
-  final String userId;
-  
-  final String type;
- 
+class Notification  
+{  
+  // Variables
+  final String id; 
+  final String userId;  
+  final String type; 
   final String? sourceUserId;
-
   final String? sourceObjectId;
-
-  final String? message;
- 
+  final String? message; 
   final bool isRead;
-
   final DateTime createdAt;
-
   final Map<String, dynamic>? metadata;
-
+  // Constructors
   Notification({
     required this.id,
     required this.userId,
@@ -31,6 +24,7 @@ class Notification  {
     this.metadata,
   });
 
+  // Copy With Method
   Notification copyWith({
     String? id,
     String? userId,
@@ -53,5 +47,20 @@ class Notification  {
       createdAt: createdAt ?? this.createdAt,
       metadata: metadata ?? this.metadata,
     );
+  }
+
+  // toJson() Method
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+      'type': type,
+      'sourceUserId': sourceUserId,
+      'sourceObjectId': sourceObjectId,
+      'message': message,
+      'isRead': isRead,
+      'createdAt': createdAt.toIso8601String(), // store as String
+      'metadata': metadata,
+    };
   }
 }

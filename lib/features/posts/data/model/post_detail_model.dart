@@ -17,4 +17,14 @@ class PostDetailModel {
     required this.user,
     required this.tags,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'feed': feed.toJson(),
+      'comments': comments.map((c) => c.toJson()).toList(),
+      'likedBy': likedBy.map((p) => p.toJson()).toList(),
+      'user': user.toJson(),
+      'tags': tags,
+    };
+  }
 }

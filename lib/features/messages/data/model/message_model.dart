@@ -2,31 +2,18 @@ enum MessageType { sentText, receivedText, sentVoice, receivedVoice ,sentImage,
   receivedImage,}
 
 class Message  {
-
-  final String id;
- 
-  final String title;
-  
-  final String senderId;
-  
+  final String id; 
+  final String title;  
+  final String senderId;  
   final String receiverId;
-
-  final String? message;
- 
-  final String? imageUrl;
-  
-  final String? videoUrl;
-  
-  final String? audioUrl;
- 
+  final String? message; 
+  final String? imageUrl;  
+  final String? videoUrl;  
+  final String? audioUrl; 
   final DateTime sentAt;
-
-  final DateTime? readAt;
- 
+  final DateTime? readAt; 
   final bool isDelivered;
-
   final bool isRead;
-
   final MessageType messageType;
 
   Message({
@@ -76,4 +63,22 @@ class Message  {
       messageType: messageType ?? this.messageType,
     );
   }
+
+  Map<String, dynamic> toJson() {
+  return {
+    'id': id,
+    'title': title,
+    'senderId': senderId,
+    'receiverId': receiverId,
+    'message': message,
+    'imageUrl': imageUrl,
+    'videoUrl': videoUrl,
+    'audioUrl': audioUrl,
+    'sentAt': sentAt.toIso8601String(),
+    'readAt': readAt?.toIso8601String(),
+    'isDelivered': isDelivered,
+    'isRead': isRead,
+    'messageType': messageType.name,
+  };
+}
 }

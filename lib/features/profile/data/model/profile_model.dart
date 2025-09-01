@@ -60,4 +60,22 @@ class Profile {
       coverPictureUrl: coverPictureUrl ?? this.coverPictureUrl,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'username': username,
+      'profilePictureUrl': profilePictureUrl,
+      'bio': bio,
+      'followersCount': followersCount,
+      'followingCount': followingCount,
+      'postsCount': postsCount,
+      'isVerified': isVerified,
+      'createdAt': createdAt.toIso8601String(),
+      'lastSeen': lastSeen?.toIso8601String(),
+      'posts': posts,
+      'coverPictureUrl': coverPictureUrl,
+    };
+  }
 }
