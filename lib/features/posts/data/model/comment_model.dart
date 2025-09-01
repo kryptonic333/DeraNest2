@@ -25,4 +25,15 @@ class Comment {
       'commentedAt': commentedAt.toIso8601String(),
     };
   }
+
+  // fromJson() Method
+  factory Comment.fromJson(Map<String, dynamic> json) {
+    return Comment(
+      id: json['id'] as String,
+      postId: json['postId'] as String,
+      user: Profile.fromJson(json['user'] as Map<String, dynamic>),
+      commentText: json['commentText'] as String,
+      commentedAt: DateTime.parse(json['commentedAt'] as String),
+    );
+  }
 }

@@ -3,7 +3,6 @@ import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 final authServiceProvider = Provider<AuthServices>((ref) {
   return AuthServices();
 });
@@ -33,6 +32,7 @@ class AuthState {
   final TextEditingController forgotPasswordController;
   // variables
   bool isTermsAgreed;
+  bool isLoading;
 
   AuthState({
     //-----
@@ -54,6 +54,7 @@ class AuthState {
     required this.forgotPasswordController,
     //----
     required this.isTermsAgreed,
+    required this.isLoading,
   });
   AuthState copyWith({
     GlobalKey<FormState>? loginFormKey,
@@ -69,6 +70,7 @@ class AuthState {
     TextEditingController? signupPasswordController,
     TextEditingController? forgotPasswordController,
     bool? isTermsAgreed,
+    bool? isLoading,
   }) {
     return AuthState(
       loginFormKey: loginFormKey ?? this.loginFormKey,
@@ -89,6 +91,7 @@ class AuthState {
       forgotPasswordController:
           forgotPasswordController ?? this.forgotPasswordController,
       isTermsAgreed: isTermsAgreed ?? this.isTermsAgreed,
+      isLoading: isLoading ?? this.isLoading
     );
   }
 }
@@ -111,23 +114,30 @@ class AuthController extends StateNotifier<AuthState> {
           signupPasswordController: TextEditingController(),
           forgotPasswordController: TextEditingController(),
           isTermsAgreed: false,
+          isLoading: false
         ),
       );
 
+  // Terms Agreed State Change
   void toggleTermsAgreed() {
     state = state.copyWith(isTermsAgreed: !state.isTermsAgreed);
   }
+  
+  // Loading State Change
+  void setLoading(bool value) {
+  state = state.copyWith(isLoading: value);
+}
 
-  // Authentication Methods\
+  // ------Authentication Methods------
   Future<void> logout(BuildContext context) async {
     try {
       await _authService.signOut();
       ShowSnackbar1.success(context, 'Logged out successfully');
-     
     } catch (e) {
       ShowSnackbar1.error(context, 'Logout failed: $e');
     }
   }
+
   // SignIn
   Future<bool> signInUser(BuildContext context) async {
     if (state.loginFormKey.currentState?.validate() ?? false) {
@@ -153,8 +163,10 @@ class AuthController extends StateNotifier<AuthState> {
         await _authService.signUpWithEmail(
           email: state.signupEmailController.text.trim(),
           password: state.signupPasswordController.text.trim(),
+          name: state.nameController.text.trim(),
+          phone: state.phoneController.text.trim(),
+          gender: state.genderController.text.trim(),
         );
-
         ShowSnackbar1.success(context, 'Sign up successful');
         return true;
       } catch (e) {

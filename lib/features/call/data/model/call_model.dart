@@ -56,6 +56,7 @@ class Call {
     );
   }
 
+    // toJson() Method
     Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -68,6 +69,24 @@ class Call {
       'duration': duration?.inSeconds, 
       'conversationId': conversationId,
     };
+  }
+
+  //fromJson() Method
+  factory Call.fromJson(Map<String, dynamic> json) {
+    return Call(
+      id: json['id'],
+      initiatorId: json['initiatorId'],
+      participantIds: List<String>.from(json['participantIds']),
+      type: CallType.values.firstWhere(
+        (e) => e.toString().split('.').last == json['type'],
+        orElse: () => CallType.voice, // default if not found
+      ),
+      startTime: DateTime.parse(json['startTime']),
+      endTime: json['endTime'] != null ? DateTime.parse(json['endTime']) : null,
+      status: json['status'],
+      duration: json['duration'] != null ? Duration(seconds: json['duration']) : null,
+      conversationId: json['conversationId'],
+    );
   }
 
 }

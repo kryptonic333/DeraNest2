@@ -1,4 +1,7 @@
+import 'package:deranest/core/data/services/firestore_services.dart';
+import 'package:deranest/features/authentication/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 
 class AuthServices {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -21,14 +24,38 @@ class AuthServices {
 
   // Register new user
   Future<UserCredential> signUpWithEmail({
-    required String email,
-    required String password,
-  }) async {
-    return await firebaseAuth.createUserWithEmailAndPassword(
+     required String email,
+  required String password,
+  required String name,
+  required String phone,
+  required String gender,
+}) async {
+  try {
+    // Create auth user
+    final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    // Create user model
+    final user = UserModel(
+      id: '',    
+      name: name,
+      email: email,
+      phone: phone,
+      gender: gender,
+      createdAt: DateTime.now(),
+    );
+
+    // Create Firestore user document
+    final firestoreServices = FirestoreServices();
+    await firestoreServices.createUser(user);
+
+    return userCredential;
+  } catch (e) {
+    throw Exception('Failed to sign up: $e');
   }
+}
 
   // Sign out
   Future<void> signOut() async {

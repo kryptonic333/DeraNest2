@@ -49,6 +49,7 @@ class Story {
     );
   }
 
+  // toJson() Method
   Map<String, dynamic> toJson() {
     return {
       'name': name,
@@ -62,5 +63,21 @@ class Story {
       'viewedBy': viewedBy,
       'isViewed': isViewed,
     };
+  }
+
+  // fromJson() Method
+  factory Story.fromJson(Map<String, dynamic> json) {
+    return Story(
+      name: json['name'] ?? '',
+      id: json['id'] ?? '',
+      userId: json['userId'] ?? '',
+      imageUrl: json['imageUrl'],
+      videoUrl: json['videoUrl'],
+      text: json['text'],
+      createdAt: DateTime.parse(json['createdAt']),
+      expiresAt: DateTime.parse(json['expiresAt']),
+      viewedBy: List<String>.from(json['viewedBy'] ?? []),
+      isViewed: json['isViewed'] ?? false,
+    );
   }
 }

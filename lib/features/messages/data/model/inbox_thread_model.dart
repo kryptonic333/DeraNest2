@@ -49,6 +49,7 @@ class InboxThread  {
     );
   }
 
+  // toJson() Method
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -60,5 +61,19 @@ class InboxThread  {
       'unreadCount': unreadCount,
       'isGroupChat': isGroupChat,
     };
+  }
+
+  // fromJson() Method
+  factory InboxThread.fromJson(Map<String, dynamic> json) {
+    return InboxThread(
+      id: json['id'] as String,
+      participantIds: List<String>.from(json['participantIds'] ?? []),
+      title: json['title'] as String,
+      imageUrl: json['imageUrl'] as String?,
+      lastMessageContent: json['lastMessageContent'] as String,
+      lastMessageTime: DateTime.parse(json['lastMessageTime']),
+      unreadCount: json['unreadCount'] ?? 0,
+      isGroupChat: json['isGroupChat'] ?? false,
+    );
   }
 }

@@ -46,6 +46,7 @@ class UserDiscoveryModel {
     );
   }
 
+  // toJson() Method
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -56,7 +57,27 @@ class UserDiscoveryModel {
       'gender': gender,
       'followers': followers,
       'following': following,
-      'createdAt': createdAt, // Firestore handles DateTime automatically
+      'createdAt': createdAt, 
     };
+  }
+
+  // fromJson() Method
+  factory UserDiscoveryModel.fromJson(Map<String, dynamic> json) {
+    return UserDiscoveryModel(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      username: json['username'] as String,
+      email: json['email'] as String,
+      profilePictureUrl: json['profilePictureUrl'] as String?,
+      gender: json['gender'] as String?,
+      followers: json['followers'] != null
+          ? List<String>.from(json['followers'])
+          : [],
+      following: json['following'] != null
+          ? List<String>.from(json['following'])
+          : [],
+      createdAt: DateTime.tryParse(json['createdAt'] ?? '') ??
+          DateTime.now(), // fallback if null
+    );
   }
 }

@@ -57,6 +57,8 @@ class Feed {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  // toJson() Method
   Map<String, dynamic> toJson() {
   return {
     'id': id,
@@ -73,5 +75,23 @@ class Feed {
     'updatedAt': updatedAt?.toIso8601String(),
   };
 }
+
+// fromJson() Method
+factory Feed.fromJson(Map<String, dynamic> json) {
+    return Feed(
+      id: json['id'],
+      userId: json['userId'],
+      imageUrl: json['imageUrl'],
+      videoUrl: json['videoUrl'],
+      caption: json['caption'],
+      likesCount: json['likesCount'] ?? 0,
+      commentsCount: json['commentsCount'] ?? 0,
+      sharesCount: json['sharesCount'] ?? 0,
+      isLiked: json['isLiked'] ?? false,
+      isBookmarked: json['isBookmarked'] ?? false,
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+    );
+  }
 
 }

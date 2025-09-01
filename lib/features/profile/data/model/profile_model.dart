@@ -1,4 +1,5 @@
-class Profile {  
+class Profile 
+{  
   final String id;
   final String name;  
   final String username;
@@ -61,6 +62,7 @@ class Profile {
     );
   }
 
+  // toJson() Method
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -77,5 +79,28 @@ class Profile {
       'posts': posts,
       'coverPictureUrl': coverPictureUrl,
     };
+  }
+  
+  // fromJson() Method
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    return Profile(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      username: json['username'] ?? '',
+      profilePictureUrl: json['profilePictureUrl'],
+      bio: json['bio'] ?? '',
+      followersCount: json['followersCount'] ?? 0,
+      followingCount: json['followingCount'] ?? 0,
+      postsCount: json['postsCount'] ?? 0,
+      isVerified: json['isVerified'] ?? false,
+      createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+      lastSeen: json['lastSeen'] != null
+          ? DateTime.tryParse(json['lastSeen'])
+          : null,
+      posts: json['posts'] != null
+          ? List<String>.from(json['posts'])
+          : [],
+      coverPictureUrl: json['coverPictureUrl'],
+    );
   }
 }

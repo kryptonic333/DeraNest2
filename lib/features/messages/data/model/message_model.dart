@@ -64,6 +64,7 @@ class Message  {
     );
   }
 
+  // toJson() Method
   Map<String, dynamic> toJson() {
   return {
     'id': id,
@@ -81,4 +82,27 @@ class Message  {
     'messageType': messageType.name,
   };
 }
+
+
+// fromJson() Method
+factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      senderId: json['senderId'] as String,
+      receiverId: json['receiverId'] as String,
+      message: json['message'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      videoUrl: json['videoUrl'] as String?,
+      audioUrl: json['audioUrl'] as String?,
+      sentAt: DateTime.parse(json['sentAt']),
+      readAt: json['readAt'] != null ? DateTime.parse(json['readAt']) : null,
+      isDelivered: json['isDelivered'] ?? false,
+      isRead: json['isRead'] ?? false,
+      messageType: MessageType.values.firstWhere(
+        (e) => e.name == json['messageType'],
+        orElse: () => MessageType.sentText, // fallback
+      ),
+    );
+  }
 }

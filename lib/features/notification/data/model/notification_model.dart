@@ -63,4 +63,21 @@ class Notification
       'metadata': metadata,
     };
   }
+
+  //fromJson() Method
+  factory Notification.fromJson(Map<String, dynamic> json) {
+    return Notification(
+      id: json['id'] as String,
+      userId: json['userId'] as String,
+      type: json['type'] as String,
+      sourceUserId: json['sourceUserId'] as String?,
+      sourceObjectId: json['sourceObjectId'] as String?,
+      message: json['message'] as String?,
+      isRead: json['isRead'] ?? false,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      metadata: json['metadata'] != null
+          ? Map<String, dynamic>.from(json['metadata'])
+          : null,
+    );
+  }
 }

@@ -18,6 +18,7 @@ class PostDetailModel {
     required this.tags,
   });
 
+  // toJson() Method
   Map<String, dynamic> toJson() {
     return {
       'feed': feed.toJson(),
@@ -26,5 +27,21 @@ class PostDetailModel {
       'user': user.toJson(),
       'tags': tags,
     };
+  }
+
+
+  // fromJson() Method
+  factory PostDetailModel.fromJson(Map<String, dynamic> json) {
+    return PostDetailModel(
+      feed: Feed.fromJson(json['feed']),
+      comments: (json['comments'] as List)
+          .map((c) => Comment.fromJson(c))
+          .toList(),
+      likedBy: (json['likedBy'] as List)
+          .map((p) => Profile.fromJson(p))
+          .toList(),
+      user: Profile.fromJson(json['user']),
+      tags: List<String>.from(json['tags']),
+    );
   }
 }

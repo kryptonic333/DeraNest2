@@ -71,7 +71,6 @@ class SignupScreen extends ConsumerWidget {
                   context: context,
                   label: 'Gender',
                   field: CustomElevatedDropDownMenuButton(
-                    
                     textFontColor: AppColors.kBlack,
                     hintText: 'Male/Female',
                     textController: authState.genderController,
@@ -150,10 +149,8 @@ class SignupScreen extends ConsumerWidget {
                     controller: authState.confirmPasswordController,
                     hintText: '********',
                     textInputAction: TextInputAction.done,
-                    validator: FieldValidator.password(
-                      shouldContainCapitalLetter: true,
-                      shouldContainNumber: true,
-                      shouldContainSpecialChars: true,
+                    validator: FieldValidator.equalTo(
+                      authState.signupPasswordController,
                     ),
                   ),
                 ),
@@ -201,31 +198,55 @@ class SignupScreen extends ConsumerWidget {
                 context.h(3).heightBox,
 
                 // --- Action Buttons ---
+                if (authState.isLoading == true)
+                  SizedBox(
+                    height: context.h(10),
+                    width: context.w(20),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.kSecondary,
+                      ),
+                    ),
+                  ),
+
                 // Register Button
                 CustomElevatedButton(
+                  loadingIndicatorColor: AppColors.kWhite,
+                  loading: authState.isLoading,
+                  circularProgressStrokeWidth: context.h(1),
                   borderRadius: context.h(1.2),
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
-                  title: 'Register',
-                  onPress: () async 
-                  {                    
+                  title: authState.isLoading ? null : 'Register',
+                  onPress: () async {
                     // Check whether the user has agreed to terms and conditions
                     if (authState.isTermsAgreed == false) {
                       ShowSnackbar1.error(context, 'Accept Terms!');
                       return;
                     }
                     // Store the Status of Signup
-                    final success = await authCtrl.signUpUser(context);                    
-                    // If true, proceed to userDiscoveryScreen
-                    if (success) {
-                      context.go(Routes.userDiscovery);                     
+                    try {
+                      final success = await authCtrl.signUpUser(context);
+                      // If true, proceed to userDiscoveryScreen
+                      if (success) {
+                        context.go(Routes.userDiscovery);
+                      }
+                    } catch (e) {
+                      ShowSnackbar1.error(
+                        context,
+                        'An unexpected error occurred. Please try again.',
+                      );
+                    } finally {
+                      authCtrl.setLoading(false);
                     }
-                    },
+                  },
                 ),
                 context.h(1.7).heightBox,
+
                 // OR Button
                 Text('OR', style: AppTextStyle.kDefaultBodyText),
                 context.h(1.7).heightBox,
+
                 // Login Button
                 CustomElevatedButton(
                   borderRadius: context.h(1.2),
@@ -247,7 +268,6 @@ class SignupScreen extends ConsumerWidget {
     );
   }
 
-
   // Helper method (label + textfield)
   Widget _buildTextFieldSection({
     required BuildContext context,
@@ -265,7 +285,7 @@ class SignupScreen extends ConsumerWidget {
         ),
         SizedBox(height: context.h(1)),
         field,
-       context.h(2).heightBox,
+        context.h(2).heightBox,
       ],
     );
   }
