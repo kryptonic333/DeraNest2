@@ -22,13 +22,13 @@ class CommentListItem extends StatelessWidget
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: CircleAvatar(
-            backgroundImage: AssetImage(comment.user.profilePictureUrl!),
+            backgroundImage: AssetImage(comment.user.person.profilePictureUrl!),
           ),
           title: Text.rich(
             TextSpan(
               children: [
                 TextSpan(
-                  text: " ${comment.user.name}",
+                  text: " ${comment.user.person.name}",
                   style: AppTextStyle.kMediumBodyText,
                 ),
                 TextSpan(

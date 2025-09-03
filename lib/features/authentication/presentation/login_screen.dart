@@ -5,7 +5,6 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
-import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
@@ -43,9 +42,7 @@ class LoginScreen extends ConsumerWidget {
                 Text(
                   'Digital Baithak for GupShup\nConnect with friends and family\nIt\'s all here for you.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.kLargeBodyText.copyWith(
-                    color: AppColors.kSecondarySupport,
-                  ),
+                  style: AppTextStyle.kLargeBodyText.copyWith(color: AppColors.kSecondarySupport),
                 ),
                 context.h(6).heightBox,
 
@@ -97,16 +94,11 @@ class LoginScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(3),
                           color: AppColors.kWhite,
                           border: Border.all(
-                            color: authState.isTermsAgreed
-                                ? AppColors.kWhite
-                                : AppColors.kBlack,
+                            color: authState.isTermsAgreed ? AppColors.kWhite : AppColors.kBlack,
                           ),
                         ),
                         child: authState.isTermsAgreed
-                            ? Icon(
-                                Icons.check,
-                                color: AppColors.kSecondarySupport,
-                              ).centerWidget
+                            ? Icon(Icons.check, color: AppColors.kSecondarySupport).centerWidget
                             : null,
                       ),
                     ),
@@ -138,18 +130,8 @@ class LoginScreen extends ConsumerWidget {
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
                   title: 'Login',
-                  onPress: () async {
-                    // Check whether the user has agreed to terms and conditions
-                    if (authState.isTermsAgreed == false) {
-                      ShowSnackbar1.error(context, 'Accept Terms!');
-                      return;
-                    }
-                    // Store the Status of Signin
-                    final success = await authCtrl.signInUser(context);
-                   // If true, proceed to feed screen
-                    if (success) {
-                      context.go(Routes.feed);
-                    }
+                  onPress: () {
+                    context.go(Routes.feed);
                   },
                 ),
                 context.h(1.7).heightBox,
@@ -187,12 +169,7 @@ class LoginScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          labelText,
-          style: AppTextStyle.kLargeBodyText.copyWith(
-            fontWeight: FontWeight.w800,
-          ),
-        ),
+        Text(labelText, style: AppTextStyle.kLargeBodyText.copyWith(fontWeight: FontWeight.w800)),
         SizedBox(height: context.h(1)),
         child,
       ],

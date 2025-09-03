@@ -55,7 +55,7 @@ class ProfileHeader extends ConsumerWidget {
           children: [
             // Name
             Text(
-              ' ${user.name}',
+              ' ${user.person.name}',
               style: AppTextStyle.kLargeBodyText.copyWith(
                 fontSize: context.w(4.8),
                 fontWeight: FontWeight.w900,

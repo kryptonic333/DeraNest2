@@ -24,7 +24,7 @@ class BuildPostInfoSection extends StatelessWidget {
           TextSpan(
             children: [
               TextSpan(
-                text: '${post.user.name} ',
+                text: '${post.user.person.name} ',
                 style: AppTextStyle.kMediumBodyText.copyWith(
                   fontSize: context.h(2.1),
                   fontWeight: FontWeight.w900,
@@ -71,7 +71,7 @@ class BuildPostInfoSection extends StatelessWidget {
           TextSpan(
             children: [
               TextSpan(
-                text: '${post.comments[0].user.name} : ',
+                text: '${post.comments[0].user.person.name} : ',
                 style: AppTextStyle.kMediumBodyText,
               ),
               TextSpan(

@@ -1,19 +1,16 @@
 
-import 'package:deranest/core/data/services/auth_services.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 final splashProvider = StateNotifierProvider<SplashProvider, SplashState>((
   ref,
-) {
-  final authService = AuthServices();
-  return SplashProvider(authService);
+) {  
+  return SplashProvider();
 });
 
 class SplashProvider extends StateNotifier<SplashState> {
-  final AuthServices _authService;
-  SplashProvider(this._authService)
+ 
+  SplashProvider()
     : super(SplashState(loginStatus:false) )
     {
       _checkLoginStatus();
@@ -22,11 +19,7 @@ class SplashProvider extends StateNotifier<SplashState> {
   void _checkLoginStatus() 
   {
 
-    if (_authService.currentUser != null) {
-      state = state.copyWith(loginStatus: true);
-    } else {
-      state = state.copyWith(loginStatus: false);
-    }
+   
   }
 }
 

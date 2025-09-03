@@ -3,7 +3,6 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/routing/app_routers.dart';
-import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +13,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authCtrl = ref.watch(authProvider.notifier);
+   
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.kTransparent,
@@ -132,8 +131,8 @@ class SettingsScreen extends ConsumerWidget {
               height: context.h(7),
               buttonColor: AppColors.kRed,
               title: 'Logout',
-              onPress: () {
-                authCtrl.logout(context);
+              onPress: () 
+              {             
                 context.go(Routes.welcome);
               },
             ).centerWidget,

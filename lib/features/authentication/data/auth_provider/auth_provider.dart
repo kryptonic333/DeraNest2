@@ -1,15 +1,14 @@
-import 'package:deranest/core/data/services/auth_services.dart';
-import 'package:deranest/core/presentation/widgets/snackbar.dart';
+import 'package:deranest/core/data/services/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final authServiceProvider = Provider<AuthServices>((ref) {
-  return AuthServices();
+final authServiceProvider = Provider<FirebaseAuthServices>((ref) {
+  return FirebaseAuthServices();
 });
 
-final authProvider = StateNotifierProvider<AuthController, AuthState>((ref) {
-  final authService = ref.watch(authServiceProvider);
-  return AuthController(authService);
+final authProvider = StateNotifierProvider<AuthController, AuthState>((ref) 
+{  
+  return AuthController();
 });
 
 class AuthState {
@@ -39,7 +38,6 @@ class AuthState {
     required this.loginFormKey,
     required this.signUpFormKey,
     required this.forgetFormKey,
-
     //-----
     required this.loginEmailController,
     required this.loginPasswordController,
@@ -96,9 +94,8 @@ class AuthState {
   }
 }
 
-class AuthController extends StateNotifier<AuthState> {
-  final AuthServices _authService;
-  AuthController(this._authService)
+class AuthController extends StateNotifier<AuthState> { 
+  AuthController()
     : super(
         AuthState(
           loginFormKey: GlobalKey<FormState>(),
@@ -127,70 +124,4 @@ class AuthController extends StateNotifier<AuthState> {
   void setLoading(bool value) {
   state = state.copyWith(isLoading: value);
 }
-
-  // ------Authentication Methods------
-  Future<void> logout(BuildContext context) async {
-    try {
-      await _authService.signOut();
-      ShowSnackbar1.success(context, 'Logged out successfully');
-    } catch (e) {
-      ShowSnackbar1.error(context, 'Logout failed: $e');
-    }
-  }
-
-  // SignIn
-  Future<bool> signInUser(BuildContext context) async {
-    if (state.loginFormKey.currentState?.validate() ?? false) {
-      try {
-        await _authService.signInWithEmail(
-          email: state.loginEmailController.text.trim(),
-          password: state.loginPasswordController.text.trim(),
-        );
-        ShowSnackbar1.success(context, 'Sign In successful');
-        return true;
-      } catch (e) {
-        ShowSnackbar1.error(context, '$e');
-        return false;
-      }
-    }
-    return false;
-  }
-
-  // SignUp
-  Future<bool> signUpUser(BuildContext context) async {
-    if (state.signUpFormKey.currentState?.validate() ?? false) {
-      try {
-        await _authService.signUpWithEmail(
-          email: state.signupEmailController.text.trim(),
-          password: state.signupPasswordController.text.trim(),
-          name: state.nameController.text.trim(),
-          phone: state.phoneController.text.trim(),
-          gender: state.genderController.text.trim(),
-        );
-        ShowSnackbar1.success(context, 'Sign up successful');
-        return true;
-      } catch (e) {
-        ShowSnackbar1.error(context, '$e');
-        return false;
-      }
-    }
-    return false;
-  }
-
-  // Reset Password
-  Future<bool> resetPassword(BuildContext context) async {
-    if (state.forgetFormKey.currentState?.validate() ?? false) {
-      try {
-        _authService.sendPasswordResetEmail(
-          email: state.forgotPasswordController.text.trim(),
-        );
-        ShowSnackbar1.success(context, 'Email Sent Successfully');
-        return true;
-      } catch (e) {
-        ShowSnackbar1.error(context, e.toString());
-        return false;
-      }
-    }
-    return false;
-  }
 }

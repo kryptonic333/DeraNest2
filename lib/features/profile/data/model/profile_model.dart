@@ -1,61 +1,36 @@
+import 'package:deranest/features/authentication/data/model/user_model.dart';
+
 class Profile 
-{  
-  final String id;
-  final String name;  
+{
+  final UserModel person;
   final String username;
-  final String? profilePictureUrl;  
-  final String bio;  
-  final int followersCount;
-  final int followingCount;
-  final int postsCount;
-  final bool isVerified;
-  final DateTime createdAt;
+  final String? bio;
   final DateTime? lastSeen;
-  final List<String>? posts;
+  final List<String>? posts
+  ;
   final String? coverPictureUrl;
 
   Profile({
-    required this.id,
-    required this.name,
+    required this.person,
     required this.username,
-    this.profilePictureUrl,
     this.bio = '',
-    this.followersCount = 0,
-    this.followingCount = 0,
-    this.postsCount = 0,
-    this.isVerified = false,
-    required this.createdAt,
     this.lastSeen,
     this.posts = const [],
     this.coverPictureUrl,
   });
 
   Profile copyWith({
-    String? id,
-    String? name,
+    UserModel? person,
     String? username,
-    String? profilePictureUrl,
     String? bio,
-    int? followersCount,
-    int? followingCount,
-    int? postsCount,
-    bool? isVerified,
-    DateTime? createdAt,
     DateTime? lastSeen,
     List<String>? posts,
     String? coverPictureUrl,
   }) {
     return Profile(
-      id: id ?? this.id,
-      name: name ?? this.name,
+      person: person ?? this.person,
       username: username ?? this.username,
-      profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
       bio: bio ?? this.bio,
-      followersCount: followersCount ?? this.followersCount,
-      followingCount: followingCount ?? this.followingCount,
-      postsCount: postsCount ?? this.postsCount,
-      isVerified: isVerified ?? this.isVerified,
-      createdAt: createdAt ?? this.createdAt,
       lastSeen: lastSeen ?? this.lastSeen,
       posts: posts ?? this.posts,
       coverPictureUrl: coverPictureUrl ?? this.coverPictureUrl,
@@ -65,41 +40,23 @@ class Profile
   // toJson() Method
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'name': name,
+      'person': person.toJson(),
       'username': username,
-      'profilePictureUrl': profilePictureUrl,
       'bio': bio,
-      'followersCount': followersCount,
-      'followingCount': followingCount,
-      'postsCount': postsCount,
-      'isVerified': isVerified,
-      'createdAt': createdAt.toIso8601String(),
       'lastSeen': lastSeen?.toIso8601String(),
       'posts': posts,
       'coverPictureUrl': coverPictureUrl,
     };
   }
-  
+
   // fromJson() Method
-  factory Profile.fromJson(Map<String, dynamic> json) {
+  factory Profile.fromJson(Map<String, dynamic> json, String documentId) {
     return Profile(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
+      person: UserModel.fromJson(json['person'], documentId),
       username: json['username'] ?? '',
-      profilePictureUrl: json['profilePictureUrl'],
       bio: json['bio'] ?? '',
-      followersCount: json['followersCount'] ?? 0,
-      followingCount: json['followingCount'] ?? 0,
-      postsCount: json['postsCount'] ?? 0,
-      isVerified: json['isVerified'] ?? false,
-      createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
-      lastSeen: json['lastSeen'] != null
-          ? DateTime.tryParse(json['lastSeen'])
-          : null,
-      posts: json['posts'] != null
-          ? List<String>.from(json['posts'])
-          : [],
+      lastSeen: json['lastSeen'] != null ? DateTime.tryParse(json['lastSeen']) : null,
+      posts: json['posts'] != null ? List<String>.from(json['posts']) : [],
       coverPictureUrl: json['coverPictureUrl'],
     );
   }

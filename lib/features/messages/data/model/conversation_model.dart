@@ -27,7 +27,7 @@ class Conversation {
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       id: json['id'] as String,
-      participant: Profile.fromJson(json['participant']), 
+      participant: Profile.fromJson(json['participant'], json['id']),
       messages: (json['messages'] as List<dynamic>)
           .map((msg) => Message.fromJson(msg))
           .toList(), 

@@ -6,7 +6,6 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
-import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
@@ -15,10 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-// Authentication Screen Controller Required
 class SignupScreen extends ConsumerWidget {
   const SignupScreen({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
@@ -38,17 +35,13 @@ class SignupScreen extends ConsumerWidget {
                 const AppHeader(),
                 // Header's bottom spacing
                 context.h(5).heightBox,
-
                 // App tagline
                 Text(
                   'Digital Baithak for GupShup\nConnect with friends and family\nIt\'s all here for you.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.kLargeBodyText.copyWith(
-                    color: AppColors.kSecondarySupport,
-                  ),
+                  style: AppTextStyle.kLargeBodyText.copyWith(color: AppColors.kSecondarySupport),
                 ),
                 context.h(2.5).heightBox,
-
                 // --- Form Fields ---
                 // Name field
                 _buildTextFieldSection(
@@ -65,7 +58,6 @@ class SignupScreen extends ConsumerWidget {
                     validator: FieldValidator.required(),
                   ),
                 ),
-
                 // Gender field
                 _buildTextFieldSection(
                   context: context,
@@ -78,17 +70,13 @@ class SignupScreen extends ConsumerWidget {
                     dropdownMenuEntries: const [
                       DropdownMenuEntry(value: 'Male', label: 'Male'),
                       DropdownMenuEntry(value: 'Female', label: 'Female'),
-                      DropdownMenuEntry(
-                        value: 'Rather not say',
-                        label: 'Rather not say',
-                      ),
+                      DropdownMenuEntry(value: 'Rather not say', label: 'Rather not say'),
                     ],
                     onSelected: (value) {
                       authState.genderController;
                     },
                   ),
                 ),
-
                 // Phone field
                 _buildTextFieldSection(
                   context: context,
@@ -103,7 +91,6 @@ class SignupScreen extends ConsumerWidget {
                     validator: FieldValidator.number(),
                   ),
                 ),
-
                 // Email field
                 _buildTextFieldSection(
                   context: context,
@@ -118,7 +105,6 @@ class SignupScreen extends ConsumerWidget {
                     validator: FieldValidator.email(),
                   ),
                 ),
-
                 // Password field
                 _buildTextFieldSection(
                   context: context,
@@ -137,7 +123,6 @@ class SignupScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-
                 // Confirm Password field
                 _buildTextFieldSection(
                   context: context,
@@ -149,12 +134,9 @@ class SignupScreen extends ConsumerWidget {
                     controller: authState.confirmPasswordController,
                     hintText: '********',
                     textInputAction: TextInputAction.done,
-                    validator: FieldValidator.equalTo(
-                      authState.signupPasswordController,
-                    ),
+                    validator: FieldValidator.equalTo(authState.signupPasswordController),
                   ),
                 ),
-
                 // Agree Term Button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -170,20 +152,14 @@ class SignupScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(3),
                           color: AppColors.kWhite,
                           border: Border.all(
-                            color: authState.isTermsAgreed
-                                ? AppColors.kWhite
-                                : AppColors.kBlack,
+                            color: authState.isTermsAgreed ? AppColors.kWhite : AppColors.kBlack,
                           ),
                         ),
                         child: authState.isTermsAgreed
-                            ? Icon(
-                                Icons.check,
-                                color: AppColors.kSecondarySupport,
-                              ).centerWidget
+                            ? Icon(Icons.check, color: AppColors.kSecondarySupport).centerWidget
                             : null,
                       ),
                     ),
-
                     // Terms and Condition Button
                     CustomTextButton(
                       fontSize: context.h(2),
@@ -196,17 +172,12 @@ class SignupScreen extends ConsumerWidget {
                   ],
                 ),
                 context.h(3).heightBox,
-
                 // --- Action Buttons ---
                 if (authState.isLoading == true)
                   SizedBox(
                     height: context.h(10),
                     width: context.w(20),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.kSecondary,
-                      ),
-                    ),
+                    child: Center(child: CircularProgressIndicator(color: AppColors.kSecondary)),
                   ),
 
                 // Register Button
@@ -217,36 +188,16 @@ class SignupScreen extends ConsumerWidget {
                   borderRadius: context.h(1.2),
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
-                  title: authState.isLoading ? null : 'Register',
-                  onPress: () async {
-                    // Check whether the user has agreed to terms and conditions
-                    if (authState.isTermsAgreed == false) {
-                      ShowSnackbar1.error(context, 'Accept Terms!');
-                      return;
-                    }
-                    // Store the Status of Signup
-                    try {
-                      final success = await authCtrl.signUpUser(context);
-                      // If true, proceed to userDiscoveryScreen
-                      if (success) {
-                        context.go(Routes.userDiscovery);
-                      }
-                    } catch (e) {
-                      ShowSnackbar1.error(
-                        context,
-                        'An unexpected error occurred. Please try again.',
-                      );
-                    } finally {
-                      authCtrl.setLoading(false);
-                    }
+                  title: 'Register',
+                  onPress: () {
+                    authCtrl.setLoading(true);
+                    context.go(Routes.userDiscovery);
                   },
                 ),
                 context.h(1.7).heightBox,
-
                 // OR Button
                 Text('OR', style: AppTextStyle.kDefaultBodyText),
                 context.h(1.7).heightBox,
-
                 // Login Button
                 CustomElevatedButton(
                   borderRadius: context.h(1.2),
@@ -277,12 +228,7 @@ class SignupScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppTextStyle.kLargeBodyText.copyWith(
-            fontWeight: FontWeight.w800,
-          ),
-        ),
+        Text(label, style: AppTextStyle.kLargeBodyText.copyWith(fontWeight: FontWeight.w800)),
         SizedBox(height: context.h(1)),
         field,
         context.h(2).heightBox,

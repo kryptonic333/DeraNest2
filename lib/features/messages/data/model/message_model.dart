@@ -1,7 +1,8 @@
 enum MessageType { sentText, receivedText, sentVoice, receivedVoice ,sentImage,
   receivedImage,}
 
-class Message  {
+class Message 
+ {
   final String id; 
   final String title;  
   final String senderId;  

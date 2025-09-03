@@ -34,7 +34,7 @@ class ImageMessage extends StatelessWidget {
                   radius: context.h(2),
 
                   backgroundImage: AssetImage(
-                    participant.profilePictureUrl ?? AppImages.profileImage,
+                    participant.person.profilePictureUrl ?? AppImages.profileImage,
                   ),
                   backgroundColor: AppColors.kHintTextColor,
                 ),

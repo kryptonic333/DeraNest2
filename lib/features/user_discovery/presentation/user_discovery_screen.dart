@@ -69,10 +69,8 @@ class UserDiscoveryScreen extends StatelessWidget {
   }
 }
 
-class _PersonCard extends StatelessWidget {
-  // " people registered on app " Model
+class _PersonCard extends StatelessWidget { 
   final UserDiscoveryModel person;
-
   const _PersonCard({required this.person});
 
   @override

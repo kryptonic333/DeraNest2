@@ -1,5 +1,6 @@
 import 'package:deranest/core/constants/app_assets.dart';
 import 'package:deranest/core/data/dummy_lists/profile_list.dart';
+import 'package:deranest/features/authentication/data/model/user_model.dart';
 import 'package:deranest/features/messages/data/model/conversation_model.dart';
 import 'package:deranest/features/messages/data/model/message_model.dart';
 import 'package:deranest/features/profile/data/model/profile_model.dart';
@@ -55,11 +56,20 @@ List<Conversation> dummyConversations = [
     id: 'congo_group_tech',
 
     participant: Profile(
-      id: 'group_tech_01',
+      person: UserModel(
+     id: 'group_tech_01',
       name: 'Flutter Devs',
-      username: 'flutter_devs_group',
+      email: '',
+      phone: '',
+      gender: '',
       profilePictureUrl: AppImages.profileImage,
-      createdAt: DateTime.now().subtract(const Duration(days: 20)),
+      followersCount: 0,
+      followingCount: 0,
+      postsCount: 0,
+      isVerified: false,
+       createdAt: DateTime.now().subtract(const Duration(days: 20)),
+    ),
+     username: 'flutter_devs_group',
     ),
     messages: [
       Message(

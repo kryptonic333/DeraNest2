@@ -17,8 +17,8 @@ class InboxListItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CircleAvatar(
-          backgroundImage: participant.profilePictureUrl != null
-              ? AssetImage(participant.profilePictureUrl!)
+          backgroundImage: participant.person.profilePictureUrl != null
+              ? AssetImage(participant.person.profilePictureUrl!)
               : null,
           radius: context.w(6),
         ),
@@ -28,7 +28,7 @@ class InboxListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                participant.name,
+                participant.person.name,
                 style: AppTextStyle.kMediumBodyText.copyWith(
                   color: AppColors.kBlack,
                 ),

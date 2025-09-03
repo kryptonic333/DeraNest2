@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   final String id;
   final String name;
+  
   final String email;
   final String phone;
   final String gender;
@@ -11,6 +12,7 @@ class UserModel {
   final int followingCount;
   final int postsCount;
   final bool isVerified;
+  final String? profilePictureUrl; 
 
   UserModel({
     required this.id,
@@ -19,6 +21,7 @@ class UserModel {
     required this.phone,
     required this.gender,
     required this.createdAt,
+    this.profilePictureUrl = '',
     this.followersCount = 0,
     this.followingCount = 0,
     this.postsCount = 0,
@@ -27,7 +30,8 @@ class UserModel {
 
   // ToJson Method - Sending data to Firestore
   Map<String, dynamic> toJson() {
-    return {
+    return 
+    {
       'id': id,
       'name': name,
       'email': email,
@@ -38,6 +42,7 @@ class UserModel {
       'followingCount': followingCount,
       'postsCount': postsCount,
       'isVerified': isVerified,
+      'profilePictureUrl': profilePictureUrl,
     };
   }
 
@@ -54,6 +59,7 @@ class UserModel {
       followingCount: json['followingCount'] ?? 0,
       postsCount: json['postsCount'] ?? 0,
       isVerified: json['isVerified'] ?? false,
+      profilePictureUrl: json['profilePictureUrl'] ?? '',
     );
   }
 }

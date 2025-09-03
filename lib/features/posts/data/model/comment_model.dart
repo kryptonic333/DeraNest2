@@ -31,7 +31,7 @@ class Comment {
     return Comment(
       id: json['id'] as String,
       postId: json['postId'] as String,
-      user: Profile.fromJson(json['user'] as Map<String, dynamic>),
+      user: Profile.fromJson(json['user'] , json['id']),
       commentText: json['commentText'] as String,
       commentedAt: DateTime.parse(json['commentedAt'] as String),
     );

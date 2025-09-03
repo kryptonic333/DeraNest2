@@ -25,12 +25,12 @@ class ConversationScreen extends StatelessWidget
         appBar:
             // Custom App Bar
             ConversationAppBar(
-              userName: conversation.participant.name,
+              userName: conversation.participant.person.name,
               activeTime:
                   conversation.participant.lastSeen ??
-                  conversation.participant.createdAt,
+                  conversation.participant.person.createdAt,
               profileImageUrl:
-                  conversation.participant.profilePictureUrl ??
+                  conversation.participant.person.profilePictureUrl ??
                   AppImages.profileImage,
             ),
         body: Column(
@@ -39,7 +39,7 @@ class ConversationScreen extends StatelessWidget
             Expanded(
               child: MessageList(
                 messages: conversation.messages,
-                currentUserId: currentUser.id,
+                currentUserId: currentUser.person.id,
                 participant: conversation.participant,
               ),
             ),

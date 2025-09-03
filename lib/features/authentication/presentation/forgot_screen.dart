@@ -14,8 +14,6 @@ class ForgotPasswordScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
-    final authCtrl = ref.read(authProvider.notifier);
-
     return CustomSafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -69,11 +67,9 @@ class ForgotPasswordScreen extends ConsumerWidget {
                   buttonColor: AppColors.kSecondary,
                   width: context.w(90),
                   title: 'Send',
-                  onPress: () async {
-                    // Store the Status of Process
-                    await authCtrl.resetPassword(context);
-                   
-                    
+                  onPress: () {
+                    // Store the Status of Process            
+                                      
                   },
                 ),
               ),

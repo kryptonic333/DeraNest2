@@ -24,7 +24,7 @@ class LikedByRow extends StatelessWidget {
                 child: CircleAvatar(
                   radius: context.h(2.5),
                   backgroundImage: AssetImage(
-                    likedBy[index].profilePictureUrl!,
+                    likedBy[index].person.profilePictureUrl!,
                   ),
                 ),
               ),
@@ -43,7 +43,7 @@ class LikedByRow extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: '${likedBy[0].name} and others',
+                  text: '${likedBy[0].person.name} and others',
                   style: AppTextStyle.kMediumBodyText.copyWith(
                     color: AppColors.kHintTextColor,
                   ),

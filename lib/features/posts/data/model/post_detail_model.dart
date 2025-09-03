@@ -38,9 +38,9 @@ class PostDetailModel {
           .map((c) => Comment.fromJson(c))
           .toList(),
       likedBy: (json['likedBy'] as List)
-          .map((p) => Profile.fromJson(p))
+          .map((p) => Profile.fromJson(p, p['id']))
           .toList(),
-      user: Profile.fromJson(json['user']),
+      user: Profile.fromJson(json['user'], json['user']['id']),
       tags: List<String>.from(json['tags']),
     );
   }

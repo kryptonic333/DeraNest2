@@ -16,16 +16,15 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
     final profile = dummyProfileList[0];
-    final userImages = dummyFeedList
-        .where((feed) => feed.imageUrl != null)
-        .toList();
+    final userImages = dummyFeedList.where((feed) => feed.imageUrl != null).toList();
     return CustomSafeArea(
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.kWhite,
           image: DecorationImage(
-            image: profile.profilePictureUrl != null
+            image: profile.person.profilePictureUrl != null
                 ? AssetImage(profile.coverPictureUrl!)
                 : AssetImage(AppImages.profileImage),
             fit: BoxFit.cover,
@@ -75,20 +74,19 @@ class ProfileScreen extends ConsumerWidget {
                               SizedBox(height: context.h(8)),
                               // Stats Row
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Column(
                                     children: [
                                       Text(
-                                        profile.postsCount.toString(),
-                                        style: AppTextStyle.kVeryLargeBodyText
-                                            .copyWith(color: AppColors.kBlack),
+                                        profile.person.postsCount.toString(),
+                                        style: AppTextStyle.kVeryLargeBodyText.copyWith(
+                                          color: AppColors.kBlack,
+                                        ),
                                       ),
                                       Text(
                                         'Posts',
-                                        style: AppTextStyle.kLargeBodyText
-                                            .copyWith(color: AppColors.kBlack),
+                                        style: AppTextStyle.kLargeBodyText.copyWith(color: AppColors.kBlack),
                                       ),
                                     ],
                                   ),
@@ -103,14 +101,14 @@ class ProfileScreen extends ConsumerWidget {
                                   Column(
                                     children: [
                                       Text(
-                                        profile.followersCount.toString(),
-                                        style: AppTextStyle.kVeryLargeBodyText
-                                            .copyWith(color: AppColors.kBlack),
+                                        profile.person.followersCount.toString(),
+                                        style: AppTextStyle.kVeryLargeBodyText.copyWith(
+                                          color: AppColors.kBlack,
+                                        ),
                                       ),
                                       Text(
                                         'Followers',
-                                        style: AppTextStyle.kLargeBodyText
-                                            .copyWith(color: AppColors.kBlack),
+                                        style: AppTextStyle.kLargeBodyText.copyWith(color: AppColors.kBlack),
                                       ),
                                     ],
                                   ),
@@ -125,14 +123,14 @@ class ProfileScreen extends ConsumerWidget {
                                   Column(
                                     children: [
                                       Text(
-                                        profile.followingCount.toString(),
-                                        style: AppTextStyle.kVeryLargeBodyText
-                                            .copyWith(color: AppColors.kBlack),
+                                        profile.person.followingCount.toString(),
+                                        style: AppTextStyle.kVeryLargeBodyText.copyWith(
+                                          color: AppColors.kBlack,
+                                        ),
                                       ),
                                       Text(
                                         'Following',
-                                        style: AppTextStyle.kLargeBodyText
-                                            .copyWith(color: AppColors.kBlack),
+                                        style: AppTextStyle.kLargeBodyText.copyWith(color: AppColors.kBlack),
                                       ),
                                     ],
                                   ),
@@ -141,29 +139,23 @@ class ProfileScreen extends ConsumerWidget {
                               context.h(2).heightBox,
                               // Name
                               Text(
-                                profile.name,
-                                style: AppTextStyle.kVeryLargeBodyText.copyWith(
-                                  color: AppColors.kBlack,
-                                ),
+                                profile.person.name,
+                                style: AppTextStyle.kVeryLargeBodyText.copyWith(color: AppColors.kBlack),
                               ),
                               context.h(2).heightBox,
                               // Username
                               Text(
                                 profile.username,
-                                style: AppTextStyle.kLargeBodyText.copyWith(
-                                  color: AppColors.kBlack,
-                                ),
+                                style: AppTextStyle.kLargeBodyText.copyWith(color: AppColors.kBlack),
                               ),
                               context.h(1.5).heightBox,
                               // Bio
                               Text(
-                                profile.bio,
-                                style: AppTextStyle.kDefaultBodyText.copyWith(
-                                  color: AppColors.kBlack,
-                                ),
+                                profile.bio!,
+                                style: AppTextStyle.kDefaultBodyText.copyWith(color: AppColors.kBlack),
                                 textAlign: TextAlign.center,
                               ).padHrz(context.h(6)),
-                             context.h(2.3).heightBox,
+                              context.h(2.3).heightBox,
                               // Grid Container
                               Container(
                                 height: context.h(40),
@@ -182,31 +174,22 @@ class ProfileScreen extends ConsumerWidget {
                                   ),
                                   child: GridView.builder(
                                     itemCount: userImages.length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          crossAxisSpacing: 6.0,
-                                          mainAxisSpacing: 6.0,
-                                          childAspectRatio: 1,
-                                        ),
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 6.0,
+                                      mainAxisSpacing: 6.0,
+                                      childAspectRatio: 1,
+                                    ),
                                     itemBuilder: (context, index) {
-                                      final imageUrl =
-                                          userImages[index].imageUrl!;
+                                      final imageUrl = userImages[index].imageUrl!;
                                       return ClipRRect(
                                         borderRadius: BorderRadius.only(
-                                          topLeft: index == 0
-                                              ? Radius.circular(50)
-                                              : Radius.circular(5),
-                                          topRight: index == 2
-                                              ? Radius.circular(50)
-                                              : Radius.circular(5),
+                                          topLeft: index == 0 ? Radius.circular(50) : Radius.circular(5),
+                                          topRight: index == 2 ? Radius.circular(50) : Radius.circular(5),
                                           bottomLeft: Radius.circular(5),
                                           bottomRight: Radius.circular(5),
                                         ),
-                                        child: Image.asset(
-                                          imageUrl,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        child: Image.asset(imageUrl, fit: BoxFit.cover),
                                       );
                                     },
                                   ),
@@ -226,15 +209,12 @@ class ProfileScreen extends ConsumerWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(
-                              width: context.w(0.5),
-                              color: AppColors.kAbortColor,
-                            ),
+                            border: Border.all(width: context.w(0.5), color: AppColors.kAbortColor),
                           ),
                           child: CircleAvatar(
                             radius: context.w(15),
-                            backgroundImage: profile.profilePictureUrl != null
-                                ? AssetImage(profile.profilePictureUrl!)
+                            backgroundImage: profile.person.profilePictureUrl != null
+                                ? AssetImage(profile.person.profilePictureUrl!)
                                 : AssetImage(AppImages.profileImage),
                           ),
                         ),
