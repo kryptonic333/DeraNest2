@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/features/authentication/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 
-class FirebaseFirestoreServices
-{
+class FirebaseFirestoreServices {
   // Creating a collection instance for users in firestore
   final users = FirebaseFirestore.instance.collection('users');
 
@@ -12,44 +10,53 @@ class FirebaseFirestoreServices
   final userData = FirebaseFirestore.instance.collection('users').snapshots();
 
   // Add User To Firestore Users Collection
-  void addUser(String id, UserModel user, BuildContext context) {
-    users
+  Future<void> addUser(String id, UserModel user, BuildContext context)async {
+    await users
         .doc(id)
-        .set({
-          'id': id,
-          'Name': user.name,
-          'Gender': user.gender,
-          'Phone Number': user.phone,
-          'Email': user.email,
-          'UserName' : 'To be Continued...',
-          'Bio': 'To be Continued...'
-        })
+        .set(user.toJson())
         .then((val) {
-          ShowSnackbar1.success(context, 'User Added!');
+          debugPrint('User Added Successfully');
         })
         .onError((e, stackTrace) {
-          ShowSnackbar1.error(context, 'Error adding user');
+          debugPrint('User Added Successfully');
         });
   }
 
   // Update the user data in users collection
-  void updateProfile(UserModel user, userData, BuildContext context) {
+  Future<void> updateProfile(UserModel user, userData, BuildContext context)async {
     // Given that docId == userId
-    users
+    await users
         .doc(userData.snapshot['id'].toString())
-        .update({
-          'Name': user.name,
-          'Username': 'To be added in User Model',
-          'Bio': 'To be added in User Model',
-          'Email': user.email,
-          'Phone': user.phone,
-        })
+        .update(user.toJson())
         .then((val) {})
         .onError((e, stackTrace) {});
   }
 
-  // Get Current User Data from FireStore
-  Future<DocumentSnapshot> getCurrentUserData(String userId) {
-  return users.doc(userId).get();
-} 
+  // Fetch user data
+  Future<UserModel?> fetchUserData(String userId) async
+  {
+    try
+    {
+      // getting doc with given user id
+      final doc = await users.doc(userId).get();
+      if (doc.exists) {
+        return UserModel.fromJson(doc.data()!,userId);
+      }
+      return null;
+    } catch (e) {
+      debugPrint("Error fetching user: $e");
+      return null;
+    }
+  }
+
+  // Stream to get user
+  Stream<UserModel?> streamUserData(String userId) {
+  return users.doc(userId).snapshots().map((doc) {
+    if (doc.exists) {
+      return UserModel.fromJson(doc.data()!,userId);
+    }
+    return null;
+  });
+}
+
 }

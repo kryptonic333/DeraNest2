@@ -5,6 +5,7 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
@@ -126,31 +127,44 @@ class LoginScreen extends ConsumerWidget {
                 context.h(2).heightBox,
                 // Login button
                 CustomElevatedButton(
+                  loadingIndicatorColor: AppColors.kWhite,
+                  loading: authState.isLoading,
                   borderRadius: context.h(1.2),
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
                   title: 'Login',
-                  onPress: () {
-                    context.go(Routes.feed);
+                  onPress: () async {
+                    if (authState.isTermsAgreed) {
+                      if (authState.loginFormKey.currentState!.validate()) {
+                        final success = await authCtrl.signIn(context);
+                        if (success) {
+                          ShowSnackbar1.success(context, 'Login Successful');
+                          context.go(Routes.feed);
+                        }
+                      }
+                    } else {
+                      ShowSnackbar1.error(context, 'Accept terms');
+                    }
                   },
                 ),
                 context.h(1.7).heightBox,
-                // OR Button
-                Text('OR', style: AppTextStyle.kDefaultBodyText),
+                if (authState.isLoading == false)
+                  // OR Button
+                  Text('OR', style: AppTextStyle.kDefaultBodyText),
                 context.h(1.7).heightBox,
-
-                // Register button
-                CustomElevatedButton(
-                  borderRadius: context.h(1.2),
-                  textColor: AppColors.kBlack,
-                  buttonColor: AppColors.kWhite,
-                  title: 'Register',
-                  width: double.infinity,
-                  onPress: () {
-                    // Navigate to signup screen
-                    context.go(Routes.register);
-                  },
-                ),
+                if (authState.isLoading == false)
+                  // Register button
+                  CustomElevatedButton(
+                    borderRadius: context.h(1.2),
+                    textColor: AppColors.kBlack,
+                    buttonColor: AppColors.kWhite,
+                    title: 'Register',
+                    width: double.infinity,
+                    onPress: () {
+                      // Navigate to signup screen
+                      context.go(Routes.register);
+                    },
+                  ),
                 context.h(5).heightBox,
               ],
             ),

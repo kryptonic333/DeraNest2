@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 class BuildPostHeader extends StatelessWidget {
   final int index;
-
   const BuildPostHeader({super.key, required this.index});
   @override
   Widget build(BuildContext context) {
@@ -26,17 +25,11 @@ class BuildPostHeader extends StatelessWidget {
             itemBuilder: (context) => [
               const PopupMenuItem(
                 value: "Favorites",
-                child: Text(
-                  "Add to Favorites",
-                  style: AppTextStyle.kDefaultBodyText,
-                ),
+                child: Text("Add to Favorites", style: AppTextStyle.kDefaultBodyText),
               ),
               const PopupMenuItem(
                 value: "Recommend",
-                child: Text(
-                  "Don't Recommend",
-                  style: AppTextStyle.kDefaultBodyText,
-                ),
+                child: Text("Don't Recommend", style: AppTextStyle.kDefaultBodyText),
               ),
               const PopupMenuItem(
                 value: "Hide",

@@ -3,6 +3,7 @@ import 'package:deranest/core/constants/app_text_styles.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:extensions_kit/extensions_kit.dart';
 import 'package:flutter/material.dart';
@@ -14,18 +15,14 @@ class ForgotPasswordScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
+    final authCtrl = ref.read(authProvider.notifier);
     return CustomSafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.kWhite,
           title:
               // Forgot Pass Text
-              Text(
-                'Forgot Password',
-                style: AppTextStyle.kLargeBodyText.copyWith(
-                  fontSize: context.h(2.9),
-                ),
-              ),
+              Text('Forgot Password', style: AppTextStyle.kLargeBodyText.copyWith(fontSize: context.h(2.9))),
         ),
         backgroundColor: AppColors.kTransparent,
         body: Form(
@@ -54,22 +51,27 @@ class ForgotPasswordScreen extends ConsumerWidget {
               context.h(2).heightBox,
 
               // Description Text
-              Text(
-                'Enter Email on which you want to Reset Password',
-                style: AppTextStyle.kMediumBodyText,
-              ),
+              Text('Enter Email on which you want to Reset Password', style: AppTextStyle.kMediumBodyText),
               context.h(20).heightBox,
 
               // Elevated Button
               Center(
                 child: CustomElevatedButton(
+                  loadingIndicatorColor: AppColors.kWhite,
+                  loading: authState.isLoading,
                   borderRadius: context.h(1.2),
                   buttonColor: AppColors.kSecondary,
                   width: context.w(90),
                   title: 'Send',
-                  onPress: () {
-                    // Store the Status of Process            
-                                      
+                  onPress: () async {
+                    if(authState.forgetFormKey.currentState!.validate())
+                    {
+                      final success = await authCtrl.resetPass(context);
+                    if (success) {
+                      ShowSnackbar1.success(context, 'Email Sent!');
+                    }
+                    }
+                    
                   },
                 ),
               ),

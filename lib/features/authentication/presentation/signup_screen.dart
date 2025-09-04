@@ -6,6 +6,7 @@ import 'package:deranest/core/presentation/widgets/custom_elevated_password_text
 import 'package:deranest/core/presentation/widgets/custom_elevated_text_field.dart';
 import 'package:deranest/core/presentation/widgets/custom_safe_area.dart';
 import 'package:deranest/core/presentation/widgets/custom_text_button.dart';
+import 'package:deranest/core/presentation/widgets/snackbar.dart';
 import 'package:deranest/core/routing/app_routers.dart';
 import 'package:deranest/features/authentication/data/auth_provider/auth_provider.dart';
 import 'package:deranest/features/splash/presentation/widgets/app_header.dart';
@@ -88,7 +89,12 @@ class SignupScreen extends ConsumerWidget {
                     hintText: '03xxxxxxxxx',
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
-                    validator: FieldValidator.number(),
+                    validator: (val) {
+                      if (authState.phoneController.text.characters.length > 11) {
+                        return 'Number should be 11 digits';
+                      }
+                      return null;
+                    },
                   ),
                 ),
                 // Email field
@@ -116,11 +122,7 @@ class SignupScreen extends ConsumerWidget {
                     controller: authState.signupPasswordController,
                     hintText: '********',
                     textInputAction: TextInputAction.next,
-                    validator: FieldValidator.password(
-                      shouldContainCapitalLetter: true,
-                      shouldContainNumber: true,
-                      shouldContainSpecialChars: true,
-                    ),
+                    validator: FieldValidator.password(),
                   ),
                 ),
                 // Confirm Password field
@@ -172,14 +174,7 @@ class SignupScreen extends ConsumerWidget {
                   ],
                 ),
                 context.h(3).heightBox,
-                // --- Action Buttons ---
-                if (authState.isLoading == true)
-                  SizedBox(
-                    height: context.h(10),
-                    width: context.w(20),
-                    child: Center(child: CircularProgressIndicator(color: AppColors.kSecondary)),
-                  ),
-
+                // --- Action Buttons --
                 // Register Button
                 CustomElevatedButton(
                   loadingIndicatorColor: AppColors.kWhite,
@@ -189,27 +184,38 @@ class SignupScreen extends ConsumerWidget {
                   buttonColor: AppColors.kSecondary,
                   width: double.infinity,
                   title: 'Register',
-                  onPress: () {
-                    authCtrl.setLoading(true);
-                    context.go(Routes.userDiscovery);
+                  onPress: () async {
+                    if (authState.isTermsAgreed) {
+                      if (authState.signUpFormKey.currentState!.validate()) {
+                        final success = await authCtrl.signUp(context);
+                        if (success) {
+                          ShowSnackbar1.success(context, 'SignUp Successful');
+                          context.go(Routes.userDiscovery);
+                        }
+                      }
+                    } else {
+                      ShowSnackbar1.error(context, 'Accept terms');
+                    }
                   },
                 ),
                 context.h(1.7).heightBox,
-                // OR Button
-                Text('OR', style: AppTextStyle.kDefaultBodyText),
+                if (authState.isLoading == false)
+                  // OR Button
+                  Text('OR', style: AppTextStyle.kDefaultBodyText),
                 context.h(1.7).heightBox,
-                // Login Button
-                CustomElevatedButton(
-                  borderRadius: context.h(1.2),
-                  textColor: AppColors.kBlack,
-                  buttonColor: AppColors.kWhite,
-                  title: 'Login',
-                  width: double.infinity,
-                  onPress: () {
-                    // Navigate to Login Screen
-                    context.go(Routes.login);
-                  },
-                ),
+                if (authState.isLoading == false)
+                  // Login Button
+                  CustomElevatedButton(
+                    borderRadius: context.h(1.2),
+                    textColor: AppColors.kBlack,
+                    buttonColor: AppColors.kWhite,
+                    title: 'Login',
+                    width: double.infinity,
+                    onPress: () {
+                      // Navigate to Login Screen
+                      context.go(Routes.login);
+                    },
+                  ),
                 context.h(3).heightBox,
               ],
             ),
